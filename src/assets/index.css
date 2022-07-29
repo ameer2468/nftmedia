@@ -23,7 +23,6 @@ html {
 }
 
 .topbar {
-    width: calc(100% - 150px);
     background: rgba(184, 234, 250, 0.29);
     backdrop-filter: blur(10px);
     border-bottom: 1px solid #B8EAFA;
@@ -44,4 +43,10 @@ html {
     background: linear-gradient(179.6deg, rgba(184, 234, 250, 0.9) 24.69%, #FFFFFF 86.16%), url("../assets/images/top-post-bg.png");
     background-size: cover;
     background-position: center;
+}
+
+@media all and (min-width: 1024px) {
+    .topbar {
+        width: calc(100% - 150px) !important;
+    }
 }

@@ -1,31 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+  faBars,
+  faCog,
+  faComments,
   faHouse,
   faNewspaper,
-  faComments,
-  faCog,
 } from "@fortawesome/free-solid-svg-icons";
-import Logo from "../../assets/images/logo.png";
 import Tippy from "@tippyjs/react";
 import { useLocation } from "react-router-dom";
 
-const links = [
-  { icon: faHouse, url: "", name: "Home" },
-  { icon: faNewspaper, url: "", name: "Latest" },
-  { icon: faComments, url: "", name: "Messages" },
-  { icon: faCog, url: "", name: "Settings" },
-];
-
-const Sidebar = () => {
+const HiddenMenu = () => {
   const router = useLocation();
   const pathname = router.pathname.split("/")[1];
+  const links = [
+    { icon: faHouse, url: "", name: "Home" },
+    { icon: faNewspaper, url: "", name: "Latest" },
+    { icon: faComments, url: "", name: "Messages" },
+    { icon: faCog, url: "", name: "Settings" },
+  ];
   return (
-    <div className="sidebar hidden w-full h-full items-center fixed lg:flex">
-      <div className="logo absolute w-full h-24 top-0 flex items-center justify-center">
-        <img src={Logo} alt="logo" />
-      </div>
-      <div className="flex flex-col justify-items-center w-full gap-10">
+    <div className="fixed bottom-0 w-full left-0 lg:hidden">
+      <div className="flex flex-row gap-5 bg-gradient-to-r from-sky-500 to-sky-300 h-24">
         {links.map((link, index) => (
           <Tippy placement="right" content={link.name}>
             <div
@@ -48,4 +44,4 @@ const Sidebar = () => {
   );
 };
 
-export default Sidebar;
+export default HiddenMenu;

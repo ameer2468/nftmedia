@@ -11,7 +11,9 @@ const RecentPosts = () => {
   };
   return (
     <div className="mt-24">
-      <h2 className="font-bold text-[40px] mb-10">📰 Recent Posts</h2>
+      <h2 className="font-bold text-[30px] lg:text-[40px] mb-10">
+        📰 Recent Posts
+      </h2>
       <div className="grid grid-cols-1 gap-10 lg:grid-cols-2  xl:grid-cols-4">
         {postsArr()}
       </div>

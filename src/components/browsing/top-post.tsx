@@ -5,20 +5,22 @@ import Button from "../global/button";
 
 const TopPost = () => {
   return (
-    <div className="flex justify-between items-center">
+    <div className="flex flex-col lg:justify-between lg:flex-row items-center">
       <div>
-        <h2 className="font-bold text-black text-[40px]">😮 Post of the day</h2>
-        <h1 className="text-black text-[50px] w-full max-w-[700px] mt-10 leading-snug">
+        <h2 className="font-bold text-black text-[30px] lg:text-[40px]">
+          😮 Post of the day
+        </h2>
+        <h1 className="text-black text-[35px] lg:text-[50px] w-full max-w-[700px] mt-10 leading-snug">
           The craziest NFT Drop do not miss this...
         </h1>
         <div className="flex gap-7 mt-10">
-          <CommentCount count={45} />
-          <ViewCount count={65} />
+          <CommentCount count="35" />
+          <ViewCount count="65" />
         </div>
       </div>
       <div className="relative">
-        <div className="arrowbg" />
-        <Button className="bg-sky-500" text="Read more" />
+        <div className="arrowbg hidden xl:block" />
+        <Button className="bg-sky-500 mt-20 lg:mt-0" text="Read more" />
       </div>
     </div>
   );

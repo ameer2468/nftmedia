@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 
 interface props {
-  count: number;
+  count: string;
 }
 
 const ViewCount = ({ count }: props) => {

@@ -6,9 +6,11 @@ import user from "../../assets/user.png";
 
 const Topbar = () => {
   return (
-    <div className="topbar h-24 fixed right-0 top-0 flex items-center pl-28 pr-32 justify-between">
-      <Searchbox />
-      <div className="flex gap-20 items-center">
+    <div className="topbar z-50  w-full gap-5 h-24 px-0 fixed right-0 top-0 flex items-center lg:gap-0 lg:pl-28 lg:pr-32 lg:justify-between">
+      <div className="hidden lg:block">
+        <Searchbox />
+      </div>
+      <div className="flex gap-20 items-center w-full px-6 justify-between lg:justify-end">
         <div className="flex gap-3 items-center">
           <img src={user} alt="user" />
           <p>Michael</p>
