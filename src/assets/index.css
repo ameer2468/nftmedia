@@ -1,0 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+    font-family: 'Poppins', sans-serif;
+}
+
+.sidebar {
+    background: linear-gradient(177.37deg, #169DFF 0.69%, #B8EAFA 99.78%);
+    width: 150px;
+    height: 100vh;
+}
+
+.searchbox {
+    background: rgba(255, 255, 255, 0.34);
+}
+
+.logo {
+    background: #4FB8FF;;
+}
+
+.topbar {
+    width: calc(100% - 150px);
+    background: rgba(184, 234, 250, 0.29);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid #B8EAFA;
+}
+
+.arrowbg {
+    width: 400px;
+    height: 50px;
+    position: absolute;
+    top: 90px;
+    right: 200px;
+    background: url("../assets/arrow.png") no-repeat;
+}
+
+
+.top-post {
+    height: 700px;
+    background: linear-gradient(179.6deg, rgba(184, 234, 250, 0.9) 24.69%, #FFFFFF 86.16%), url("../assets/images/top-post-bg.png");
+    background-size: cover;
+    background-position: center;
+}
