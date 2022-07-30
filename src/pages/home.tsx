@@ -1,8 +1,7 @@
 import React from "react";
-import TopPost from "../components/browsing/top-post";
-import TrendingPosts from "../components/browsing/trending-posts/trending-posts";
-import RecentPosts from "../components/browsing/recent-posts/recent-posts";
-import HiddenMenu from "../components/global/hidden-menu";
+import TopPost from "../components/home/top-post";
+import TrendingPosts from "../components/home/trending-posts/trending-posts";
+import RecentPosts from "../components/home/recent-posts/recent-posts";
 
 const Home = () => {
   return (
@@ -10,7 +9,6 @@ const Home = () => {
       <TopPost />
       <TrendingPosts />
       <RecentPosts />
-      <HiddenMenu />
     </div>
   );
 };

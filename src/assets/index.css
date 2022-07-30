@@ -14,6 +14,10 @@ html {
     height: 100vh;
 }
 
+.menubg {
+    background: linear-gradient(120.37deg, #169DFF 0.69%, #B8EAFA 99.78%);
+}
+
 .searchbox {
     background: rgba(255, 255, 255, 0.34);
 }
@@ -35,6 +39,10 @@ html {
     top: 90px;
     right: 200px;
     background: url("../assets/arrow.png") no-repeat;
+}
+
+.signup-bg {
+    background: linear-gradient(179.6deg, rgba(184, 234, 250, 0.51) 24.69%, #FFFFFF 86.16%), url("../assets/images/signupbg.png") no-repeat;
 }
 
 

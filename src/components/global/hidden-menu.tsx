@@ -1,44 +1,37 @@
-import React, { useState } from "react";
+import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faBars,
-  faCog,
-  faComments,
-  faHouse,
-  faNewspaper,
-} from "@fortawesome/free-solid-svg-icons";
-import Tippy from "@tippyjs/react";
-import { useLocation } from "react-router-dom";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
+import Button from "./button";
+import Searchbox from "./searchbox";
+import { Link } from "react-router-dom";
 
 const HiddenMenu = () => {
-  const router = useLocation();
-  const pathname = router.pathname.split("/")[1];
-  const links = [
-    { icon: faHouse, url: "", name: "Home" },
-    { icon: faNewspaper, url: "", name: "Latest" },
-    { icon: faComments, url: "", name: "Messages" },
-    { icon: faCog, url: "", name: "Settings" },
-  ];
+  const [isOpen, setIsOpen] = React.useState(false);
   return (
-    <div className="fixed bottom-0 w-full left-0 lg:hidden">
-      <div className="flex flex-row gap-5 bg-gradient-to-r from-sky-500 to-sky-300 h-24">
-        {links.map((link, index) => (
-          <Tippy placement="right" content={link.name}>
-            <div
-              className={`flex w-[28%] m-auto justify-center ${
-                pathname === link.name.toLowerCase()
-                  ? "opacity-100"
-                  : "opacity-50"
-              }`}
-              key={index.toString()}
-            >
-              <FontAwesomeIcon
-                className="text-white text-[30px] transition-all duration-200 hover:opacity-80 cursor-pointer transition-all duration-200"
-                icon={link.icon}
-              />
-            </div>
-          </Tippy>
-        ))}
+    <div className="lg:hidden block" onClick={() => setIsOpen(!isOpen)}>
+      <div className="bg-sky-500 rounded-full w-12 h-12 flex justify-center items-center">
+        <FontAwesomeIcon
+          className={`text-white text-xl transition-all duration-200 ${
+            isOpen ? "transform rotate-90" : "transform rotate-0"
+          }`}
+          icon={faBars}
+        />
+      </div>
+      <div
+        className={`${
+          isOpen ? "flex" : "hidden"
+        } menubg w-full fixed mt-6 flex-col justify-center items-center gap-5 left-0 h-auto p-10`}
+      >
+        <Link to="/login">
+          <Button
+            className="bg-transparent text-white normal-case py-3 border border-white"
+            text="Login"
+          />
+        </Link>
+        <Link to="/signup">
+          <Button className="bg-sky-500 normal-case py-3" text="Sign Up" />
+        </Link>
+        <Searchbox />
       </div>
     </div>
   );
