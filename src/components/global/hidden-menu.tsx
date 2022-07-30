@@ -4,6 +4,7 @@ import { faBars } from "@fortawesome/free-solid-svg-icons";
 import Button from "./button";
 import Searchbox from "./searchbox";
 import { Link } from "react-router-dom";
+import { AnimatePresence, motion } from "framer-motion";
 
 const HiddenMenu = () => {
   const [isOpen, setIsOpen] = React.useState(false);
@@ -17,22 +18,29 @@ const HiddenMenu = () => {
           icon={faBars}
         />
       </div>
-      <div
-        className={`${
-          isOpen ? "flex" : "hidden"
-        } menubg w-full fixed mt-6 flex-col justify-center items-center gap-5 left-0 h-auto p-10`}
-      >
-        <Link to="/login">
-          <Button
-            className="bg-transparent text-white normal-case py-3 border border-white"
-            text="Login"
-          />
-        </Link>
-        <Link to="/signup">
-          <Button className="bg-sky-500 normal-case py-3" text="Sign Up" />
-        </Link>
-        <Searchbox />
-      </div>
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -50 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -5 }}
+            className={`${
+              isOpen ? "flex" : "hidden"
+            } menubg w-full fixed mt-6 flex-col justify-center items-center gap-5 left-0 h-auto p-10`}
+          >
+            <Link to="/login">
+              <Button
+                className="bg-transparent text-black normal-case py-3 border border-black"
+                text="Login"
+              />
+            </Link>
+            <Link to="/signup">
+              <Button className="bg-sky-500 normal-case py-3" text="Sign Up" />
+            </Link>
+            <Searchbox />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
