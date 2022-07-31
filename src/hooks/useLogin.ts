@@ -1,11 +1,9 @@
 import { useState } from "react";
 import { supabase } from "../constants/supabase";
-import { useNavigate } from "react-router-dom";
 
 export const useLogin = () => {
   const [loading, setLoading] = useState(false);
   const windowBrowser = window;
-  const navigate = useNavigate();
 
   const loginHandler = () => {
     setLoading(true);
@@ -23,9 +21,13 @@ export const useLogin = () => {
             .eq("wallet", address)
             .then(async (res: any) => {
               if (res.data.length === 0) {
-                navigate("/signup");
+                window.location.href = "/signup";
               } else {
-                navigate("/home");
+                window.location.href = "/home";
+                localStorage.setItem(
+                  "user",
+                  JSON.stringify(res.data[0].wallet)
+                );
               }
             });
         })
@@ -37,5 +39,10 @@ export const useLogin = () => {
     }
   };
 
-  return { loginHandler, loading };
+  const logout = () => {
+    localStorage.removeItem("user");
+    window.location.href = "/login";
+  };
+
+  return { loginHandler, loading, logout };
 };

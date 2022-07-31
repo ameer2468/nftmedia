@@ -4,7 +4,7 @@ import metamask from "../assets/metamask.png";
 import { useSignup } from "../hooks/useSignup";
 
 const Signup = () => {
-  const { signUpHandler } = useSignup();
+  const { signUpHandler, loading } = useSignup();
   return (
     <div className="relative z-[100] w-full h-screen bg-black flex justify-between">
       <div className="signup-bg w-[50%] h-screen hidden lg:block" />
@@ -14,9 +14,11 @@ const Signup = () => {
         </h1>
         <div className="w-[80%] lg:w-[50%]">
           <Button
+            loading={loading}
+            disabled={loading}
             onClick={signUpHandler}
             image={metamask}
-            className="normal-case bg-sky-500 w-full"
+            className="normal-case h-16 bg-sky-500 w-full"
             text="Signup with MetaMask"
           />
         </div>

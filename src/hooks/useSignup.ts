@@ -1,11 +1,9 @@
 import { useState } from "react";
 import { supabase } from "../constants/supabase";
-import { useNavigate } from "react-router-dom";
 
 export const useSignup = () => {
   const [loading, setLoading] = useState(false);
   const windowBrowser = window;
-  const navigate = useNavigate();
 
   const signUpHandler = () => {
     setLoading(true);
@@ -29,10 +27,10 @@ export const useSignup = () => {
                     wallet: address,
                   })
                   .then(() => {
-                    navigate("/home");
+                    window.location.href = "/home";
                   });
               } else if (res.data.length === 1) {
-                navigate("/home");
+                window.location.href = "/home";
               }
             });
         })
