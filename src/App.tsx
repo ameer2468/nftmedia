@@ -9,28 +9,32 @@ import Latest from "./pages/latest";
 import MobileMenu from "./components/global/mobile-menu";
 import Signup from "./pages/signup";
 import Login from "./pages/login";
+import { MetaMaskProvider } from "metamask-react";
 
 function App() {
   const appRoutes = ["/home", "/latest", "/messages", "/settings", "/profile"];
   const checkLocation = appRoutes.includes(window.location.pathname);
+
   return (
-    <BrowserRouter>
-      {checkLocation ? (
-        <div>
-          <Topbar />
-          <Sidebar />
-          <MobileMenu />
-        </div>
-      ) : (
-        ""
-      )}
-      <Routes>
-        <Route path="/home" element={<Home />} />
-        <Route path="/latest" element={<Latest />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/login" element={<Login />} />
-      </Routes>
-    </BrowserRouter>
+    <MetaMaskProvider>
+      <BrowserRouter>
+        {checkLocation ? (
+          <div>
+            <Topbar />
+            <Sidebar />
+            <MobileMenu />
+          </div>
+        ) : (
+          ""
+        )}
+        <Routes>
+          <Route path="/home" element={<Home />} />
+          <Route path="/latest" element={<Latest />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/login" element={<Login />} />
+        </Routes>
+      </BrowserRouter>
+    </MetaMaskProvider>
   );
 }
 

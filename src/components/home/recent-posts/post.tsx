@@ -13,7 +13,7 @@ const Post = () => {
         <Avatar className="w-10" />
         <p className="text-sky-500 mt-3">John Doe</p>
       </div>
-      <p className="py-5 leading-7">
+      <p className="py-5 leading-7 text-center">
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus iste,
         magni non qui quo sequi temporibus vel. Error facilis quae quis quos
         ratione! Ad aspernatur commodi eius mollitia tempora voluptates?
@@ -24,7 +24,7 @@ const Post = () => {
         <VoteCount count="18" />
       </div>
       <Button
-        className="bg-black normal-case hover:bg-zinc-700"
+        className="bg-black normal-case hover:bg-zinc-700 m-auto"
         text="Read More"
       />
     </div>

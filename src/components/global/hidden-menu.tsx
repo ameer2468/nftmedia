@@ -21,9 +21,9 @@ const HiddenMenu = () => {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -50 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -5 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
             className={`${
               isOpen ? "flex" : "hidden"
             } menubg w-full fixed mt-6 flex-col justify-center items-center gap-5 left-0 h-auto p-10`}

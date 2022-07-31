@@ -18,12 +18,15 @@ const Topbar = () => {
         <div className="flex hidden gap-5 lg:flex">
           <Link to="/login">
             <Button
-              className="bg-transparent text-sky-500 normal-case py-3 border border-sky-500"
+              className="bg-transparent h-12 text-sky-500 normal-case py-3 border border-sky-500"
               text="Login"
             />
           </Link>
           <Link to="/signup">
-            <Button className="bg-sky-500 normal-case py-3" text="Sign Up" />
+            <Button
+              className="bg-sky-500 h-12 normal-case py-3"
+              text="Sign Up"
+            />
           </Link>
         </div>
         <div className="flex gap-10 items-center">
