@@ -2,6 +2,7 @@ import React from "react";
 import Button from "../components/global/button";
 import metamask from "../assets/metamask.png";
 import { useSignup } from "../hooks/useSignup";
+import { Link } from "react-router-dom";
 
 const Signup = () => {
   const { signUpHandler, loading } = useSignup();
@@ -21,6 +22,11 @@ const Signup = () => {
             className="normal-case h-16 bg-sky-500 w-full"
             text="Signup with MetaMask"
           />
+          <Link to="/login">
+            <p className="text-center transition-all duration-200 text-white text-md mt-5 hover:opacity-50 cursor-pointer">
+              Have an account? Let's login!
+            </p>
+          </Link>
         </div>
       </div>
     </div>

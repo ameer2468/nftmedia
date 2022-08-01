@@ -17,7 +17,7 @@ export const useLogin = () => {
           address = res[0];
           await supabase
             .from("accounts")
-            .select("wallet")
+            .select("*")
             .eq("wallet", address)
             .then(async (res: any) => {
               if (res.data.length === 0) {
@@ -26,7 +26,11 @@ export const useLogin = () => {
                 window.location.href = "/home";
                 localStorage.setItem(
                   "user",
-                  JSON.stringify(res.data[0].wallet)
+                  JSON.stringify({
+                    id: res.data[0].id,
+                    display_name: res.data[0].display_name,
+                    wallet: res.data[0].wallet,
+                  })
                 );
               }
             });

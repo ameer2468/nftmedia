@@ -26,7 +26,8 @@ export const useSignup = () => {
                   .insert({
                     wallet: address,
                   })
-                  .then(() => {
+                  .then((res: any) => {
+                    localStorage.setItem("user", JSON.stringify(res.data[0]));
                     window.location.href = "/home";
                   });
               } else if (res.data.length === 1) {

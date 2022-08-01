@@ -5,22 +5,23 @@ export const useCheckUser = () => {
   const [user, setUser] = useState(
     checkStorage ? JSON.parse(checkStorage) : null
   );
+  const location = window.location;
 
   const check = useCallback(() => {
     if (user) {
-      if (
-        window.location.pathname === "/login" ||
-        window.location.pathname === "/signup"
-      ) {
-        return (window.location.href = "/home");
+      if (location.pathname === "/login" || location.pathname === "/signup") {
+        return (location.href = "/home");
       }
-    } else if (user === null && window.location.pathname !== "/login") {
-      return (window.location.href = "/login");
+    } else if (
+      location.pathname !== "/login" &&
+      location.pathname !== "/signup"
+    ) {
+      return (location.href = "/login");
     }
-  }, [user]);
+  }, [location, user]);
 
   useEffect(() => {
     check();
-  }, [check, user]);
+  }, [check, user, checkStorage]);
   return { user, setUser };
 };
