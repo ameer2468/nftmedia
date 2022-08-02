@@ -7,7 +7,6 @@ import Sidebar from "./components/home/sidebar";
 import "tippy.js/dist/tippy.css";
 import Latest from "./pages/latest";
 import MobileMenu from "./components/global/mobile-menu";
-import Signup from "./pages/signup";
 import Login from "./pages/login";
 import { MetaMaskProvider } from "metamask-react";
 import { useCheckUser } from "./hooks/useCheckUser";
@@ -44,7 +43,6 @@ function App() {
           <Routes>
             <Route path="/home" element={<Home />} />
             <Route path="/latest" element={<Latest />} />
-            <Route path="/signup" element={<Signup />} />
             <Route path="/login" element={<Login />} />
           </Routes>
         </ModalContext.Provider>
