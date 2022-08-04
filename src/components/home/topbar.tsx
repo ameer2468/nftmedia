@@ -26,7 +26,7 @@ const Topbar = () => {
             className="flex gap-3 items-center"
           >
             <Avatar className="w-12 h-12" />
-            <p>{user?.display_name || "Unknown"}</p>
+            <p>{user?.display_name || "NA"}</p>
             <FontAwesomeIcon icon={faCaretDown} />
           </div>
           <FontAwesomeIcon

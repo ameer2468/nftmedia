@@ -17,8 +17,8 @@ const Post = () => {
           <p className="text-sky-500 mt-3">John Doe</p>
         </div>
       </div>
-      <div className="flex items-center justify-between my-5 gap-10">
-        <p className="py-5 leading-7 text-left w-[60%]">
+      <div className="flex items-center flex-col lg:flex-row justify-between my-5 gap-10">
+        <p className="py-5 leading-7 text-left w-[100%] lg:w-[60%]">
           Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus
           iste, magni non qui quo sequi temporibus vel. Error facilis quae quis
           quos ratione! Ad aspernatur commodi eius mollitia tempora voluptates?

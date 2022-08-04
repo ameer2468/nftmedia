@@ -94,7 +94,7 @@ export const useLogin = () => {
             await nonceHandler(address, res.data[0].nonce);
             await updateNonce(address);
             setLoading(false);
-            const user = res.data[0];
+            // const user = res.data[0];
             window.location.href = "/home";
 
             // localStorage.setItem(

@@ -14,6 +14,7 @@ import { UserProvider } from "./context/UserContext";
 import { ModalContext } from "./context/ModalContext";
 import ModalManager from "./components/global/ModalManager";
 import { ModalID } from "./types/modals";
+import Settings from "./pages/settings";
 
 function App() {
   const appRoutes = ["/home", "/latest", "/messages", "/settings", "/profile"];
@@ -44,6 +45,7 @@ function App() {
             <Route path="/home" element={<Home />} />
             <Route path="/latest" element={<Latest />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/settings" element={<Settings/>} />
           </Routes>
         </ModalContext.Provider>
       </UserProvider>

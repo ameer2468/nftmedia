@@ -10,8 +10,8 @@ const TopPost = () => {
         <h2 className="font-bold text-black text-[30px] lg:text-[40px]">
           😮 Post of the day
         </h2>
-        <h1 className="text-black text-[35px] lg:text-[50px] w-full max-w-[700px] mt-10 leading-snug">
-          The craziest NFT Drop do not miss this...
+        <h1 className="text-black text-[35px] w-[80%] lg:w-[100%] lg:text-[50px] w-full max-w-[700px] mt-10 leading-snug">
+          The craziest NFT drop do not miss this...
         </h1>
         <div className="flex gap-7 mt-10">
           <CommentCount count="35" />

@@ -21,7 +21,7 @@ export const useCheckUser = () => {
   }, [location, user]);
 
   useEffect(() => {
-    check();
+    // check();
   }, [check, user, checkStorage]);
   return { user, setUser };
 };
