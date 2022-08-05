@@ -36,12 +36,18 @@ export const useLogin = () => {
       })
       .then(async (res: any) => {
         await axios
-          .post(`${url}/auth/validate`, {
-            token: res.data.token,
-            wallet: address,
-          })
+          .post(
+            `${url}/auth/validate`,
+            {
+              wallet: address,
+            },
+            {
+              headers: {
+                "auth-token": res.data.token,
+              },
+            }
+          )
           .then((res) => {
-            console.log(res);
             return res;
           });
       });
@@ -76,14 +82,12 @@ export const useLogin = () => {
         const user = res.data[0];
         await nonceHandler(address, user.nonce);
         window.location.href = "/home";
-        // localStorage.setItem(
-        //   "user",
-        //   JSON.stringify({
-        //     id: res.data[0].id,
-        //     display_name: res.data[0].display_name,
-        //     wallet: res.data[0].wallet,
-        //   })
-        // );
+        localStorage.setItem(
+          "user",
+          JSON.stringify({
+            ...user,
+          })
+        );
       });
   };
 
@@ -105,17 +109,14 @@ export const useLogin = () => {
           } else {
             await nonceHandler(address, res.data[0].nonce);
             setLoading(false);
-            // const user = res.data[0];
-            // window.location.href = "/home";
-
-            // localStorage.setItem(
-            //   "user",
-            //   JSON.stringify({
-            //     id: user.id,
-            //     display_name: user.display_name,
-            //     wallet: user.wallet,
-            //   })
-            // );
+            const user = res.data[0];
+            window.location.href = "/home";
+            localStorage.setItem(
+              "user",
+              JSON.stringify({
+                ...user,
+              })
+            );
           }
         });
     }

@@ -19,12 +19,12 @@ export const useDisplayname = () => {
     if (displayName) {
       setLoading(true);
       await supabase
-        .from("accounts")
+        .from("auth")
         .update({ display_name: displayName })
         .eq("wallet", JSON.parse(localStorage.getItem("user") as string).wallet)
         .then(async () => {
           await supabase
-            .from("accounts")
+            .from("auth")
             .select("display_name")
             .eq(
               "display_name",
