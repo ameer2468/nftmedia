@@ -7,7 +7,7 @@ export const useLogin = () => {
   const [loading, setLoading] = useState(false);
   const windowBrowser: any = window;
   const randomNonce = Math.floor(Math.random() * 1000000);
-  const [nonce, setNonce] = useState(randomNonce);
+  const url = process.env.REACT_APP_API_URL;
 
   const detectCurrentProvider = () => {
     let provider;
@@ -21,20 +21,30 @@ export const useLogin = () => {
     return provider;
   };
 
-  const updateNonce = async (wallet: string) => {
-    setNonce(randomNonce);
-    await supabase
-      .from("auth")
-      .update({ nonce: randomNonce })
-      .select("nonce")
-      .eq("wallet", wallet);
-  };
+  //Send data to server to get JWT token and verify token is valid
 
-  const handleAuth = async (address: string, signature: string) => {
-    await axios.post(`https://rmgkkukzcwaywhvkwmky.functions.supabase.co/auth`, {
-      address,
-      signature,
-    });
+  const handleAuth = async (
+    address: string,
+    nonce: number,
+    signature: string
+  ) => {
+    return await axios
+      .post(`${url}/auth/generate`, {
+        address,
+        nonce,
+        signature,
+      })
+      .then(async (res: any) => {
+        await axios
+          .post(`${url}/auth/validate`, {
+            token: res.data.token,
+            wallet: address,
+          })
+          .then((res) => {
+            console.log(res);
+            return res;
+          });
+      });
   };
 
   const nonceHandler = async (account: string, nonce: number) => {
@@ -48,17 +58,19 @@ export const useLogin = () => {
           String(randomNonce)
         )
         .then(async (signed: string) => {
-          await handleAuth(account, signed);
+          await handleAuth(account, nonce, signed);
         });
     }
   };
+
+  //Function that signs the user up
 
   const signUp = async (address: string) => {
     await supabase
       .from("auth")
       .insert({
         wallet: address,
-        nonce: nonce,
+        nonce: randomNonce,
       })
       .then(async (res: any) => {
         const user = res.data[0];
@@ -92,10 +104,9 @@ export const useLogin = () => {
             await signUp(address);
           } else {
             await nonceHandler(address, res.data[0].nonce);
-            await updateNonce(address);
             setLoading(false);
             // const user = res.data[0];
-            window.location.href = "/home";
+            // window.location.href = "/home";
 
             // localStorage.setItem(
             //   "user",
