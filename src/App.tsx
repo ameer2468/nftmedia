@@ -29,6 +29,13 @@ function App() {
     }
   }, [user]);
 
+  const authedRoutes = [
+    { path: "/home", element: <Home /> },
+    { path: "/latest", element: <Latest /> },
+    { path: "/settings", element: <Settings /> },
+  ];
+  const guestRoutes = [{ path: "/login", element: <Login /> }];
+
   return (
     <MetaMaskProvider>
       <UserProvider value={{ user, setUser }}>
@@ -42,10 +49,21 @@ function App() {
             </>
           ) : null}
           <Routes>
-            <Route path="/home" element={<Home />} />
-            <Route path="/latest" element={<Latest />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/settings" element={<Settings/>} />
+            {user === null
+              ? guestRoutes.map((route, index: number) => (
+                  <Route
+                    key={index.toString()}
+                    path={route.path}
+                    element={route.element}
+                  />
+                ))
+              : authedRoutes.map((route, index: number) => (
+                  <Route
+                    key={index.toString()}
+                    path={route.path}
+                    element={route.element}
+                  />
+                ))}
           </Routes>
         </ModalContext.Provider>
       </UserProvider>

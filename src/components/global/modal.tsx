@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose } from "@fortawesome/free-solid-svg-icons";
 import { ModalContext } from "../../context/ModalContext";
 import { AnimatePresence, motion } from "framer-motion";
+import Lottie from "react-lottie";
 
 interface props {
   title: string;
@@ -13,6 +14,7 @@ interface props {
   hideClose?: boolean;
   loading?: boolean;
   subtext?: string;
+  lottie: any;
 }
 
 const Modal = ({
@@ -23,6 +25,7 @@ const Modal = ({
   loading,
   subtext,
   hideClose,
+  lottie,
 }: props) => {
   const { setModalId, modalId } = useContext(ModalContext);
   return (
@@ -32,9 +35,9 @@ const Modal = ({
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -10 }}
-          className="fixed z-[100] w-full h-full bg-opacity-50 bg-zinc-700 flex justify-center items-center"
+          className="fixed z-[100] w-full h-full bg-opacity-50 px-5 bg-zinc-700 flex justify-center items-center"
         >
-          <div className="w-[500px] rounded h-auto bg-white p-14 relative">
+          <div className="w-[850px] rounded h-auto bg-white relative">
             {hideClose ? (
               ""
             ) : (
@@ -48,20 +51,27 @@ const Modal = ({
                 <FontAwesomeIcon icon={faClose} />
               </div>
             )}
-            <h1 className="text-center text-black text-xl font-bold mb-2">
-              {title}
-            </h1>
-            <p className="text-center text-sm">{subtext}</p>
-            <div className="my-8">{children}</div>
-            {hideButton ? null : (
-              <Button
-                loading={loading}
-                disabled={loading}
-                onClick={onClick}
-                className="bg-sky-500 normal-case ml-auto mr-auto"
-                text="Confirm"
-              />
-            )}
+            <div className="flex">
+              <div className="bg-zinc-100 w-[50%] flex items-center">
+                <Lottie options={lottie} height={"100%"} width={"100%"} />
+              </div>
+              <div className="w-[50%] p-10 py-20">
+                <h1 className="text-left text-black text-xl font-bold mb-2">
+                  {title}
+                </h1>
+                <p className="text-left text-sm leading-6">{subtext}</p>
+                <div className="my-8">{children}</div>
+                {hideButton ? null : (
+                  <Button
+                    loading={loading}
+                    disabled={loading}
+                    onClick={onClick}
+                    className="bg-sky-500 h-14 w-full normal-case ml-auto mr-auto"
+                    text="Confirm"
+                  />
+                )}
+              </div>
+            </div>
           </div>
         </motion.div>
       )}
