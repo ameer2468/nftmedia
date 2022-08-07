@@ -3,6 +3,11 @@ declare module "*.png" {
   export = value;
 }
 
+declare module "*.mp4" {
+  const value: any;
+  export = value;
+}
+
 interface Window {
   ethereum: any;
 }

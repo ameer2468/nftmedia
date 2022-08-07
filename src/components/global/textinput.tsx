@@ -7,12 +7,18 @@ interface props {
   type?: string;
   minLength?: number;
   maxLength?: number;
+  value?: string;
+  onFocus?: () => void;
+  onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
 }
 
 const TextInput = ({
   placeholder,
   onChange,
   className,
+  onBlur,
+  onFocus,
+  value,
   type,
   maxLength,
   minLength,
@@ -21,6 +27,9 @@ const TextInput = ({
     <input
       placeholder={placeholder}
       onChange={onChange}
+      onFocus={onFocus}
+      onBlur={onBlur}
+      value={value}
       minLength={minLength}
       maxLength={maxLength}
       type={type || "text"}

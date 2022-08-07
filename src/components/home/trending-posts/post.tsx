@@ -4,6 +4,7 @@ import ViewCount from "../../global/view-count";
 import CommentCount from "../../global/comment-count";
 import { Avatar } from "../../global/avatar";
 import VoteCount from "../../global/vote-count";
+import { Link } from "react-router-dom";
 
 const Post = () => {
   return (
@@ -23,10 +24,12 @@ const Post = () => {
         <ViewCount count="25" />
         <VoteCount count="18" />
       </div>
-      <Button
-        className="bg-black m-auto normal-case hover:bg-zinc-700"
-        text="Read More"
-      />
+      <Link to={"/post/10"}>
+        <Button
+          className="bg-black m-auto normal-case hover:bg-zinc-700"
+          text="Read More"
+        />
+      </Link>
     </div>
   );
 };

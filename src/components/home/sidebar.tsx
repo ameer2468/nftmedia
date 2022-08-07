@@ -16,14 +16,16 @@ const Sidebar = () => {
         <img src={Logo} alt="logo" />
       </div>
       <div className="flex flex-col justify-items-center w-full gap-10">
-        <Tippy placement="right" content="New Post">
-          <div
-            className="flex w-14 transition-all duration-200 m-auto justify-center items-center text-white text-[20px]
+        <Link to={"/new"}>
+          <Tippy placement="right" content="New Post">
+            <div
+              className="flex w-14 transition-all duration-200 m-auto justify-center items-center text-white text-[20px]
           bg-sky-500 h-14 rounded-full hover:bg-sky-600 cursor-pointer"
-          >
-            <FontAwesomeIcon icon={faPlus} />
-          </div>
-        </Tippy>
+            >
+              <FontAwesomeIcon icon={faPlus} />
+            </div>
+          </Tippy>
+        </Link>
         {links.map((link, index) => (
           <Link to={link.url} key={index.toString()}>
             <Tippy placement="right" content={link.name}>

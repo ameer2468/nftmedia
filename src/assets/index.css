@@ -40,6 +40,16 @@ html {
     right: 200px;
     background: url("../assets/arrow.png") no-repeat;
 }
+.login-bg {
+    background-image: url("../assets/loginbg.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.login-box {
+    background: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(33px);
+}
 
 .signup-bg {
     background: linear-gradient(179.6deg, rgba(184, 234, 250, 0.51) 24.69%, #FFFFFF 86.16%), url("../assets/images/signupbg.png") no-repeat;

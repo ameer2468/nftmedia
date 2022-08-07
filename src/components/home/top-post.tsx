@@ -20,7 +20,10 @@ const TopPost = () => {
       </div>
       <div className="relative">
         <div className="arrowbg hidden xl:block" />
-        <Button className="bg-sky-500 mt-20 lg:mt-0" text="Read more" />
+        <Button
+          className="bg-sky-500 mt-20 lg:mt-0 normal-case"
+          text="Read More"
+        />
       </div>
     </div>
   );
