@@ -6,6 +6,7 @@ interface props {
   className?: string;
   type?: string;
   minLength?: number;
+  name?: string;
   maxLength?: number;
   value?: string;
   onFocus?: () => void;
@@ -16,6 +17,7 @@ const TextInput = ({
   placeholder,
   onChange,
   className,
+  name,
   onBlur,
   onFocus,
   value,
@@ -28,6 +30,7 @@ const TextInput = ({
       placeholder={placeholder}
       onChange={onChange}
       onFocus={onFocus}
+      name={name}
       onBlur={onBlur}
       value={value}
       minLength={minLength}

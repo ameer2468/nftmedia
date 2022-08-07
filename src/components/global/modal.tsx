@@ -52,8 +52,13 @@ const Modal = ({
               </div>
             )}
             <div className="flex">
-              <div className="bg-zinc-100 w-[50%] flex items-center">
-                <Lottie options={lottie} height={"100%"} width={"100%"} />
+              <div className="bg-zinc-100 w-[50%] flex items-center rounded-xl">
+                <Lottie
+                  isClickToPauseDisabled={true}
+                  options={lottie}
+                  height={"100%"}
+                  width={"100%"}
+                />
               </div>
               <div className="w-[50%] p-10 py-20">
                 <h1 className="text-left text-black text-xl font-bold mb-2">

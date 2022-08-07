@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import value from "*.png";
+import React, { RefObject, useState } from "react";
 
 interface props {
   placeholder: string;
@@ -8,7 +7,9 @@ interface props {
   type?: string;
   minLength?: number;
   maxLength?: number;
+  name?: string;
   onFocus?: () => void;
+  inputref?: RefObject<any>;
   value?: string;
   onBlur?: (e: React.FocusEvent<HTMLTextAreaElement>) => void;
 }
@@ -18,7 +19,9 @@ const TextAreaInput = ({
   onChange,
   className,
   onBlur,
+  inputref,
   onFocus,
+  name,
   value,
   maxLength,
   minLength,
@@ -28,12 +31,14 @@ const TextAreaInput = ({
     <div>
       <textarea
         placeholder={placeholder}
-        onChange={(e) => {
+        onChange={(e: any) => {
           onChange?.(e);
           setCount(e.target.value.length);
         }}
         onFocus={onFocus}
+        name={name}
         onBlur={onBlur}
+        ref={inputref}
         minLength={minLength}
         value={value}
         maxLength={maxLength}
