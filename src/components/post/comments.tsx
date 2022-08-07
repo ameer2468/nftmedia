@@ -33,10 +33,13 @@ const Comments = () => {
                 onClick={() => {
                   setShow(false);
                 }}
-                className="bg-transparent border-2 border-sky-500 normal-case w-32 text-sky-500"
+                className="bg-transparent border-2 border-sky-500 h-14 normal-case w-32 text-sky-500"
                 text="Cancel"
               />
-              <Button className=" bg-sky-500 normal-case w-32" text="Submit" />
+              <Button
+                className=" bg-sky-500 normal-case w-32 h-14"
+                text="Submit"
+              />
             </motion.div>
           ) : null}
         </AnimatePresence>

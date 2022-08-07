@@ -4,17 +4,20 @@ import TextAreaInput from "../components/global/textarea";
 import Button from "../components/global/button";
 import Picker from "emoji-picker-react";
 import { useFormHook } from "../hooks/useFormHook";
+import { usePost } from "../hooks/usePost";
 
 const New = () => {
-  const [chosenEmoji, setChosenEmoji] = useState(null);
+  const [chosenEmoji, setChosenEmoji] = useState<{ emoji: string } | null>(
+    null
+  );
   const inputRef: any = useRef(0);
   const form = {
     title: "",
     post: "",
   };
-  const { inputValues, setInputValues, onChangeHandler } = useFormHook({
-    form,
-  });
+  const { inputValues, setInputValues, onChangeHandler } = useFormHook(form);
+  const { submitNewPost, createLoading } = usePost(inputValues);
+  const formCheck = inputValues.title.length > 0 && inputValues.post.length > 0;
   const onEmojiClick = (event: any, emojiObject: any) => {
     const selectionEnd = inputRef.current.selectionEnd;
     const postUpdate = () => {
@@ -22,7 +25,7 @@ const New = () => {
       for (let i = 0; i < inputValues.post.length; i++) {
         arr.push(inputValues.post[i]);
       }
-      arr.splice(selectionEnd, 0, emojiObject.emoji);
+      arr.splice(selectionEnd, 0, chosenEmoji?.emoji);
       return arr.join("");
     };
     setChosenEmoji(emojiObject);
@@ -61,12 +64,20 @@ const New = () => {
             onChange={(e: any) => {
               onChangeHandler(e);
             }}
-            className="h-[200px] resize-none"
+            className="min-h-[200px] resize-none block"
             placeholder="Post content"
             maxLength={800}
           />
         </div>
-        <Button className="normal-case bg-sky-500 mt-3" text="Submit" />
+        <Button
+          loading={createLoading}
+          disabled={createLoading || !formCheck}
+          onClick={() => submitNewPost(setInputValues)}
+          className={`normal-case w-40 h-14 bg-sky-500 mt-3 ${
+            formCheck ? "" : "opacity-50 cursor-not-allowed"
+          }`}
+          text="Submit"
+        />
       </div>
     </div>
   );

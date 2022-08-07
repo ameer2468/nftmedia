@@ -1,11 +1,7 @@
 import { ChangeEvent, useState } from "react";
 
-interface args {
-  form: any;
-}
-
-export const useFormHook = ({ form }: args) => {
-  const [inputValues, setInputValues] = useState(form);
+export const useFormHook = (form: { [key: string]: string }) => {
+  const [inputValues, setInputValues] = useState<any>(form);
 
   const onChangeHandler = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>

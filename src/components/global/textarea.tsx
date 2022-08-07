@@ -1,4 +1,4 @@
-import React, { RefObject, useState } from "react";
+import React, { RefObject } from "react";
 
 interface props {
   placeholder: string;
@@ -26,14 +26,12 @@ const TextAreaInput = ({
   maxLength,
   minLength,
 }: props) => {
-  const [count, setCount] = useState(0);
   return (
     <div>
       <textarea
         placeholder={placeholder}
         onChange={(e: any) => {
           onChange?.(e);
-          setCount(e.target.value.length);
         }}
         onFocus={onFocus}
         name={name}
@@ -48,7 +46,7 @@ const TextAreaInput = ({
          ${className}
       `}
       />
-      <p className="mt-4 w-full text-right">{`${count} / ${maxLength}`}</p>
+      <p className="mt-4 w-full text-right">{`${value?.length} / ${maxLength}`}</p>
     </div>
   );
 };
