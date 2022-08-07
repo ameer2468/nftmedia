@@ -17,6 +17,7 @@ import { ModalID } from "./types/modals";
 import Settings from "./pages/settings";
 import Post from "./pages/post";
 import New from "./pages/new";
+import { useScrollTop } from "./hooks/useScrollTop";
 
 function App() {
   const appRoutes = [
@@ -47,6 +48,7 @@ function App() {
     { path: "/new", element: <New /> },
   ];
   const guestRoutes = [{ path: "/login", element: <Login /> }];
+  useScrollTop();
 
   return (
     <MetaMaskProvider>
