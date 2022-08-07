@@ -49,6 +49,7 @@ html {
 .login-box {
     background: rgba(255, 255, 255, 0.3);
     backdrop-filter: blur(33px);
+    border: 1px solid #fafafa;
 }
 
 .signup-bg {
