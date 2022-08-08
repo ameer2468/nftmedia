@@ -8,13 +8,13 @@ import { AnimatePresence, motion } from "framer-motion";
 const Comments = () => {
   const [show, setShow] = useState(false);
   return (
-    <div className="bg-gradient-to-br to-zinc-50 from-sky-50 rounded-xl p-10">
+    <div className="bg-gradient-to-br to-zinc-50 from-sky-50 rounded-xl border border-sky-100 p-10">
       <h2 className="font-bold text-[25px] lg:text-[30px]">Comments</h2>
       <div className="mt-5 flex-col flex gap-5">
         <div className="flex w-full items-center">
           <Avatar className="w-16" />
           <TextInput
-            className="w-full"
+            className="w-full border border-sky-100"
             onFocus={() => {
               setShow(true);
             }}
