@@ -20,26 +20,26 @@ const Login = () => {
     },
   };
   return (
-    <div className="relative z-[100] w-full h-screen bg-black flex justify-between">
-      <div className="w-[40%] bg-white leading-none relative h-screen hidden lg:block overflow-hidden">
-        <video
-          className="outline-0 border-0 leading-none"
-          width={"100%"}
-          src={videobg}
-          autoPlay
-          loop
-          muted
-        />
-      </div>
-      <div className="flex login-bg flex-col justify-center items-center w-full h-screen lg:w-[60%]">
+    <div className="relative z-[100] w-full h-screen bg-black">
+      {/*<div className="w-[40%] bg-white leading-none relative h-screen hidden lg:block overflow-hidden">*/}
+      {/*  <video*/}
+      {/*    className="outline-0 border-0 leading-none"*/}
+      {/*    width={"100%"}*/}
+      {/*    src={videobg}*/}
+      {/*    autoPlay*/}
+      {/*    loop*/}
+      {/*    muted*/}
+      {/*  />*/}
+      {/*</div>*/}
+      <div className="flex login-bg flex-col justify-center items-center w-full h-screen lg:w-[100%]">
         <motion.div
           initial={{ opacity: 0, y: -5 }}
           animate={{ opacity: 1, y: 0 }}
-          className="w-[90%] lg:w-[60%] login-box rounded-xl flex-col items-center justify-center p-20 flex"
+          className="w-[95%] lg:w-[50rem] login-box rounded-xl flex-col items-center justify-center p-20 flex"
         >
           <div className="flex w-full">
             <div className="flex">
-              <h1 className="text-black text-[25px] text-left font-bold w-[100%] lg:text-[40px] lg:px-0">
+              <h1 className="text-zinc-500 text-[25px] text-left font-bold w-[100%] lg:text-[40px] lg:px-0">
                 Welcome
               </h1>
               <Lottie

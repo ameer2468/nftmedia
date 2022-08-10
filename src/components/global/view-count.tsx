@@ -9,8 +9,8 @@ interface props {
 const ViewCount = ({ count }: props) => {
   return (
     <div className="flex gap-2 items-center">
-      <FontAwesomeIcon icon={faEye} />
-      <p className="text-xl">{count}</p>
+      <FontAwesomeIcon className="text-[15px]" icon={faEye} />
+      <p className="text-[15px] font-normal">{count}</p>
     </div>
   );
 };

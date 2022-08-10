@@ -6,7 +6,7 @@ import { Avatar } from "../global/avatar";
 
 const PostContent = () => {
   return (
-    <div className="bg-gradient-to-br to-zinc-50 from-sky-50 rounded-xl p-10">
+    <div className="bg-gradient-to-br to-zinc-50 from-sky-50 rounded-xl p-10 border border-white">
       <div>
         <h2 className="font-bold text-[30px] lg:text-[40px]">
           Bitcoin price drop

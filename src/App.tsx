@@ -18,6 +18,7 @@ import Settings from "./pages/settings";
 import Post from "./pages/post";
 import New from "./pages/new";
 import { useScrollTop } from "./hooks/useScrollTop";
+import Profile from "./pages/profile";
 
 function App() {
   const appRoutes = [
@@ -28,6 +29,7 @@ function App() {
     "/profile",
     "/new",
     `/post/${useLocation().pathname.split("/")[2]}`,
+    `/profile/${useLocation().pathname.split("/")[2]}`,
   ];
   const [modalId, setModalId] = useState<keyof ModalID | null>(null);
   const checkRoute = (path: string) => {
@@ -43,6 +45,7 @@ function App() {
   const authedRoutes = [
     { path: "/home", element: <Home /> },
     { path: "/post/:id", element: <Post /> },
+    { path: "/profile/:id", element: <Profile /> },
     { path: "/latest", element: <Latest /> },
     { path: "/settings", element: <Settings /> },
     { path: "/new", element: <New /> },

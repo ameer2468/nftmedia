@@ -74,7 +74,7 @@ const New = () => {
           disabled={createLoading || !formCheck}
           onClick={() => submitNewPost(setInputValues)}
           className={`normal-case w-40 h-14 bg-sky-500 mt-3 ${
-            formCheck ? "" : "opacity-50 cursor-not-allowed"
+            formCheck ? "" : "bg-zinc-300 cursor-not-allowed"
           }`}
           text="Submit"
         />

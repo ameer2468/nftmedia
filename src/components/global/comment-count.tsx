@@ -9,8 +9,8 @@ interface props {
 const CommentCount = ({ count }: props) => {
   return (
     <div className="flex gap-2 items-center">
-      <FontAwesomeIcon icon={faComments} />
-      <p className="text-xl">{count}</p>
+      <FontAwesomeIcon className="text-[15px]" icon={faComments} />
+      <p className="text-[15px] font-normal">{count}</p>
     </div>
   );
 };

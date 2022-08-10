@@ -10,10 +10,10 @@ const VoteCount = ({ count }: props) => {
   return (
     <div className="flex gap-2 items-center">
       <div className="flex gap-1">
-        <FontAwesomeIcon icon={faArrowUp} />
-        <FontAwesomeIcon icon={faArrowDown} />
+        <FontAwesomeIcon className="text-[15px]" icon={faArrowUp} />
+        <FontAwesomeIcon className="text-[15px]" icon={faArrowDown} />
       </div>
-      <p className="text-xl">{count}</p>
+      <p className="text-[15px] font-normal">{count}</p>
     </div>
   );
 };

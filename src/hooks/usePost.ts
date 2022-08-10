@@ -19,7 +19,7 @@ export const usePost = (form: args) => {
       .from("threads")
       .insert({
         ...form,
-        posted_by: user?.wallet,
+        user: user?.id,
       })
       .then(() => {
         setCreateLoading(false);
