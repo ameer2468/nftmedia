@@ -3,7 +3,7 @@ import { Avatar } from "../global/avatar";
 
 const Comment = () => {
   return (
-    <div className="bg-white rounded-xl p-5">
+    <div className="bg-white rounded-xl p-5 border border-sky-100">
       <div className="flex justify-between items-center mb-5">
         <div className="flex items-center">
           <Avatar className="w-10" />

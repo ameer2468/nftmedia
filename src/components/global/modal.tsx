@@ -44,15 +44,15 @@ const Modal = ({
               <div
                 onClick={() => setModalId(null)}
                 className="absolute transition-all duration-200 rounded-full flex
-         justify-center items-center
+         justify-center items-center rounded-xl
          cursor-pointer right-[-10px] top-[-10px] bg-zinc-50 w-10 h-10
          hover:bg-sky-500 hover:text-white"
               >
                 <FontAwesomeIcon icon={faClose} />
               </div>
             )}
-            <div className="flex">
-              <div className="bg-zinc-100 w-[50%] flex items-center rounded-xl">
+            <div className="flex rounded">
+              <div className="bg-gradient-to-br to-sky-50 rounded-bl rounded-tl from-sky-200 w-[50%] flex items-center">
                 <Lottie
                   isClickToPauseDisabled={true}
                   options={lottie}
@@ -71,7 +71,7 @@ const Modal = ({
                     loading={loading}
                     disabled={loading}
                     onClick={onClick}
-                    className="bg-sky-500 h-14 w-full normal-case ml-auto mr-auto"
+                    className="bg-sky-500 h-14 w-full normal-case font-normal text-[14px] ml-auto mr-auto"
                     text="Confirm"
                   />
                 )}

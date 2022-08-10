@@ -8,7 +8,7 @@ const Settings = () => {
     <div className="w-full top-post pt-48 px-5  lg:pl-64 lg:pr-32 lg:pt-48">
       <h2 className="font-bold text-[30px] lg:text-[40px] mb-10">⚙ Settings</h2>
       <Card
-        subtitle="   You can only change your display name once every 30 days."
+        subtitle="You can only change your display name once every 30 days."
         title="Display Name"
       >
         <TextInput className="bg-zinc-100" placeholder="New display name" />

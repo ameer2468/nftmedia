@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import TextInput from "../components/global/textinput";
 import TextAreaInput from "../components/global/textarea";
 import Button from "../components/global/button";
@@ -7,14 +7,16 @@ import { useFormHook } from "../hooks/useFormHook";
 import { usePost } from "../hooks/usePost";
 
 const New = () => {
-  const [chosenEmoji, setChosenEmoji] = useState<{ emoji: string } | null>(
-    null
-  );
   const inputRef: any = useRef(0);
+  const [selectionValue, setSelectionValue] = useState(0);
   const form = {
     title: "",
     post: "",
   };
+  useEffect(() => {
+    setSelectionValue(inputRef.current.selectionStart);
+  }, [inputRef]);
+  console.log(selectionValue);
   const { inputValues, setInputValues, onChangeHandler } = useFormHook(form);
   const { submitNewPost, createLoading } = usePost(inputValues);
   const formCheck = inputValues.title.length > 0 && inputValues.post.length > 0;
@@ -25,15 +27,15 @@ const New = () => {
       for (let i = 0; i < inputValues.post.length; i++) {
         arr.push(inputValues.post[i]);
       }
-      arr.splice(selectionEnd, 0, chosenEmoji?.emoji);
+      arr.splice(selectionEnd, 0, emojiObject?.emoji);
       return arr.join("");
     };
-    setChosenEmoji(emojiObject);
     setInputValues({
       ...inputValues,
       post: postUpdate(),
     });
   };
+
   return (
     <div className="w-full h-auto top-post pt-48 px-5 lg:pl-64 lg:pr-32 lg:pt-48">
       <h2 className="font-bold text-black text-[30px] lg:text-[40px]">

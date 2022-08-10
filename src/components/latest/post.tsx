@@ -7,7 +7,7 @@ import VoteCount from "../global/vote-count";
 
 const Post = () => {
   return (
-    <div className="px-12 py-8 w-full bg-gradient-to-br to-zinc-50 from-sky-50 rounded-xl text-center">
+    <div className="px-12 py-8 w-full bg-gradient-to-br to-zinc-50 from-sky-50 rounded-xl border border-sky-100 text-center">
       <div className="font-bold flex justify-between w-full transition-all duration-200 justify-center gap-2">
         <h1 className="text-center text-[25px] font-bold lg:text-[30px]">
           Post
