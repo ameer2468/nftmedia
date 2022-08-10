@@ -1,18 +1,29 @@
 import React from "react";
 import ContentLoader from "react-content-loader";
 
-const Rectangle = (props: any) => (
+interface props {
+  height?: number;
+  width?: number;
+}
+
+const Rectangle = ({ height, width }: props) => (
   <ContentLoader
     speed={2}
-    width={700}
-    height={50}
+    width={width || 700}
+    height={height || 50}
     style={{ width: "100%" }}
-    viewBox="0 0 700 50"
+    viewBox={`0 0 ${width || "700"} ${height || "50"}`}
     backgroundColor="#DFDFDF"
     foregroundColor="#ecebeb"
-    {...props}
   >
-    <rect x="14" y="11" rx="1" ry="1" width="700" height="50" />
+    <rect
+      x="0"
+      y="0"
+      rx="1"
+      ry="1"
+      width={`${width || "700"}`}
+      height={height || "50"}
+    />
   </ContentLoader>
 );
 

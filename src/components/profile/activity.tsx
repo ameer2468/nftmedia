@@ -14,10 +14,10 @@ const Activity = ({ comments, user, loading }: props) => {
     <div className="flex gap-2 flex-col">
       {loading ? (
         <div className="w-full">
-          <Rectangle />
-          <Rectangle />
-          <Rectangle />
-          <Rectangle />
+          <Rectangle width={1000} height={60} />
+          <Rectangle width={1000} height={60} />
+          <Rectangle width={1000} height={60} />
+          <Rectangle width={1000} height={60} />
         </div>
       ) : (
         ""
