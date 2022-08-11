@@ -49,7 +49,7 @@ const Topbar = () => {
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
-                className="absolute bg-black text-white text-sm text-justify rounded w-36 h-auto p-2 top-[60px]"
+                className="absolute bg-black text-white text-sm text-justify rounded w-36 h-auto p-3 top-[60px]"
               >
                 <ul className="flex flex-col gap-1.5">
                   <li

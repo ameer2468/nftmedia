@@ -23,7 +23,7 @@ const Profile = () => {
             comments={comments}
           />
         </Box>
-        <Box className="w-full" title="Posts">
+        <Box className="w-full" title="Threads">
           <UserPosts />
         </Box>
       </div>

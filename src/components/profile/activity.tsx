@@ -10,15 +10,17 @@ interface props {
 }
 
 const Activity = ({ comments, user, loading }: props) => {
+  const skeleton = () => {
+    let arr = [];
+    for (let i = 0; i < 6; i++) {
+      arr.push(<Rectangle width={1000} height={60} />);
+    }
+    return arr;
+  };
   return (
     <div className="flex gap-2 flex-col">
       {loading ? (
-        <div className="w-full">
-          <Rectangle width={1000} height={60} />
-          <Rectangle width={1000} height={60} />
-          <Rectangle width={1000} height={60} />
-          <Rectangle width={1000} height={60} />
-        </div>
+        <div className="w-full flex flex-col gap-2">{skeleton()}</div>
       ) : (
         ""
       )}
