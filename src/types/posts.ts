@@ -1,4 +1,4 @@
-export interface profileComment {
+export interface IProfileComment {
   thread_title: string;
   thread_id: number;
   id: number;

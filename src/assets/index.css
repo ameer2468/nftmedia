@@ -40,6 +40,14 @@ html {
     right: 200px;
     background: url("../assets/arrow.png") no-repeat;
 }
+
+.absoluteCenter {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
 .login-bg {
     background-image: url("../assets/loginbg.png");
     background-repeat: no-repeat;

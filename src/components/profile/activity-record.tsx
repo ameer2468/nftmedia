@@ -1,12 +1,12 @@
 import React from "react";
+import { IProfileComment } from "../../types/posts";
 
 interface props {
   user: string | undefined;
-  post?: string;
-  comment: any;
+  comment: IProfileComment;
 }
 
-const ActivityRecord = ({ user, post, comment }: props) => {
+const ActivityRecord = ({ user, comment }: props) => {
   return (
     <div className="w-full bg-white p-5 rounded-xl">
       <p className="text-sm font-normal text-center">
