@@ -6,7 +6,7 @@ import UserPosts from "../components/profile/user-posts";
 import Activity from "../components/profile/activity";
 
 const Profile = () => {
-  const { profile, userId, loading, comments } = useProfile();
+  const { profile, userId, loading, comments, threads } = useProfile();
   return (
     <div className="w-full top-post pt-48 px-5 lg:pl-64 lg:pr-32 lg:pt-48">
       <h2 className="font-bold text-black text-[30px] lg:text-[40px] mb-10">
@@ -24,7 +24,7 @@ const Profile = () => {
           />
         </Box>
         <Box className="w-full" title="Threads">
-          <UserPosts />
+          <UserPosts loading={loading} data={threads} />
         </Box>
       </div>
     </div>

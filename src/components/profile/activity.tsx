@@ -13,7 +13,7 @@ const Activity = ({ comments, user, loading }: props) => {
   const skeleton = () => {
     let arr = [];
     for (let i = 0; i < 6; i++) {
-      arr.push(<Rectangle width={1000} height={60} />);
+      arr.push(<Rectangle key={i} width={"100%"} height={65} />);
     }
     return arr;
   };

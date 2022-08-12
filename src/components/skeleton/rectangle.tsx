@@ -2,15 +2,15 @@ import React from "react";
 import ContentLoader from "react-content-loader";
 
 interface props {
-  height?: number;
-  width?: number;
+  height?: number | string;
+  width?: number | string;
 }
 
 const Rectangle = ({ height, width }: props) => (
   <ContentLoader
     speed={2}
-    width={width || 700}
-    height={height || 50}
+    width={width || "700"}
+    height={height || "50"}
     style={{ width: "100%" }}
     viewBox={`0 0 ${width || "700"} ${height || "50"}`}
     backgroundColor="#DFDFDF"

@@ -21,7 +21,7 @@ const User = ({ profile, params, loading }: props) => {
   const skeleton = () => {
     let arr = [];
     for (let i = 0; i < 4; i++) {
-      arr.push(<Rectangle height={50} key={i} />);
+      arr.push(<Rectangle width={"100%"} height={100} key={i} />);
     }
     return arr;
   };
@@ -38,26 +38,24 @@ const User = ({ profile, params, loading }: props) => {
         <Avatar className="w-32 m-auto" />
       )}
       <p className="text-center text-[18px] mt-2">{profile?.display_name}</p>
-      <div className="mt-7 flex-row flex-wrap flex gap-3">
-        {loadingCheck ? (
-          skeleton()
-        ) : (
-          <>
-            <UserStat title="Posts" stat={profile?.postCount} />
-            <UserStat title="Followers" stat={profile?.followCount} />
-            <UserStat
-              title="Join date"
-              stat={moment(profile?.created_at).format("LL")}
-            />
-            <div className="text-center bg-white w-full py-3 px-5 rounded-xl flex justify-between items-center">
-              <p className="text-sm font-normal truncate w-[200px] lg:w-[350px]">
-                Wallet: {`${profile?.wallet || ""}`}
-              </p>
-              <CopyButton textToCopy={profile?.wallet} />
-            </div>
-          </>
-        )}
-      </div>
+      {loading ? (
+        <div className="flex flex-col h-60 gap-3 mt-5">{skeleton()}</div>
+      ) : (
+        <div className="mt-7 flex-row flex-wrap flex gap-3">
+          <UserStat title="Posts" stat={profile?.postCount} />
+          <UserStat title="Followers" stat={profile?.followCount} />
+          <UserStat
+            title="Join date"
+            stat={moment(profile?.created_at).format("LL")}
+          />
+          <div className="text-center bg-white w-full py-3 px-5 rounded-xl flex justify-between items-center">
+            <p className="text-sm font-normal truncate w-[200px] lg:w-[350px]">
+              Wallet: {`${profile?.wallet || ""}`}
+            </p>
+            <CopyButton textToCopy={profile?.wallet} />
+          </div>
+        </div>
+      )}
       {user?.id === Number(params) ? (
         ""
       ) : (

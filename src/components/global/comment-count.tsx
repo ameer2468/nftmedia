@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faComments } from "@fortawesome/free-solid-svg-icons";
 
 interface props {
-  count: string;
+  count: string | number;
 }
 
 const CommentCount = ({ count }: props) => {
