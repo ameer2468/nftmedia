@@ -9,10 +9,15 @@ export const useFormHook = (form: { [key: string]: string }) => {
     return setInputValues({ ...inputValues, [e.target.name]: e.target.value });
   };
 
+  const resetForm = () => {
+    setInputValues(form);
+  };
+
   return {
     onChangeHandler,
     form,
     inputValues,
     setInputValues,
+    resetForm,
   };
 };

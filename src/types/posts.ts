@@ -14,3 +14,27 @@ export interface IThreadProfile {
   vote_count: number;
   user: string;
 }
+
+export interface IPostComment {
+  id: number;
+  created_at: string;
+  thread_id: number;
+  comment_id: number;
+  thread_title: string;
+  display_name: string;
+  user_id: string;
+  comment: string;
+}
+
+export interface IThread {
+  id: number;
+  created_at: string;
+  display_name: string;
+  comments?: IPostComment[];
+  post: string;
+  title: string;
+  view_count: number;
+  comment_count: number;
+  vote_count: number;
+  user_id: string;
+}

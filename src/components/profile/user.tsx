@@ -29,7 +29,9 @@ const User = ({ profile, params, loading }: props) => {
     <div>
       {loadingCheck ? (
         <div className="w-full flex justify-center items-center flex-col">
-          <Circle />
+          <div>
+            <Circle />
+          </div>
           <div className="w-[200px]">
             <Rectangle />
           </div>

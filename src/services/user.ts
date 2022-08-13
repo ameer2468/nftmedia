@@ -1,12 +1,7 @@
-import axios from "axios";
+import { getRequest } from "./requestTypes";
 
 const api = process.env.REACT_APP_API_URL;
 
 export const fetchUserProfile = async (userId: string) => {
-  const response = await axios.get(`${api}/profile`, {
-    params: {
-      userId,
-    },
-  });
-  return response.data;
+  return await getRequest(`${api}/profile`, { userId });
 };

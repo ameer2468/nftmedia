@@ -22,7 +22,7 @@ const Post = ({ post }: props) => {
         <ViewCount count={post.view_count} />
         <VoteCount count={post.vote_count} />
       </div>
-      <Link to={"/post/10"}>
+      <Link to={`/post/${post.id}`}>
         <Button
           className="bg-black normal-case hover:bg-zinc-700 m-auto text-sm"
           text="Read More"

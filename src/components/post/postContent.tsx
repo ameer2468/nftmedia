@@ -3,42 +3,76 @@ import ViewCount from "../global/view-count";
 import CommentCount from "../global/comment-count";
 import VoteCount from "../global/vote-count";
 import { Avatar } from "../global/avatar";
+import moment from "moment";
+import { IThread } from "../../types/posts";
+import Rectangle from "../skeleton/rectangle";
 
-const PostContent = () => {
+interface props {
+  post: IThread | null;
+  loading: boolean;
+}
+
+const PostContent = ({ post, loading }: props) => {
+  const skeleton = () => {
+    return (
+      <div>
+        <div className="flex justify-between">
+          <div>
+            <Rectangle width={250} height={30} />
+          </div>
+          <div className="flex gap-10">
+            <Rectangle width={30} height={30} />
+            <Rectangle width={30} height={30} />
+            <Rectangle width={30} height={30} />
+          </div>
+        </div>
+        <div className="flex flex-col gap-5 ml-auto w-full mt-10">
+          <div className="flex justify-between">
+            <div className="flex w-[200px]">
+              <Rectangle width={200} height={30} />
+            </div>
+            <div className="w-[200px]">
+              <Rectangle width={200} height={30} />
+            </div>
+          </div>
+          <div className="flex justify-start w-[400px]">
+            <Rectangle width={400} height={30} />
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className="bg-gradient-to-br to-zinc-50 from-sky-50 rounded-xl p-10 border border-white">
-      <div>
-        <h2 className="font-bold text-[30px] lg:text-[40px]">
-          Bitcoin price drop
-        </h2>
-        <div className="flex gap-10 mb-8 mt-2">
-          <CommentCount count="12" />
-          <ViewCount count="25" />
-          <VoteCount count="18" />
-        </div>
-      </div>
-      <div className="flex items-center gap-2 mb-5">
-        <p className="font-bold">By:</p>
-        <div className="flex items-center justify-between w-full">
-          <div className="flex items-center">
-            <Avatar className="w-10" />
-            <p className="font-bold text-sky-500">John Doe</p>
+      {loading ? (
+        skeleton()
+      ) : (
+        <>
+          <div className="flex justify-between items-center mb-5">
+            <h2 className="font-bold text-[30px] lg:text-[40px]">
+              {post?.title}
+            </h2>
+            <div className="flex gap-10">
+              <CommentCount count={post?.comment_count} />
+              <ViewCount count={post?.view_count} />
+              <VoteCount count={post?.vote_count} />
+            </div>
           </div>
-          <p className="ml-5 font-bold text-sm opacity-50">Today at 5:43PM</p>
-        </div>
-      </div>
-      <p className="leading-6">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam animi,
-        aut consequatur, delectus deserunt doloremque doloribus eaque eligendi
-        facilis labore laudantium libero nesciunt, numquam optio quam sed sunt
-        tenetur voluptatibus? Lorem ipsum dolor sit amet, consectetur
-        adipisicing elit. Accusantium aliquam aliquid amet, aut beatae dicta est
-        facilis harum ipsa labore nemo nihil quam quia quisquam recusandae saepe
-        velit voluptas voluptatum? Lorem ipsum dolor sit amet, consectetur
-        adipisicing elit. Ipsa laboriosam magnam quam saepe unde? Consequuntur
-        cum, dolor ea excepturi iusto nihil repellat tenetur unde. Animi
-        dignissimos nisi nulla quae rerum.
-      </p>
+          <div className="flex items-center gap-2 mb-5">
+            <div className="flex items-center justify-between w-full">
+              <div className="flex items-center">
+                <Avatar className="w-10" />
+                <p className="font-bold text-sky-500">{post?.display_name}</p>
+              </div>
+              <p className="ml-5 font-bold text-sm opacity-50">
+                Posted at {moment(post?.created_at).format("LLL")}
+              </p>
+            </div>
+          </div>
+          <p className="leading-6">{post?.post}</p>
+        </>
+      )}
     </div>
   );
 };

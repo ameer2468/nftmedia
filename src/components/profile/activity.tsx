@@ -2,6 +2,7 @@ import React from "react";
 import ActivityRecord from "./activity-record";
 import Rectangle from "../skeleton/rectangle";
 import { IProfileComments } from "../../types/user";
+import { Scrollbars } from "react-custom-scrollbars-2";
 
 interface props {
   comments: IProfileComments | undefined;
@@ -18,21 +19,23 @@ const Activity = ({ comments, user, loading }: props) => {
     return arr;
   };
   return (
-    <div className="flex gap-2 flex-col">
-      {loading ? (
-        <div className="w-full flex flex-col gap-2">{skeleton()}</div>
-      ) : comments?.length === 0 ? (
-        <div className="absoluteCenter">
-          <p className="font-normal text-[18px] w-full">No Activity</p>
-        </div>
-      ) : (
-        comments?.map((comment) => {
-          return (
-            <ActivityRecord key={comment.id} user={user} comment={comment} />
-          );
-        })
-      )}
-    </div>
+    <Scrollbars style={{ width: "100%", height: "90%" }}>
+      <div className="flex gap-2 flex-col">
+        {loading ? (
+          <div className="w-full flex flex-col gap-2">{skeleton()}</div>
+        ) : comments?.length === 0 ? (
+          <div className="absoluteCenter">
+            <p className="font-normal text-[18px] w-full">No Activity</p>
+          </div>
+        ) : (
+          comments?.map((comment) => {
+            return (
+              <ActivityRecord key={comment.id} user={user} comment={comment} />
+            );
+          })
+        )}
+      </div>
+    </Scrollbars>
   );
 };
 
