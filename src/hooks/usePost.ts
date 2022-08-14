@@ -146,20 +146,17 @@ export const useFetchPost = () => {
   const [loading, setLoading] = useState(true);
   const postId = useParams().id;
   const fetchPost = useCallback(async () => {
-    await supabase
-      .from("threads")
-      .select("*")
-      .eq("id", postId)
-      .then(async (thread: any) => {
-        await supabase
-          .from("comments")
-          .select("*")
-          .eq("thread_id", postId)
-          .then((res: any) => {
-            setPost({ ...thread.data[0], comments: res.data });
-          });
-        setLoading(false);
+    await Promise.all([
+      supabase.from("threads").select("*").eq("id", postId),
+      supabase.from("comments").select("*").eq("thread_id", postId),
+    ]).then(([thread, comments]: any) => {
+      setPost({
+        ...thread.data[0],
+        comments: comments.data,
       });
+      setLoading(false);
+    });
+    setLoading(false);
   }, [postId]);
   useEffect(() => {
     if (loading) {

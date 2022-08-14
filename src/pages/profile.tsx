@@ -12,7 +12,7 @@ const Profile = () => {
       <h2 className="font-bold text-black text-[30px] lg:text-[40px] mb-10">
         Profile
       </h2>
-      <div className="flex flex-wrap gap-5 justify-between">
+      <div className="flex flex-wrap gap-5 py-10 justify-between">
         <Box className="flex-auto lg:w-[100%] xl:w-[40%]" title="User">
           <User loading={loading} params={userId} profile={profile?.user} />
         </Box>

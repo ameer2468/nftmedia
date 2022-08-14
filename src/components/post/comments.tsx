@@ -93,7 +93,7 @@ const Comments = ({ comments, loading, post, setPost }: props) => {
           ) : null}
         </AnimatePresence>
       </div>
-      <Scrollbars style={{ width: "100%", height: "800px", marginTop: "20px" }}>
+      <Scrollbars style={{ width: "100%", height: "500px", marginTop: "20px" }}>
         <div className="mt-5 flex flex-col gap-5">
           {loading
             ? ""

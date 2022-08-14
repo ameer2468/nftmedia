@@ -10,7 +10,7 @@ const RecentPosts = () => {
     return arr;
   };
   return (
-    <div className="mt-24">
+    <div className="mt-24 py-10">
       <h2 className="font-bold text-[30px] lg:text-[40px] mb-10">
         📰 Recent Posts
       </h2>
