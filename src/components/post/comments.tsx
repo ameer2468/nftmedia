@@ -21,21 +21,27 @@ const Comments = ({ comments, loading, post, setPost }: props) => {
   const [show, setShow] = useState(false);
   const inputObj = {
     comment: "",
+    editedComment: "",
   };
   const { user } = useContext(UserContext);
   const { onChangeHandler, inputValues, resetForm } = useFormHook(inputObj);
-  const { comment } = inputValues;
-  const { newCommentHandler, commentLoading, deleteCommentHandler } = usePost();
+  const { comment, editedComment } = inputValues;
+  const {
+    newCommentHandler,
+    commentLoading,
+    deleteCommentHandler,
+    editCommentHandler,
+  } = usePost();
   const submitComment = () => {
-    newCommentHandler(
-      comment,
-      post?.id,
-      post?.title,
-      user?.display_name,
-      user?.id,
-      post,
-      setPost
-    ).then(() => {
+    newCommentHandler({
+      input: comment,
+      thread_id: post?.id,
+      thread_title: post?.title,
+      display_name: user?.display_name,
+      user_id: user?.id,
+      post: post,
+      setPost: setPost,
+    }).then(() => {
       resetForm();
     });
   };
@@ -91,14 +97,28 @@ const Comments = ({ comments, loading, post, setPost }: props) => {
         <div className="mt-5 flex flex-col gap-5">
           {loading
             ? ""
-            : comments?.map((comment) => {
+            : comments?.map((commentPost) => {
                 return (
                   <Comment
+                    onChange={(e) => {
+                      onChangeHandler(e);
+                    }}
+                    resetForm={resetForm}
+                    editCommentHandler={(commentId: number) => {
+                      editCommentHandler(
+                        commentId,
+                        editedComment,
+                        post,
+                        setPost
+                      );
+                    }}
+                    commentLoading={commentLoading}
+                    editedComment={editedComment}
                     deleteComment={(commentId: number) => {
                       deleteCommentHandler(commentId, post, setPost);
                     }}
-                    key={comment.id}
-                    comment={comment}
+                    key={commentPost.id}
+                    comment={commentPost}
                   />
                 );
               })}

@@ -22,7 +22,7 @@ export interface IPostComment {
   comment_id: number;
   thread_title: string;
   display_name: string;
-  user_id: string;
+  user_id: number;
   comment: string;
 }
 

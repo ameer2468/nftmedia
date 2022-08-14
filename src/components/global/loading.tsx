@@ -3,10 +3,11 @@ import { BarLoader } from "react-spinners";
 
 interface props {
   color: string;
+  width?: number | string;
 }
 
-const Loading = ({ color }: props) => {
-  return <BarLoader color={color} />;
+const Loading = ({ color, width }: props) => {
+  return <BarLoader width={width} color={color} />;
 };
 
 export default Loading;

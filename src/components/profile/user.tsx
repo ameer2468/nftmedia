@@ -54,7 +54,7 @@ const User = ({ profile, params, loading }: props) => {
               stat={moment(profile?.created_at).format("LL")}
             />
             <div className="text-center bg-white w-full py-3 px-5 rounded-xl flex justify-between items-center">
-              <p className="text-sm font-normal truncate w-[200px] lg:w-[350px]">
+              <p className="text-sm font-normal truncate w-[200px] lg:w-[350px] xl:w-full">
                 Wallet: {`${profile?.wallet || ""}`}
               </p>
               <CopyButton textToCopy={profile?.wallet} />

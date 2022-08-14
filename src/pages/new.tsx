@@ -16,7 +16,6 @@ const New = () => {
   useEffect(() => {
     setSelectionValue(inputRef.current.selectionStart);
   }, [inputRef]);
-  console.log(selectionValue);
   const { inputValues, setInputValues, onChangeHandler } = useFormHook(form);
   const { submitNewPost, createLoading } = usePost(inputValues);
   const formCheck = inputValues.title.length > 0 && inputValues.post.length > 0;

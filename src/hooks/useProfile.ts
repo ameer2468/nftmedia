@@ -5,11 +5,11 @@ import { fetchUserProfile } from "../services/user";
 
 export const useProfile = () => {
   const [loading, setLoading] = useState(true);
-  const userId = useParams().id;
+  const userId = useParams().id as string;
   const [profile, setProfile] = useState<IUserProfile | null>(null);
   useEffect(() => {
     if (loading) {
-      fetchUserProfile(userId as string).then((data) => {
+      fetchUserProfile(userId).then((data) => {
         setProfile(data);
         setLoading(false);
       });

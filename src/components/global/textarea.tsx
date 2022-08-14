@@ -2,7 +2,7 @@ import React, { RefObject } from "react";
 
 interface props {
   placeholder: string;
-  onChange?: (e?: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
   className?: string;
   type?: string;
   minLength?: number;

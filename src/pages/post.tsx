@@ -9,10 +9,10 @@ const Post = () => {
   const skeleton = () => {
     return (
       <div className="flex flex-col gap-5">
-        <Rectangle width={1000} height={70} />
-        <Rectangle width={1000} height={70} />
-        <Rectangle width={1000} height={70} />
-        <Rectangle width={1000} height={70} />
+        <Rectangle width={1500} height={70} />
+        <Rectangle width={1500} height={70} />
+        <Rectangle width={1500} height={70} />
+        <Rectangle width={1500} height={70} />
       </div>
     );
   };

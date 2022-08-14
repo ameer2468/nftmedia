@@ -45,26 +45,59 @@ export const usePost = (form?: args) => {
       .match({ id: commentId })
       .then(() => {
         setCommentLoading(false);
-        if (post) {
+        if (post)
           setPost({
             ...post,
             comments: post.comments?.filter(
               (comment) => comment.id !== commentId
             ),
           });
+      });
+  };
+
+  const editCommentHandler = async (
+    commentId: number,
+    editedComment: string,
+    post: IThread | null,
+    setPost: Dispatch<IThread>
+  ) => {
+    setCommentLoading(true);
+    await supabase
+      .from("comments")
+      .update({ comment: editedComment })
+      .eq("id", commentId)
+      .then((res: any) => {
+        const updatedComment = res.data[0];
+        setCommentLoading(false);
+        const updateComment = post?.comments?.map((comment) => {
+          if (comment.id === updatedComment.id) {
+            return updatedComment;
+          }
+          return comment;
+        });
+        if (post) {
+          setPost({ ...post, comments: updateComment });
         }
       });
   };
 
-  const newCommentHandler = async (
-    input: string,
-    thread_id: number | undefined,
-    thread_title: string | undefined,
-    display_name: string | undefined,
-    user_id: number | undefined,
-    post: IThread | null,
-    setPost: Dispatch<IThread>
-  ) => {
+  const newCommentHandler = async ({
+    input,
+    thread_id,
+    thread_title,
+    display_name,
+    user_id,
+    post,
+    setPost,
+  }: {
+    input: string;
+    thread_id: number | undefined;
+    thread_title: string | undefined;
+    display_name: string | undefined;
+    user_id: number | undefined;
+    post: IThread | null;
+    setPost: Dispatch<IThread>;
+  }) => {
     setCommentLoading(true);
     await supabase
       .from("comments")
@@ -75,7 +108,8 @@ export const usePost = (form?: args) => {
         display_name: display_name,
         user_id: user_id,
       })
-      .then(() => {
+      .then((res: any) => {
+        const newComment = res.data[0];
         setCommentLoading(false);
         if (post) {
           setPost({
@@ -83,6 +117,7 @@ export const usePost = (form?: args) => {
             comments: [
               ...(post.comments as any),
               {
+                id: newComment.id,
                 thread_id: thread_id,
                 thread_title: thread_title,
                 comment: input,
@@ -100,6 +135,7 @@ export const usePost = (form?: args) => {
     submitNewPost,
     commentLoading,
     createLoading,
+    editCommentHandler,
     newCommentHandler,
     deleteCommentHandler,
   };

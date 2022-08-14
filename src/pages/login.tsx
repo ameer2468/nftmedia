@@ -2,7 +2,6 @@ import React from "react";
 import Button from "../components/global/button";
 import metamask from "../assets/metamask.png";
 import { useLogin } from "../hooks/useLogin";
-import videobg from "../assets/videobg.mp4";
 import { motion } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDiscord } from "@fortawesome/free-brands-svg-icons";
@@ -21,16 +20,6 @@ const Login = () => {
   };
   return (
     <div className="relative z-[100] w-full h-screen bg-black">
-      {/*<div className="w-[40%] bg-white leading-none relative h-screen hidden lg:block overflow-hidden">*/}
-      {/*  <video*/}
-      {/*    className="outline-0 border-0 leading-none"*/}
-      {/*    width={"100%"}*/}
-      {/*    src={videobg}*/}
-      {/*    autoPlay*/}
-      {/*    loop*/}
-      {/*    muted*/}
-      {/*  />*/}
-      {/*</div>*/}
       <div className="flex login-bg flex-col justify-center items-center w-full h-screen lg:w-[100%]">
         <motion.div
           initial={{ opacity: 0, y: -5 }}
