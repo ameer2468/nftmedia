@@ -6,13 +6,17 @@ import { Avatar } from "../global/avatar";
 import moment from "moment";
 import { IThread } from "../../types/posts";
 import Rectangle from "../skeleton/rectangle";
+import Button from "../global/button";
+import { faArrowDown, faArrowUp } from "@fortawesome/free-solid-svg-icons";
 
 interface props {
   post: IThread | null;
   loading: boolean;
+  vote: (dir: "up" | "down") => void;
+  userVoted: number | null;
 }
 
-const PostContent = ({ post, loading }: props) => {
+const PostContent = ({ post, loading, vote, userVoted }: props) => {
   const skeleton = () => {
     return (
       <div>
@@ -49,7 +53,21 @@ const PostContent = ({ post, loading }: props) => {
         skeleton()
       ) : (
         <>
-          <div className="flex justify-between items-center mb-5">
+          <div className="flex justify-between items-center mb-5 relative">
+            <div className="flex gap-4 flex-col absolute left-[-60px] top-[35px]">
+              <Button
+                onClick={() => vote("up")}
+                icon={faArrowUp}
+                className={`px-[2px] w-[35px] bg-sky-500 rounded-lg normal-case text-sm h-[40px]
+                ${userVoted === 1 ? "bg-green-400" : ""}`}
+              />
+              <Button
+                onClick={() => vote("down")}
+                icon={faArrowDown}
+                className={`px-[2px] w-[35px] bg-sky-500 rounded-lg normal-case text-sm h-[40px]
+                ${userVoted === -1 ? "bg-green-400" : ""}`}
+              />
+            </div>
             <h2 className="font-bold text-[30px] lg:text-[40px]">
               {post?.title}
             </h2>
@@ -61,13 +79,15 @@ const PostContent = ({ post, loading }: props) => {
           </div>
           <div className="flex items-center gap-2 mb-5">
             <div className="flex items-center justify-between w-full">
-              <div className="flex items-center">
+              <div className="flex items-center transition-all duration-200 hover:opacity-50 cursor-pointer">
                 <Avatar className="w-10" />
                 <p className="font-bold text-sky-500">{post?.display_name}</p>
               </div>
-              <p className="ml-5 font-bold text-sm opacity-50">
-                Posted at {moment(post?.created_at).format("LLL")}
-              </p>
+              <div className="flex flex-col gap-4">
+                <p className="ml-5 font-bold text-sm opacity-50">
+                  Posted at {moment(post?.created_at).format("LLL")}
+                </p>
+              </div>
             </div>
           </div>
           <p className="leading-6">{post?.post}</p>

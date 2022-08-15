@@ -1,3 +1,5 @@
+import { Dispatch } from "react";
+
 export interface IProfileComment {
   thread_title: string;
   thread_id: number;
@@ -24,6 +26,32 @@ export interface IPostComment {
   display_name: string;
   user_id: number;
   comment: string;
+}
+
+export interface IUpvotePost {
+  post: IThread;
+  setPost: Dispatch<IThread>;
+  dir: "up" | "down";
+  userVote: number | null;
+  setUserVoted: Dispatch<number>;
+}
+
+export interface IVote {
+  id: number;
+  created_at: string;
+  thread_id: number;
+  user_id: number;
+  dir: number;
+}
+
+export interface INewComment {
+  input: string;
+  thread_id: number | undefined;
+  thread_title: string | undefined;
+  display_name: string | undefined;
+  user_id: number | undefined;
+  post: IThread | null;
+  setPost: Dispatch<IThread>;
 }
 
 export interface IThread {

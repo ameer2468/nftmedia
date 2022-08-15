@@ -4,7 +4,7 @@ import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import Loading from "./loading";
 
 interface props {
-  text: string;
+  text?: string;
   className?: string;
   image?: string;
   icon?: IconProp;
@@ -36,7 +36,7 @@ const Button = ({
         <>
           {icon && <FontAwesomeIcon icon={icon} />}
           {image && <img className="w-10" src={image} alt="icon" />}
-          {text}
+          {text || ""}
         </>
       )}
     </button>

@@ -9,7 +9,7 @@ const Profile = () => {
   const { profile, loading, userId } = useProfile();
   return (
     <div className="w-full top-post pt-48 px-5 lg:pl-64 lg:pr-32 lg:pt-48">
-      <h2 className="font-bold text-black text-[30px] lg:text-[40px] mb-10">
+      <h2 className="font-bold text-black text-[30px] lg:text-[40px]">
         Profile
       </h2>
       <div className="flex flex-wrap gap-5 py-10 justify-between">

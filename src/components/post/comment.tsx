@@ -41,7 +41,7 @@ const Comment = ({
     <div className="bg-white rounded-xl p-5 border border-sky-100">
       <div className="flex justify-between items-center mb-5">
         <NavLink to={`/profile/${comment.user_id}`}>
-          <div className="flex items-center">
+          <div className="flex items-center transition-all duration-200 hover:opacity-50 cursor-pointer">
             <Avatar className="w-10" />
             <p className="font-bold text-sky-500">{comment.display_name}</p>
           </div>
