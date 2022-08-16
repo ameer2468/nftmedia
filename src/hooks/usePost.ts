@@ -4,6 +4,7 @@ import { useContext } from "react";
 import { UserContext } from "../context/UserContext";
 import { useParams } from "react-router-dom";
 import { INewComment, IThread, IUpvotePost } from "../types/posts";
+import { fetchPostService } from "../services/post";
 
 interface args {
   title: string;
@@ -244,35 +245,28 @@ export const useFetchPost = () => {
   const { user } = useContext(UserContext);
   const postId = useParams().id;
   const fetchPost = useCallback(async () => {
-    await Promise.all([
-      supabase.from("threads").select("*").eq("id", postId),
-      supabase.from("comments").select("*").eq("thread_id", postId),
-      supabase
-        .from("votes")
-        .select("*")
-        .eq("thread_id", postId)
-        .eq("user_id", user?.id),
-      supabase.from("votes").select("*").eq("thread_id", postId),
-    ]).then(([thread, comments, vote, addVotes]: any) => {
-      const countVotes = addVotes.data.reduce(
-        (acc: any, vote: { dir: any }) => {
-          return acc + vote.dir;
-        },
-        0
-      );
-      if (vote.data.length > 0) {
-        setUserVoted(vote.data[0].dir);
-      } else {
-        setUserVoted(null);
-      }
-      setPost({
-        ...thread.data[0],
-        vote_count: countVotes,
-        comments: comments.data,
-      });
-      setLoading(false);
+    await fetchPostService(Number(user?.id), postId).then((data: any) => {
+      console.log(data);
     });
-    setLoading(false);
+    //   const countVotes = addVotes.data.reduce(
+    //     (acc: any, vote: { dir: any }) => {
+    //       return acc + vote.dir;
+    //     },
+    //     0
+    //   );
+    //   if (vote.data.length > 0) {
+    //     setUserVoted(vote.data[0].dir);
+    //   } else {
+    //     setUserVoted(null);
+    //   }
+    //   setPost({
+    //     ...thread.data[0],
+    //     vote_count: countVotes,
+    //     comments: comments.data,
+    //   });
+    //   setLoading(false);
+    // });
+    // setLoading(false);
   }, [postId, user?.id]);
   useEffect(() => {
     if (loading) {
