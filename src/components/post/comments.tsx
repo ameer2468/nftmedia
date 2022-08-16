@@ -29,14 +29,15 @@ const Comments = ({ comments, loading, post, setPost }: props) => {
   const {
     newCommentHandler,
     commentLoading,
+    createCommentLoading,
     deleteCommentHandler,
     editCommentHandler,
   } = usePost();
   const submitComment = () => {
     newCommentHandler({
       input: comment,
-      thread_id: post?.id,
-      thread_title: post?.title,
+      thread_id: post?.thread.id,
+      thread_title: post?.thread.title,
       display_name: user?.display_name,
       user_id: user?.id,
       post: post,
@@ -81,9 +82,9 @@ const Comments = ({ comments, loading, post, setPost }: props) => {
               />
               <Button
                 onClick={submitComment}
-                disabled={comment.length === 0 || commentLoading}
+                disabled={comment.length === 0 || createCommentLoading}
                 className={`bg-sky-500 normal-case w-32 h-14 ${
-                  comment.length === 0 || commentLoading
+                  comment.length === 0 || createCommentLoading
                     ? "bg-zinc-300 cursor-not-allowed"
                     : ""
                 }`}
@@ -93,7 +94,7 @@ const Comments = ({ comments, loading, post, setPost }: props) => {
           ) : null}
         </AnimatePresence>
       </div>
-      <Scrollbars style={{ width: "100%", height: "500px", marginTop: "20px" }}>
+      <Scrollbars style={{ width: "100%", height: "700px", marginTop: "20px" }}>
         <div className="mt-5 flex flex-col gap-5">
           {loading
             ? ""
@@ -113,6 +114,7 @@ const Comments = ({ comments, loading, post, setPost }: props) => {
                       );
                     }}
                     commentLoading={commentLoading}
+                    createCommentLoading={createCommentLoading}
                     editedComment={editedComment}
                     deleteComment={(commentId: number) => {
                       deleteCommentHandler(commentId, post, setPost);

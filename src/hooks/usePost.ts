@@ -13,8 +13,10 @@ interface args {
 
 export const usePost = (form?: args) => {
   const { user } = useContext(UserContext);
+  const [voteLoading, setVoteLoading] = useState(false);
   const [createLoading, setCreateLoading] = useState(false);
   const [commentLoading, setCommentLoading] = useState(false);
+  const [createCommentLoading, setCreateCommentLoading] = useState(false);
   const submitNewPost = async (
     clearInput: Dispatch<{ title: string; post: string }>
   ) => {
@@ -39,13 +41,11 @@ export const usePost = (form?: args) => {
     post: IThread | null,
     setPost: Dispatch<IThread>
   ) => {
-    setCommentLoading(true);
     await supabase
       .from("comments")
       .delete()
       .match({ id: commentId })
       .then(() => {
-        setCommentLoading(false);
         if (post)
           setPost({
             ...post,
@@ -82,23 +82,27 @@ export const usePost = (form?: args) => {
       });
   };
 
-  const voteUpdate = (post: IThread, dir: string, userVote: number | null) => {
-    if (post.vote_count === 0 && dir === "up") {
-      return post.vote_count + 1;
-    } else if (post.vote_count === 0 && dir === "down") {
-      return post.vote_count - 1;
-    } else if (post.vote_count === 1 && dir === "down") {
-      return post.vote_count - 2;
-    } else if (post.vote_count === -1 && dir === "up") {
-      return post.vote_count + 2;
+  const voteUpdate = (
+    post: IThread,
+    dir: string,
+    userVote: number | null | undefined
+  ) => {
+    if (post.thread.vote_count === 0 && dir === "up") {
+      return post.thread.vote_count + 1;
+    } else if (post.thread.vote_count === 0 && dir === "down") {
+      return post.thread.vote_count - 1;
+    } else if (post.thread.vote_count === 1 && dir === "down") {
+      return post.thread.vote_count - 2;
+    } else if (post.thread.vote_count === -1 && dir === "up") {
+      return post.thread.vote_count + 2;
     } else if (userVote === 1 && dir === "up") {
-      return post.vote_count - 1;
+      return post.thread.vote_count - 1;
     } else if (userVote === -1 && dir === "down") {
-      return post.vote_count + 1;
+      return post.thread.vote_count + 1;
     } else if (dir === "up") {
-      return post.vote_count + 1;
+      return post.thread.vote_count + 1;
     } else {
-      return post.vote_count - 1;
+      return post.thread.vote_count - 1;
     }
   };
 
@@ -108,35 +112,44 @@ export const usePost = (form?: args) => {
     userVote,
     setPost,
     post,
-    setUserVoted,
   }: any) => {
     if (
       (dir === "up" && userVote === 1) ||
       (dir === "down" && userVote === -1)
     ) {
       await supabase.from("votes").delete().match({ id: voteCheck.id });
-      setUserVoted(null);
+      setPost({
+        ...post,
+        thread: {
+          ...post.thread,
+          didUserVote: null,
+          vote_count: voteUpdate(post, dir, userVote),
+        },
+      });
     } else {
       if (voteCheck) {
         await supabase
           .from("votes")
           .update({ dir: dir === "up" ? 1 : -1 })
-          .eq("thread_id", post.id)
+          .eq("thread_id", post.thread.id)
           .eq("user_id", user?.id)
           .then(() => {
             if (post) {
               setPost({
                 ...post,
-                vote_count: voteUpdate(post, dir, userVote),
+                thread: {
+                  ...post.thread,
+                  vote_count: voteUpdate(post, dir, userVote),
+                  didUserVote: dir === "up" ? 1 : -1,
+                },
               });
-              setUserVoted(dir === "up" ? 1 : -1);
             }
           });
       } else {
         await supabase
           .from("votes")
           .insert({
-            thread_id: post.id,
+            thread_id: post.thread.id,
             user_id: user?.id,
             dir: dir === "up" ? 1 : -1,
           })
@@ -144,45 +157,45 @@ export const usePost = (form?: args) => {
             if (post) {
               setPost({
                 ...post,
-                vote_count: voteUpdate(post, dir, userVote),
+                thread: {
+                  ...post.thread,
+                  vote_count: voteUpdate(post, dir, userVote),
+                  didUserVote: dir === "up" ? 1 : -1,
+                },
               });
-              setUserVoted(dir === "up" ? 1 : -1);
             }
           });
       }
     }
   };
 
-  const upvote = async ({
-    post,
-    setPost,
-    dir,
-    userVote,
-    setUserVoted,
-  }: IUpvotePost) => {
-    await Promise.all([
-      supabase
-        .from("votes")
-        .select("*")
-        .eq("thread_id", post.id)
-        .eq("user_id", user?.id),
-    ]).then(async ([voteCheck]: any) => {
-      const checkVote = voteCheck.data[0] || null;
-      if (post) {
-        setPost({
-          ...post,
-          vote_count: voteUpdate(post, dir, userVote) as number,
+  const upvote = async ({ post, setPost, dir, didUserVote }: IUpvotePost) => {
+    setVoteLoading(true);
+    await supabase
+      .from("votes")
+      .select("*")
+      .eq("thread_id", post.thread.id)
+      .eq("user_id", user?.id)
+      .then((voteCheck: any) => {
+        const checkVote = voteCheck.data[0] || 0;
+        if (post) {
+          setPost({
+            ...post,
+            thread: {
+              ...post.thread,
+              vote_count: voteUpdate(post, dir, didUserVote) as number,
+            },
+          });
+        }
+        voteHandler({
+          dir,
+          voteCheck: checkVote,
+          userVote: checkVote.dir,
+          setPost,
+          post,
         });
-      }
-      await voteHandler({
-        dir,
-        voteCheck: checkVote,
-        userVote,
-        setPost,
-        post,
-        setUserVoted,
+        setVoteLoading(false);
       });
-    });
   };
 
   const newCommentHandler = async ({
@@ -194,7 +207,7 @@ export const usePost = (form?: args) => {
     post,
     setPost,
   }: INewComment) => {
-    setCommentLoading(true);
+    setCreateCommentLoading(true);
     await supabase
       .from("comments")
       .insert({
@@ -206,7 +219,7 @@ export const usePost = (form?: args) => {
       })
       .then((res: any) => {
         const newComment = res.data[0];
-        setCommentLoading(false);
+        setCreateCommentLoading(false);
         if (post) {
           setPost({
             ...post,
@@ -232,6 +245,8 @@ export const usePost = (form?: args) => {
     upvote,
     commentLoading,
     createLoading,
+    createCommentLoading,
+    voteLoading,
     editCommentHandler,
     newCommentHandler,
     deleteCommentHandler,
@@ -241,37 +256,19 @@ export const usePost = (form?: args) => {
 export const useFetchPost = () => {
   const [post, setPost] = useState<IThread | null>(null);
   const [loading, setLoading] = useState(true);
-  const [userVoted, setUserVoted] = useState<number | null>(null);
   const { user } = useContext(UserContext);
   const postId = useParams().id;
   const fetchPost = useCallback(async () => {
+    setLoading(true);
     await fetchPostService(Number(user?.id), postId).then((data: any) => {
-      console.log(data);
+      setPost(data);
+      setLoading(false);
     });
-    //   const countVotes = addVotes.data.reduce(
-    //     (acc: any, vote: { dir: any }) => {
-    //       return acc + vote.dir;
-    //     },
-    //     0
-    //   );
-    //   if (vote.data.length > 0) {
-    //     setUserVoted(vote.data[0].dir);
-    //   } else {
-    //     setUserVoted(null);
-    //   }
-    //   setPost({
-    //     ...thread.data[0],
-    //     vote_count: countVotes,
-    //     comments: comments.data,
-    //   });
-    //   setLoading(false);
-    // });
-    // setLoading(false);
   }, [postId, user?.id]);
   useEffect(() => {
     if (loading) {
       fetchPost();
     }
   }, [postId, loading, fetchPost]);
-  return { post, loading, setPost, userVoted, setUserVoted };
+  return { post, loading, setPost };
 };

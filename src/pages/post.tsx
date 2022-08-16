@@ -6,8 +6,8 @@ import Rectangle from "../components/skeleton/rectangle";
 import { IThread } from "../types/posts";
 
 const Post = () => {
-  const { post, loading, setPost, userVoted, setUserVoted } = useFetchPost();
-  const { upvote } = usePost();
+  const { post, loading, setPost } = useFetchPost();
+  const { upvote, voteLoading } = usePost();
   const skeleton = () => {
     return (
       <div className="flex flex-col gap-5">
@@ -18,23 +18,21 @@ const Post = () => {
       </div>
     );
   };
-  console.log(post);
   return (
     <div className="w-full top-post pt-48 px-5  lg:pl-64 lg:pr-32 lg:pt-48">
       <div className="mt-10 py-10">
         <PostContent
-          userVoted={userVoted}
           vote={(dir: "up" | "down") => {
             upvote({
               post: post as IThread,
               setPost,
               dir: dir,
-              userVote: userVoted,
-              setUserVoted,
+              didUserVote: post?.thread.didUserVote,
             });
           }}
+          voteLoading={voteLoading}
           loading={loading}
-          post={post}
+          post={post?.thread}
         />
         <div className="mt-10">
           {loading ? (

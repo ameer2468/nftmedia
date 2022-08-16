@@ -32,8 +32,7 @@ export interface IUpvotePost {
   post: IThread;
   setPost: Dispatch<IThread>;
   dir: "up" | "down";
-  userVote: number | null;
-  setUserVoted: Dispatch<number>;
+  didUserVote: number | null | undefined;
 }
 
 export interface IVote {
@@ -55,14 +54,17 @@ export interface INewComment {
 }
 
 export interface IThread {
-  id: number;
-  created_at: string;
-  display_name: string;
   comments?: IPostComment[];
-  post: string;
-  title: string;
-  view_count: number;
-  comment_count: number;
-  vote_count: number;
-  user_id: string;
+  thread: {
+    post: string;
+    title: string;
+    view_count: number;
+    comment_count: number;
+    vote_count: number;
+    didUserVote: number;
+    user_id: string;
+    id: number;
+    created_at: string;
+    display_name: string;
+  };
 }

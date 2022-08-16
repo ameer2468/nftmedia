@@ -16,6 +16,7 @@ interface props {
   onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
   resetForm: () => void;
   commentLoading: boolean;
+  createCommentLoading: boolean;
   editCommentHandler: (arg: number) => void;
 }
 

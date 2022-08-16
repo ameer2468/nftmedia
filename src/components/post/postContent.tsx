@@ -10,13 +10,13 @@ import Button from "../global/button";
 import { faArrowDown, faArrowUp } from "@fortawesome/free-solid-svg-icons";
 
 interface props {
-  post: IThread | null;
+  post: IThread["thread"] | undefined;
   loading: boolean;
   vote: (dir: "up" | "down") => void;
-  userVoted: number | null;
+  voteLoading: boolean;
 }
 
-const PostContent = ({ post, loading, vote, userVoted }: props) => {
+const PostContent = ({ post, loading, vote, voteLoading }: props) => {
   const skeleton = () => {
     return (
       <div>
@@ -58,14 +58,18 @@ const PostContent = ({ post, loading, vote, userVoted }: props) => {
               <Button
                 onClick={() => vote("up")}
                 icon={faArrowUp}
-                className={`px-[2px] w-[35px] bg-sky-500 rounded-lg normal-case text-sm h-[40px]
-                ${userVoted === 1 ? "bg-green-400" : ""}`}
+                disabled={voteLoading}
+                className={`px-[2px] w-[35px] bg-sky-500 rounded-lg normal-case text-sm h-[40px] ${
+                  post?.didUserVote === 1 ? "bg-green-400" : ""
+                }`}
               />
               <Button
                 onClick={() => vote("down")}
                 icon={faArrowDown}
-                className={`px-[2px] w-[35px] bg-sky-500 rounded-lg normal-case text-sm h-[40px]
-                ${userVoted === -1 ? "bg-green-400" : ""}`}
+                disabled={voteLoading}
+                className={`px-[2px] w-[35px] bg-sky-500 rounded-lg normal-case text-sm h-[40px] ${
+                  post?.didUserVote === -1 ? "bg-red-400" : ""
+                }`}
               />
             </div>
             <h2 className="font-bold text-[30px] lg:text-[40px]">
