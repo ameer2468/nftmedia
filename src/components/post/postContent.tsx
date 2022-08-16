@@ -60,7 +60,7 @@ const PostContent = ({ post, loading, vote, voteLoading }: props) => {
                 icon={faArrowUp}
                 disabled={voteLoading}
                 className={`px-[2px] w-[35px] bg-sky-500 rounded-lg normal-case text-sm h-[40px] ${
-                  post?.didUserVote === 1 ? "bg-green-400" : ""
+                  post?.didUserVote.dir === 1 ? "bg-green-400" : ""
                 }`}
               />
               <Button
@@ -68,7 +68,7 @@ const PostContent = ({ post, loading, vote, voteLoading }: props) => {
                 icon={faArrowDown}
                 disabled={voteLoading}
                 className={`px-[2px] w-[35px] bg-sky-500 rounded-lg normal-case text-sm h-[40px] ${
-                  post?.didUserVote === -1 ? "bg-red-400" : ""
+                  post?.didUserVote.dir === -1 ? "bg-red-400" : ""
                 }`}
               />
             </div>

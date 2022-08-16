@@ -32,7 +32,7 @@ export interface IUpvotePost {
   post: IThread;
   setPost: Dispatch<IThread>;
   dir: "up" | "down";
-  didUserVote: number | null | undefined;
+  didUserVote: IThread["thread"]["didUserVote"];
 }
 
 export interface IVote {
@@ -61,7 +61,10 @@ export interface IThread {
     view_count: number;
     comment_count: number;
     vote_count: number;
-    didUserVote: number;
+    didUserVote: {
+      dir: number;
+      id: number;
+    };
     user_id: string;
     id: number;
     created_at: string;

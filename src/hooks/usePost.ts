@@ -82,6 +82,11 @@ export const usePost = (form?: args) => {
       });
   };
 
+  //This is a function that sets the vote count correctly
+  //if vote count is = 1 and the user downvotes, we set it to -1
+  //if vote count is = -1 and the user upvotes, we set it to 1
+  //Otherwise add 1 to the vote count or -1
+
   const voteUpdate = (
     post: IThread,
     dir: string,
@@ -106,46 +111,52 @@ export const usePost = (form?: args) => {
     }
   };
 
-  const voteHandler = async ({
-    dir,
-    voteCheck,
-    userVote,
-    setPost,
-    post,
-  }: any) => {
+  const voteHandler = async ({ dir, userVote, setPost, post }: any) => {
+    //if user already voted and they clicked the same button
+
     if (
-      (dir === "up" && userVote === 1) ||
-      (dir === "down" && userVote === -1)
+      (dir === "up" && userVote.dir === 1) ||
+      (dir === "down" && userVote.dir === -1)
     ) {
-      await supabase.from("votes").delete().match({ id: voteCheck.id });
-      setPost({
-        ...post,
-        thread: {
-          ...post.thread,
-          didUserVote: null,
-          vote_count: voteUpdate(post, dir, userVote),
-        },
-      });
+      await supabase
+        .from("votes")
+        .delete()
+        .match({ id: userVote.id })
+        .then(() => {
+          setPost({
+            ...post,
+            thread: {
+              ...post.thread,
+              didUserVote: { dir: null, id: null },
+              vote_count: voteUpdate(post, dir, userVote.dir),
+            },
+          });
+        });
     } else {
-      if (voteCheck) {
+      //if user already voted and they clicked a different button
+
+      if (userVote.dir === 1 || userVote.dir === -1) {
         await supabase
           .from("votes")
           .update({ dir: dir === "up" ? 1 : -1 })
           .eq("thread_id", post.thread.id)
           .eq("user_id", user?.id)
-          .then(() => {
+          .then((res: any) => {
+            const data = res.data[0];
             if (post) {
               setPost({
                 ...post,
                 thread: {
                   ...post.thread,
                   vote_count: voteUpdate(post, dir, userVote),
-                  didUserVote: dir === "up" ? 1 : -1,
+                  didUserVote: { dir: data.dir, id: data.id },
                 },
               });
             }
           });
       } else {
+        //if user has not voted yet
+
         await supabase
           .from("votes")
           .insert({
@@ -153,14 +164,15 @@ export const usePost = (form?: args) => {
             user_id: user?.id,
             dir: dir === "up" ? 1 : -1,
           })
-          .then(() => {
+          .then((res: any) => {
+            const data = res.data[0];
             if (post) {
               setPost({
                 ...post,
                 thread: {
                   ...post.thread,
                   vote_count: voteUpdate(post, dir, userVote),
-                  didUserVote: dir === "up" ? 1 : -1,
+                  didUserVote: { dir: data.dir, id: data.id },
                 },
               });
             }
@@ -171,31 +183,13 @@ export const usePost = (form?: args) => {
 
   const upvote = async ({ post, setPost, dir, didUserVote }: IUpvotePost) => {
     setVoteLoading(true);
-    await supabase
-      .from("votes")
-      .select("*")
-      .eq("thread_id", post.thread.id)
-      .eq("user_id", user?.id)
-      .then((voteCheck: any) => {
-        const checkVote = voteCheck.data[0] || 0;
-        if (post) {
-          setPost({
-            ...post,
-            thread: {
-              ...post.thread,
-              vote_count: voteUpdate(post, dir, didUserVote) as number,
-            },
-          });
-        }
-        voteHandler({
-          dir,
-          voteCheck: checkVote,
-          userVote: checkVote.dir,
-          setPost,
-          post,
-        });
-        setVoteLoading(false);
-      });
+    await voteHandler({
+      dir,
+      userVote: didUserVote,
+      setPost,
+      post,
+    });
+    setVoteLoading(false);
   };
 
   const newCommentHandler = async ({

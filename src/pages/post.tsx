@@ -3,7 +3,7 @@ import PostContent from "../components/post/postContent";
 import Comments from "../components/post/comments";
 import { useFetchPost, usePost } from "../hooks/usePost";
 import Rectangle from "../components/skeleton/rectangle";
-import { IThread } from "../types/posts";
+import { IThread, IUpvotePost } from "../types/posts";
 
 const Post = () => {
   const { post, loading, setPost } = useFetchPost();
@@ -28,7 +28,7 @@ const Post = () => {
               setPost,
               dir: dir,
               didUserVote: post?.thread.didUserVote,
-            });
+            } as IUpvotePost);
           }}
           voteLoading={voteLoading}
           loading={loading}
