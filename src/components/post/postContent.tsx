@@ -8,6 +8,7 @@ import { IThread } from "../../types/posts";
 import Rectangle from "../skeleton/rectangle";
 import Button from "../global/button";
 import { faArrowDown, faArrowUp } from "@fortawesome/free-solid-svg-icons";
+import Tippy from "@tippyjs/react";
 
 interface props {
   post: IThread["thread"] | undefined;
@@ -54,24 +55,26 @@ const PostContent = ({ post, loading, vote, voteLoading }: props) => {
       ) : (
         <>
           <div className="flex justify-between items-center mb-5 relative">
-            <div className="flex gap-4 flex-col absolute left-[-60px] top-[35px]">
-              <Button
-                onClick={() => vote("up")}
-                icon={faArrowUp}
-                disabled={voteLoading}
-                className={`px-[2px] w-[35px] bg-sky-500 rounded-lg normal-case text-sm h-[40px] ${
-                  post?.didUserVote.dir === 1 ? "bg-green-400" : ""
-                }`}
-              />
-              <Button
-                onClick={() => vote("down")}
-                icon={faArrowDown}
-                disabled={voteLoading}
-                className={`px-[2px] w-[35px] bg-sky-500 rounded-lg normal-case text-sm h-[40px] ${
-                  post?.didUserVote.dir === -1 ? "bg-red-400" : ""
-                }`}
-              />
-            </div>
+            <Tippy content="Upvote or downvote">
+              <div className="flex gap-4 flex-row absoluteHorizontalCenter w-[200px] top-[-55px]">
+                <Button
+                  onClick={() => vote("up")}
+                  icon={faArrowUp}
+                  disabled={voteLoading}
+                  className={`px-[2px] w-[90px] rounded-lg normal-case text-sm h-[30px] ${
+                    post?.didUserVote.dir === 1 ? "bg-green-400" : "bg-sky-500"
+                  }`}
+                />
+                <Button
+                  onClick={() => vote("down")}
+                  icon={faArrowDown}
+                  disabled={voteLoading}
+                  className={`px-[2px] w-[90px] rounded-lg normal-case text-sm h-[30px] ${
+                    post?.didUserVote.dir === -1 ? "bg-red-400" : "bg-sky-500"
+                  }`}
+                />
+              </div>
+            </Tippy>
             <h2 className="font-bold text-[30px] lg:text-[40px]">
               {post?.title}
             </h2>
