@@ -19,6 +19,7 @@ import Post from "./pages/post";
 import New from "./pages/new";
 import { useScrollTop } from "./hooks/useScrollTop";
 import Profile from "./pages/profile";
+import { useCheckSession } from "./hooks/useCheckSession";
 
 function App() {
   const appRoutes = [
@@ -52,6 +53,7 @@ function App() {
   ];
   const guestRoutes = [{ path: "/login", element: <Login /> }];
   useScrollTop();
+  useCheckSession();
 
   return (
     <MetaMaskProvider>

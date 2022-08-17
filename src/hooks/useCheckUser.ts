@@ -12,13 +12,16 @@ export const useCheckUser = () => {
       if (location.pathname === "/login" || location.pathname === "/signup") {
         return (location.href = "/home");
       }
-    } else if (
+    }
+    if (
+      !checkStorage &&
       location.pathname !== "/login" &&
       location.pathname !== "/signup"
     ) {
+      setUser(null);
       return (location.href = "/login");
     }
-  }, [location, user]);
+  }, [checkStorage, location, user]);
 
   useEffect(() => {
     check();
