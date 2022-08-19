@@ -63,7 +63,7 @@ const Topbar = () => {
                     Profile
                   </li>
                   <li
-                    onClick={logout}
+                    onClick={() => logout(user?.id as number)}
                     className="flex gap-2 transition-all duration-200 items-center justify-center hover:opacity-50 cursor-pointer"
                   >
                     <FontAwesomeIcon icon={faSignOut} />

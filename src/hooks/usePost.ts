@@ -49,6 +49,10 @@ export const usePost = (form?: args) => {
         if (post)
           setPost({
             ...post,
+            thread: {
+              ...post.thread,
+              comment_count: post.thread.comment_count - 1,
+            },
             comments: post.comments?.filter(
               (comment) => comment.id !== commentId
             ),
@@ -217,6 +221,10 @@ export const usePost = (form?: args) => {
         if (post) {
           setPost({
             ...post,
+            thread: {
+              ...post.thread,
+              comment_count: post.thread.comment_count + 1,
+            },
             comments: [
               ...(post.comments as any),
               {

@@ -35,7 +35,7 @@ export const useLogin = () => {
         signature,
       })
       .then(async (res: any) => {
-        await axios
+        return await axios
           .post(
             `${url}/auth/validate`,
             {
@@ -53,7 +53,7 @@ export const useLogin = () => {
       });
   };
 
-  const nonceHandler = async (account: string, nonce: number) => {
+  const nonceHandler = async (account: string, nonce: number, user?: any) => {
     const provider = detectCurrentProvider();
     if (provider) {
       const web3 = new Web3(provider);
@@ -64,7 +64,18 @@ export const useLogin = () => {
           String(randomNonce)
         )
         .then(async (signed: string) => {
-          await handleAuth(account, nonce, signed);
+          const res = await handleAuth(account, nonce, signed);
+          if (user) {
+            localStorage.setItem(
+              "user",
+              JSON.stringify({
+                ...user,
+                token: res.data.token,
+              })
+            );
+          } else {
+            await handleAuth(account, nonce, signed);
+          }
         });
     }
   };
@@ -107,24 +118,23 @@ export const useLogin = () => {
           if (res.data.length === 0) {
             await signUp(address);
           } else {
-            await nonceHandler(address, res.data[0].nonce);
+            await nonceHandler(address, res.data[0].nonce, res.data[0]);
             setLoading(false);
-            const user = res.data[0];
             window.location.href = "/home";
-            localStorage.setItem(
-              "user",
-              JSON.stringify({
-                ...user,
-              })
-            );
           }
         });
     }
   };
 
-  const logout = () => {
-    localStorage.removeItem("user");
-    window.location.href = "/login";
+  const logout = async (userId: number) => {
+    await supabase
+      .from("auth")
+      .update({ token: null })
+      .match({ id: userId })
+      .then(() => {
+        localStorage.removeItem("user");
+        window.location.href = "/login";
+      });
   };
 
   return { loginHandler, loading, logout };

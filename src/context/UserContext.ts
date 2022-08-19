@@ -1,7 +1,7 @@
 import { createContext } from "react";
 import { IUser } from "../types/user";
 
-export const UserContext = createContext<{ user: null | IUser; setUser: any }>({
+export const UserContext = createContext<{ user: IUser | null; setUser: any }>({
   user: null,
   setUser: () => {},
 });
