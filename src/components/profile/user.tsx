@@ -67,7 +67,7 @@ const User = ({ profile, params, loading }: props) => {
       ) : (
         <Button
           text="+ Follow"
-          className="w-full font-normal text-sm bg-sky-500 mt-10 normal-case"
+          className="w-[150px] mx-auto font-normal text-sm bg-sky-500 mt-10 normal-case"
         />
       )}
     </div>

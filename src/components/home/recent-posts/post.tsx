@@ -5,26 +5,29 @@ import CommentCount from "../../global/comment-count";
 import { Avatar } from "../../global/avatar";
 import VoteCount from "../../global/vote-count";
 import { Link } from "react-router-dom";
+import { IPost } from "../../../types/posts";
 
-const Post = () => {
+interface props {
+  data: null | IPost;
+}
+
+const Post = ({ data }: props) => {
   return (
     <div className="px-12 py-8 w-full bg-gradient-to-br to-zinc-50 from-sky-50 border border-sky-100  rounded-xl text-center">
-      <h1 className="text-center text-[25px] font-bold lg:text-[30px]">Post</h1>
+      <h1 className="text-center text-[25px] font-bold lg:text-[30px]">
+        {data?.title}
+      </h1>
       <div className="font-bold flex items-center transition-all duration-200 justify-center gap-2 hover:opacity-50 cursor-pointer">
         <Avatar className="w-10" />
-        <p className="text-sky-500 mt-3">John Doe</p>
+        <p className="text-sky-500 mt-3">{data?.display_name}</p>
       </div>
-      <p className="py-5 leading-7 text-center">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus iste,
-        magni non qui quo sequi temporibus vel. Error facilis quae quis quos
-        ratione! Ad aspernatur commodi eius mollitia tempora voluptates?
-      </p>
+      <p className="py-5 leading-7 text-center">{data?.post}</p>
       <div className="flex justify-center gap-10 mb-10">
-        <CommentCount count="12" />
-        <ViewCount count="24" />
-        <VoteCount count="18" />
+        <CommentCount count={data?.comment_count} />
+        <ViewCount count={data?.view_count} />
+        <VoteCount count={data?.vote_count} />
       </div>
-      <Link to={"/post/10"}>
+      <Link to={`/post/${data?.id}`}>
         <Button
           className="bg-black normal-case hover:bg-zinc-700 m-auto"
           text="Read More"

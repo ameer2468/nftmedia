@@ -17,6 +17,18 @@ export interface IThreadProfile {
   user: string;
 }
 
+export interface IPost {
+  created_at: string;
+  id: number;
+  post: string;
+  title: string;
+  user_id: string;
+  view_count: number;
+  vote_count: number;
+  comment_count: number;
+  display_name: string;
+}
+
 export interface IPostComment {
   id: number;
   created_at: string;

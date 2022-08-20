@@ -3,8 +3,8 @@ import { supabase } from "../constants/supabase";
 import { useContext } from "react";
 import { UserContext } from "../context/UserContext";
 import { useParams } from "react-router-dom";
-import { INewComment, IThread, IUpvotePost } from "../types/posts";
-import { fetchPostService } from "../services/post";
+import { INewComment, IPost, IThread, IUpvotePost } from "../types/posts";
+import { fetchPostService, getRecentPosts } from "../services/post";
 
 interface args {
   title: string;
@@ -25,7 +25,9 @@ export const usePost = (form?: args) => {
       .from("threads")
       .insert({
         ...form,
-        user: user?.id,
+        user_id: user?.id,
+        display_name: user?.display_name,
+        view_count: 0,
       })
       .then(() => {
         setCreateLoading(false);
@@ -252,6 +254,24 @@ export const usePost = (form?: args) => {
     editCommentHandler,
     newCommentHandler,
     deleteCommentHandler,
+  };
+};
+
+export const useFetchHomePosts = () => {
+  const [recentPostsLoading, setRecentPostsLoading] = useState(false);
+  const [recentPosts, setRecentPosts] = useState<null | IPost[]>([]);
+  const getData = useCallback(async () => {
+    setRecentPostsLoading(true);
+    const res = await getRecentPosts();
+    setRecentPosts(res);
+    setRecentPostsLoading(false);
+  }, []);
+  useEffect(() => {
+    getData();
+  }, [getData]);
+  return {
+    recentPostsLoading,
+    recentPosts,
   };
 };
 

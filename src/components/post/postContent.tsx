@@ -56,7 +56,11 @@ const PostContent = ({ post, loading, vote, voteLoading }: props) => {
         <>
           <div className="flex justify-between items-center mb-5 relative">
             <Tippy content="Upvote or downvote">
-              <div className="flex gap-4 flex-row absoluteHorizontalCenter w-[200px] top-[-55px]">
+              <div
+                className="flex gap-2 flex-row
+              absoluteHorizontalCenter w-[200px] top-[-65px]
+             bg-gradient-to-br to-zinc-50 from-sky-100 p-2 rounded-lg border border-white"
+              >
                 <Button
                   onClick={() => vote("up")}
                   icon={faArrowUp}
