@@ -2,7 +2,7 @@ import { Dispatch, useCallback, useEffect, useState } from "react";
 import { supabase } from "../constants/supabase";
 import { useContext } from "react";
 import { UserContext } from "../context/UserContext";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { INewComment, IPost, IThread, IUpvotePost } from "../types/posts";
 import { fetchPostService, getRecentPosts } from "../services/post";
 
@@ -17,6 +17,7 @@ export const usePost = (form?: args) => {
   const [createLoading, setCreateLoading] = useState(false);
   const [commentLoading, setCommentLoading] = useState(false);
   const [createCommentLoading, setCreateCommentLoading] = useState(false);
+  const nav = useNavigate();
   const submitNewPost = async (
     clearInput: Dispatch<{ title: string; post: string }>
   ) => {
@@ -29,12 +30,14 @@ export const usePost = (form?: args) => {
         display_name: user?.display_name,
         view_count: 0,
       })
-      .then(() => {
+      .then((res: any) => {
+        const threadId = res.data[0].id;
         setCreateLoading(false);
         clearInput({
           title: "",
           post: "",
         });
+        nav(`/post/${threadId}`);
       });
   };
 

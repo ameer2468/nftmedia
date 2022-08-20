@@ -7,7 +7,6 @@ import {
 
 export const links = [
   { icon: faHouse, url: "/home", name: "Home" },
-  { icon: faNewspaper, url: "/latest", name: "Latest" },
   { icon: faComments, url: "", name: "Messages" },
   { icon: faCog, url: "/settings", name: "Settings" },
 ];

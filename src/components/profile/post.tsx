@@ -13,7 +13,9 @@ interface props {
 const Post = ({ post }: props) => {
   return (
     <div className="px-12 py-8 w-full bg-white rounded-xl text-center">
-      <h1 className="text-center text-[25px] font-bold lg:text-[20px]">Post</h1>
+      <h1 className="text-center text-[25px] font-bold lg:text-[20px]">
+        {post.title}
+      </h1>
       <p className="py-5 leading-6 text-left text-sm font-normal">
         {post.post}
       </p>

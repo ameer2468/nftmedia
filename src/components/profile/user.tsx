@@ -13,9 +13,10 @@ interface props {
   profile: IUser | undefined;
   params: string | undefined;
   loading: boolean;
+  followHandler: () => void;
 }
 
-const User = ({ profile, params, loading }: props) => {
+const User = ({ profile, params, loading, followHandler }: props) => {
   const { user } = useContext(UserContext);
   const loadingCheck = loading;
   const skeleton = () => {
@@ -62,11 +63,12 @@ const User = ({ profile, params, loading }: props) => {
           </div>
         </>
       )}
-      {user?.id === Number(params) ? (
+      {user?.id === Number(params) || loading ? (
         ""
       ) : (
         <Button
-          text="+ Follow"
+          onClick={followHandler}
+          text={`${profile?.isFollowing ? "Unfollow" : "Follow"}`}
           className="w-[150px] mx-auto font-normal text-sm bg-sky-500 mt-10 normal-case"
         />
       )}

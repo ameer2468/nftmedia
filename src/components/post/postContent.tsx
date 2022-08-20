@@ -9,6 +9,7 @@ import Rectangle from "../skeleton/rectangle";
 import Button from "../global/button";
 import { faArrowDown, faArrowUp } from "@fortawesome/free-solid-svg-icons";
 import Tippy from "@tippyjs/react";
+import { Link } from "react-router-dom";
 
 interface props {
   post: IThread["thread"] | undefined;
@@ -90,10 +91,12 @@ const PostContent = ({ post, loading, vote, voteLoading }: props) => {
           </div>
           <div className="flex items-center gap-2 mb-5">
             <div className="flex items-center justify-between w-full">
-              <div className="flex items-center transition-all duration-200 hover:opacity-50 cursor-pointer">
-                <Avatar className="w-10" />
-                <p className="font-bold text-sky-500">{post?.display_name}</p>
-              </div>
+              <Link to={`/profile/${post?.user_id}`}>
+                <div className="flex items-center transition-all duration-200 hover:opacity-50 cursor-pointer">
+                  <Avatar className="w-10" />
+                  <p className="font-bold text-sky-500">{post?.display_name}</p>
+                </div>
+              </Link>
               <div className="flex flex-col gap-4">
                 <p className="ml-5 font-bold text-sm opacity-50">
                   Posted at {moment(post?.created_at).format("LLL")}

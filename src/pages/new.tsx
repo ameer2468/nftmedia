@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import TextInput from "../components/global/textinput";
 import TextAreaInput from "../components/global/textarea";
 import Button from "../components/global/button";
@@ -8,14 +8,11 @@ import { usePost } from "../hooks/usePost";
 
 const New = () => {
   const inputRef: any = useRef(0);
-  const [selectionValue, setSelectionValue] = useState(0);
   const form = {
     title: "",
     post: "",
   };
-  useEffect(() => {
-    setSelectionValue(inputRef.current.selectionStart);
-  }, [inputRef]);
+  useEffect(() => {}, [inputRef]);
   const { inputValues, setInputValues, onChangeHandler } = useFormHook(form);
   const { submitNewPost, createLoading } = usePost(inputValues);
   const formCheck = inputValues.title.length > 0 && inputValues.post.length > 0;

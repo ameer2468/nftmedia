@@ -5,7 +5,6 @@ import Home from "./pages/home";
 import Topbar from "./components/home/topbar";
 import Sidebar from "./components/home/sidebar";
 import "tippy.js/dist/tippy.css";
-import Latest from "./pages/latest";
 import MobileMenu from "./components/global/mobile-menu";
 import Login from "./pages/login";
 import { MetaMaskProvider } from "metamask-react";
@@ -24,7 +23,6 @@ import { useCheckSession } from "./hooks/useCheckSession";
 function App() {
   const appRoutes = [
     "/home",
-    "/latest",
     "/messages",
     "/settings",
     "/profile",
@@ -47,7 +45,6 @@ function App() {
     { path: "/home", element: <Home /> },
     { path: "/post/:id", element: <Post /> },
     { path: "/profile/:id", element: <Profile /> },
-    { path: "/latest", element: <Latest /> },
     { path: "/settings", element: <Settings /> },
     { path: "/new", element: <New /> },
   ];
