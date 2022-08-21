@@ -54,11 +54,7 @@ const Comments = ({ comments, loading, post, setPost }: props) => {
           {user?.avatar_url === null ? (
             <Avatar className="w-10 mr-5" />
           ) : (
-            <img
-              className="w-10 mr-5"
-              src={user?.avatar_url + "?d=mm" + new Date().getTime()}
-              alt="avatar"
-            />
+            <img className="w-10 mr-5" src={user?.avatar_url} alt="avatar" />
           )}
           <TextInput
             className="w-full"
