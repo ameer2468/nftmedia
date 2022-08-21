@@ -51,7 +51,15 @@ const Comments = ({ comments, loading, post, setPost }: props) => {
       <h2 className="font-bold text-[25px] lg:text-[30px]">Comments</h2>
       <div className="mt-5 flex-col flex gap-5">
         <div className="flex w-full items-center">
-          <Avatar className="w-16" />
+          {user?.avatar_url === null ? (
+            <Avatar className="w-10 mr-5" />
+          ) : (
+            <img
+              className="w-10 mr-5"
+              src={user?.avatar_url + "?d=mm" + new Date().getTime()}
+              alt="avatar"
+            />
+          )}
           <TextInput
             className="w-full"
             name="comment"
@@ -59,6 +67,7 @@ const Comments = ({ comments, loading, post, setPost }: props) => {
             onChange={(e) => {
               onChangeHandler(e);
             }}
+            enterKeyHandler={submitComment}
             onFocus={() => {
               setShow(true);
             }}

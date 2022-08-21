@@ -11,6 +11,8 @@ interface props {
   value?: string;
   onFocus?: () => void;
   onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
+  inputRef?: React.RefObject<HTMLInputElement>;
+  enterKeyHandler?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
 }
 
 const TextInput = ({
@@ -24,15 +26,23 @@ const TextInput = ({
   type,
   maxLength,
   minLength,
+  inputRef,
+  enterKeyHandler,
 }: props) => {
   return (
     <input
       placeholder={placeholder}
       onChange={onChange}
       onFocus={onFocus}
+      ref={inputRef}
       name={name}
       onBlur={onBlur}
       value={value}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" && enterKeyHandler) {
+          enterKeyHandler && enterKeyHandler(e);
+        }
+      }}
       minLength={minLength}
       maxLength={maxLength}
       type={type || "text"}

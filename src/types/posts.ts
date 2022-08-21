@@ -24,6 +24,7 @@ export interface IPost {
   title: string;
   user_id: string;
   view_count: number;
+  user_image_url: string;
   vote_count: number;
   comment_count: number;
   display_name: string;
@@ -73,6 +74,7 @@ export interface IThread {
     view_count: number;
     comment_count: number;
     vote_count: number;
+    user_image_url: string;
     didUserVote: {
       dir: number;
       id: number;

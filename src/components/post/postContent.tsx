@@ -93,7 +93,15 @@ const PostContent = ({ post, loading, vote, voteLoading }: props) => {
             <div className="flex items-center justify-between w-full">
               <Link to={`/profile/${post?.user_id}`}>
                 <div className="flex items-center transition-all duration-200 hover:opacity-50 cursor-pointer">
-                  <Avatar className="w-10" />
+                  {post?.user_image_url === null ? (
+                    <Avatar className="w-10" />
+                  ) : (
+                    <img
+                      className="w-10 mr-3"
+                      src={post?.user_image_url + "?v=" + Date.now()}
+                      alt="avatar"
+                    />
+                  )}
                   <p className="font-bold text-sky-500">{post?.display_name}</p>
                 </div>
               </Link>

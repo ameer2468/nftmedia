@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown, faBell } from "@fortawesome/free-solid-svg-icons";
 import HiddenMenu from "../global/hidden-menu";
 import { useLogin } from "../../hooks/useLogin";
-import { Avatar } from "../global/avatar";
 import { UserContext } from "../../context/UserContext";
 import { AnimatePresence, motion } from "framer-motion";
 import { faSignOut, faUser } from "@fortawesome/free-solid-svg-icons";
@@ -16,12 +15,16 @@ const Topbar = () => {
   const { user } = useContext(UserContext);
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
+  const [userImageUpdate, setUserImageUpdate] = React.useState(false);
   const [active, setActive] = useDetectOutsideClick(dropdownRef, false);
   const clickHandler = () => {
     setActive(!active);
   };
   return (
-    <div className="topbar z-50  w-full gap-5 h-24 px-0 fixed right-0 top-0 flex items-center lg:gap-0 lg:pl-20 lg:pr-28 lg:justify-between">
+    <div
+      className="topbar z-50  w-full gap-5 h-24 px-0 fixed right-0 top-0
+     flex items-center lg:gap-0 lg:pl-20 lg:pr-28 lg:justify-between"
+    >
       <div className="flex items-center w-full px-6 justify-between">
         <div className="hidden lg:block">
           <Searchbox />
@@ -35,7 +38,18 @@ const Topbar = () => {
             onClick={() => setActive(!active)}
             className="flex gap-3 items-center"
           >
-            <Avatar className="w-12 h-12" />
+            <img
+              onError={() => {
+                setUserImageUpdate(true);
+              }}
+              src={
+                userImageUpdate
+                  ? user?.avatar_url
+                  : user?.avatar_url + "?d=mm" + new Date().getTime()
+              }
+              alt="user"
+              className="w-8 h-8"
+            />
             <p>{user?.display_name || "NA"}</p>
             <FontAwesomeIcon icon={faCaretDown} />
           </div>

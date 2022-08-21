@@ -1,13 +1,21 @@
 import React from "react";
 import Box from "../components/profile/box";
-import { useProfile } from "../hooks/useProfile";
+import { useProfile, useProfileGet } from "../hooks/useProfile";
 import User from "../components/profile/user";
 import UserPosts from "../components/profile/user-posts";
 import Activity from "../components/profile/activity";
 import { useFollow } from "../hooks/useFollow";
 
 const Profile = () => {
-  const { profile, setProfile, loading, userId } = useProfile();
+  const {
+    profile,
+    setProfile,
+    userId,
+    handleFileUpload,
+    imageLoading,
+    userImage,
+  } = useProfile();
+  const { loading } = useProfileGet(setProfile);
   const { followHandler } = useFollow(profile, setProfile);
   const followOrNot = !profile?.user.isFollowing;
   return (
@@ -18,6 +26,9 @@ const Profile = () => {
       <div className="flex flex-wrap gap-5 py-10 justify-between">
         <Box className="flex-auto lg:w-[100%] xl:w-[40%]" title="User">
           <User
+            handleFileUpload={handleFileUpload}
+            imageLoading={imageLoading}
+            userImage={userImage}
             followHandler={() => followHandler(profile?.user.id, followOrNot)}
             loading={loading}
             params={userId}

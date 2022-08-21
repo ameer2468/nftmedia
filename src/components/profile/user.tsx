@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import { Avatar } from "../global/avatar";
 import UserStat from "./user-stat";
 import moment from "moment";
 import CopyButton from "../global/copy-button";
@@ -8,17 +7,32 @@ import { UserContext } from "../../context/UserContext";
 import { IUser } from "../../types/user";
 import Circle from "../skeleton/circle";
 import Rectangle from "../skeleton/rectangle";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPencilAlt } from "@fortawesome/free-solid-svg-icons";
+import { Avatar } from "../global/avatar";
 
 interface props {
   profile: IUser | undefined;
   params: string | undefined;
   loading: boolean;
   followHandler: () => void;
+  imageLoading: boolean;
+  handleFileUpload: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  userImage: string | null;
 }
 
-const User = ({ profile, params, loading, followHandler }: props) => {
+const User = ({
+  profile,
+  params,
+  loading,
+  followHandler,
+  imageLoading,
+  handleFileUpload,
+  userImage,
+}: props) => {
   const { user } = useContext(UserContext);
   const loadingCheck = loading;
+  const fileRef = React.createRef<HTMLInputElement>();
   const skeleton = () => {
     let arr = [];
     for (let i = 0; i < 4; i++) {
@@ -26,6 +40,7 @@ const User = ({ profile, params, loading, followHandler }: props) => {
     }
     return arr;
   };
+
   return (
     <div>
       {loadingCheck ? (
@@ -38,7 +53,43 @@ const User = ({ profile, params, loading, followHandler }: props) => {
           </div>
         </div>
       ) : (
-        <Avatar className="w-32 m-auto" />
+        <div className="relative w-24 m-auto">
+          <input
+            accept="image/*"
+            onChange={handleFileUpload}
+            ref={fileRef}
+            className="hidden"
+            type="file"
+          />
+          {imageLoading ? (
+            <Circle />
+          ) : profile?.avatar_url === null ? (
+            <Avatar className="w-24" />
+          ) : (
+            <img
+              alt="user"
+              className="w-24 h-24 rounded-full mb-5"
+              src={userImage || profile?.avatar_url + "?v=" + Date.now()}
+            />
+          )}
+          {user?.id === profile?.id ? (
+            <div
+              onClick={() => fileRef.current?.click()}
+              className="bg-sky-500 w-7 h-7 cursor-pointer
+          rounded-full flex items-center
+          transition-all duration-200
+          justify-center absolute right-0
+           bottom-2 hover:brightness-105"
+            >
+              <FontAwesomeIcon
+                className="text-white text-[13px]"
+                icon={faPencilAlt}
+              />
+            </div>
+          ) : (
+            ""
+          )}
+        </div>
       )}
       {loading ? (
         <div className="flex flex-col h-60 gap-3 mt-5">{skeleton()}</div>
