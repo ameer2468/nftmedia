@@ -19,6 +19,7 @@ interface props {
 
 const Comments = ({ comments, loading, post, setPost }: props) => {
   const [show, setShow] = useState(false);
+  const [editCommentIndex, setEditCommentIndex] = useState<number | null>(null);
   const inputObj = {
     comment: "",
     editedComment: "",
@@ -54,7 +55,11 @@ const Comments = ({ comments, loading, post, setPost }: props) => {
           {user?.avatar_url === null ? (
             <Avatar className="w-10 mr-5" />
           ) : (
-            <img className="w-10 mr-5" src={user?.avatar_url} alt="avatar" />
+            <img
+              className="w-10 mr-5"
+              src={user?.avatar_url + "?d=" + Date.now()}
+              alt="avatar"
+            />
           )}
           <TextInput
             className="w-full"
@@ -103,14 +108,17 @@ const Comments = ({ comments, loading, post, setPost }: props) => {
         <div className="mt-5 flex flex-col gap-5">
           {loading
             ? ""
-            : comments?.map((commentPost) => {
+            : comments?.map((commentPost, index) => {
                 return (
                   <Comment
                     onChange={(e) => {
                       onChangeHandler(e);
                     }}
+                    index={index}
+                    editCommentIndex={editCommentIndex}
                     resetForm={resetForm}
                     editCommentHandler={(commentId: number) => {
+                      setEditCommentIndex(index);
                       editCommentHandler(
                         commentId,
                         editedComment,

@@ -219,6 +219,7 @@ export const usePost = (form?: args) => {
         comment: input,
         display_name: display_name,
         user_id: user_id,
+        avatar_url: user?.avatar_url || null,
       })
       .then((res: any) => {
         const newComment = res.data[0];
@@ -240,6 +241,7 @@ export const usePost = (form?: args) => {
                 created_at: new Date().toISOString(),
                 display_name: display_name,
                 user_id: user_id,
+                avatar_url: user?.avatar_url || null,
               },
             ],
           });

@@ -18,6 +18,8 @@ interface props {
   commentLoading: boolean;
   createCommentLoading: boolean;
   editCommentHandler: (arg: number) => void;
+  editCommentIndex: number | null;
+  index: number;
 }
 
 const Comment = ({
@@ -26,6 +28,8 @@ const Comment = ({
   editedComment,
   onChange,
   resetForm,
+  index,
+  editCommentIndex,
   commentLoading,
   editCommentHandler,
 }: props) => {
@@ -43,7 +47,15 @@ const Comment = ({
       <div className="flex justify-between items-center mb-5">
         <NavLink to={`/profile/${comment.user_id}`}>
           <div className="flex items-center transition-all duration-200 hover:opacity-50 cursor-pointer">
-            <Avatar className="w-10" />
+            {comment.avatar_url ? (
+              <img
+                className="w-8 mr-3"
+                src={comment.avatar_url + "?v=" + Date.now()}
+                alt="avatar"
+              />
+            ) : (
+              <Avatar className="w-10" />
+            )}
             <p className="font-bold text-sky-500">{comment.display_name}</p>
           </div>
         </NavLink>
@@ -63,7 +75,7 @@ const Comment = ({
           )}
         </div>
       </div>
-      {commentLoading && (
+      {editCommentIndex === index && commentLoading && (
         <div className="w-[full]">
           <Loading width="100%" color="black" />
         </div>

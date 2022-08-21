@@ -24,7 +24,7 @@ const Post = ({ data }: props) => {
             alt="user"
             className="w-8 h-8"
           />
-          <p className="text-sky-500 mt-3">{data?.display_name}</p>
+          <p className="text-sky-500">{data?.display_name}</p>
         </div>
       </Link>
       <p className="py-10 leading-7 text-center">{data?.post}</p>
