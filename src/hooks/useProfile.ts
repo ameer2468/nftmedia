@@ -16,14 +16,13 @@ export const useProfileGet = (setProfile: (arg: IUserProfile) => void) => {
       setProfile(data);
       setLoading(false);
     });
-  }, [user?.id, userId]);
+  }, [user?.id, userId, setProfile]);
   return { loading };
 };
 
 export const useProfile = () => {
   const userId = useParams().id as string;
   const [profile, setProfile] = useState<IUserProfile | null>(null);
-  const [userImage, setUserImage] = useState<string | null>(null);
   const [imageLoading, setImageLoading] = React.useState<boolean>(false);
   const { user, setUser } = useContext(UserContext);
 
@@ -32,22 +31,28 @@ export const useProfile = () => {
     const fileExt = file?.name.split(".").pop();
     const fileName = `${profile?.user.id}.${fileExt}`;
     const filePath = `${fileName}`;
+    const oldUserAvatar = profile?.user.avatar_image_url;
+    const getExtension = oldUserAvatar?.split(".").pop();
     setImageLoading(true);
-    await supabase.storage.from("avatars").remove([fileName]);
+    await supabase.storage
+      .from("avatars")
+      .remove([`${profile?.user.id}.${getExtension}`]);
     let { error: uploadError } = await supabase.storage
       .from("avatars")
       .upload(filePath, file);
     const avatar_url = supabase.storage.from("avatars").getPublicUrl(fileName);
     await supabase
       .from("auth")
-      .update({ avatar_url: avatar_url.data?.publicURL })
-      .eq("id", profile?.user.id);
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => {
-      setUserImage(reader.result as string);
-      setUser({ ...user, avatar_url: reader.result as string });
-    };
+      .update({ avatar_image_url: avatar_url.data?.publicURL })
+      .eq("id", profile?.user.id)
+      .then((res: any) => {
+        const userData = res.data[0];
+        // const reader = new FileReader();
+        // reader.readAsDataURL(file);
+        // reader.onload = () => {
+        setUser({ ...user, avatar_image_url: userData.avatar_image_url });
+        console.log(userData);
+      });
     setImageLoading(false);
     if (uploadError) {
       throw uploadError;
@@ -58,7 +63,6 @@ export const useProfile = () => {
     profile,
     setProfile,
     userId,
-    userImage,
     handleFileUpload,
     imageLoading,
   };

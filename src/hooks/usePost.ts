@@ -28,6 +28,7 @@ export const usePost = (form?: args) => {
         ...form,
         user_id: user?.id,
         display_name: user?.display_name,
+        avatar_image_url: user?.avatar_image_url,
         view_count: 0,
       })
       .then((res: any) => {
@@ -219,7 +220,7 @@ export const usePost = (form?: args) => {
         comment: input,
         display_name: display_name,
         user_id: user_id,
-        avatar_url: user?.avatar_url || null,
+        avatar_url: user?.avatar_image_url || null,
       })
       .then((res: any) => {
         const newComment = res.data[0];
@@ -241,7 +242,7 @@ export const usePost = (form?: args) => {
                 created_at: new Date().toISOString(),
                 display_name: display_name,
                 user_id: user_id,
-                avatar_url: user?.avatar_url || null,
+                avatar_url: user?.avatar_image_url || null,
               },
             ],
           });

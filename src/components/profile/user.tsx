@@ -18,7 +18,6 @@ interface props {
   followHandler: () => void;
   imageLoading: boolean;
   handleFileUpload: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  userImage: string | null;
 }
 
 const User = ({
@@ -28,7 +27,6 @@ const User = ({
   followHandler,
   imageLoading,
   handleFileUpload,
-  userImage,
 }: props) => {
   const { user } = useContext(UserContext);
   const loadingCheck = loading;
@@ -55,7 +53,7 @@ const User = ({
       ) : (
         <div className="relative w-24 m-auto">
           <input
-            accept="image/*"
+            accept="image/png, image/jpeg"
             onChange={handleFileUpload}
             ref={fileRef}
             className="hidden"
@@ -63,13 +61,13 @@ const User = ({
           />
           {imageLoading ? (
             <Circle />
-          ) : profile?.avatar_url === null ? (
+          ) : profile?.avatar_image_url === null ? (
             <Avatar className="w-24" />
           ) : (
             <img
               alt="user"
               className="w-24 h-24 rounded-full mb-5"
-              src={userImage || profile?.avatar_url + "?v=" + Date.now()}
+              src={profile?.avatar_image_url + "?v=" + Date.now()}
             />
           )}
           {user?.id === profile?.id ? (

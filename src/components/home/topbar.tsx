@@ -9,13 +9,13 @@ import { AnimatePresence, motion } from "framer-motion";
 import { faSignOut, faUser } from "@fortawesome/free-solid-svg-icons";
 import { useDetectOutsideClick } from "../../hooks/useDetectOutsideClick";
 import { useNavigate } from "react-router-dom";
+import { Avatar } from "../global/avatar";
 
 const Topbar = () => {
   const { logout } = useLogin();
   const { user } = useContext(UserContext);
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
-  const [userImageUpdate, setUserImageUpdate] = React.useState(false);
   const [active, setActive] = useDetectOutsideClick(dropdownRef, false);
   const clickHandler = () => {
     setActive(!active);
@@ -38,18 +38,15 @@ const Topbar = () => {
             onClick={() => setActive(!active)}
             className="flex gap-3 items-center"
           >
-            <img
-              onError={() => {
-                setUserImageUpdate(true);
-              }}
-              src={
-                userImageUpdate
-                  ? user?.avatar_url
-                  : user?.avatar_url + "?d=mm" + new Date().getTime()
-              }
-              alt="user"
-              className="w-8 h-8"
-            />
+            {user?.avatar_image_url === null ? (
+              <Avatar className="w-10" />
+            ) : (
+              <img
+                src={user?.avatar_image_url + "?a=" + Date.now()}
+                alt="user"
+                className="w-8 h-8"
+              />
+            )}
             <p>{user?.display_name || "NA"}</p>
             <FontAwesomeIcon icon={faCaretDown} />
           </div>

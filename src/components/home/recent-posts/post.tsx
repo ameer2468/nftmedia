@@ -20,7 +20,7 @@ const Post = ({ data }: props) => {
       <Link to={`/profile/${data?.user_id}`}>
         <div className="font-bold flex items-center transition-all duration-200 justify-center mt-5 gap-2 hover:opacity-50 cursor-pointer">
           <img
-            src={data?.user_image_url + "?v=" + Date.now()}
+            src={data?.avatar_image_url + "?v=" + Date.now()}
             alt="user"
             className="w-8 h-8"
           />

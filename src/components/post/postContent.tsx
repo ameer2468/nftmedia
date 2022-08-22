@@ -49,6 +49,8 @@ const PostContent = ({ post, loading, vote, voteLoading }: props) => {
     );
   };
 
+  console.log(post);
+
   return (
     <div className="bg-gradient-to-br to-zinc-50 from-sky-50 rounded-xl p-10 border border-white">
       {loading ? (
@@ -93,12 +95,12 @@ const PostContent = ({ post, loading, vote, voteLoading }: props) => {
             <div className="flex items-center justify-between w-full">
               <Link to={`/profile/${post?.user_id}`}>
                 <div className="flex items-center transition-all duration-200 hover:opacity-50 cursor-pointer">
-                  {post?.user_image_url === null ? (
+                  {post?.avatar_image_url === null ? (
                     <Avatar className="w-10" />
                   ) : (
                     <img
                       className="w-10 mr-3"
-                      src={post?.user_image_url + "?v=" + Date.now()}
+                      src={post?.avatar_image_url + "?v=" + Date.now()}
                       alt="avatar"
                     />
                   )}

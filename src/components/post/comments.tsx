@@ -52,12 +52,12 @@ const Comments = ({ comments, loading, post, setPost }: props) => {
       <h2 className="font-bold text-[25px] lg:text-[30px]">Comments</h2>
       <div className="mt-5 flex-col flex gap-5">
         <div className="flex w-full items-center">
-          {user?.avatar_url === null ? (
+          {user?.avatar_image_url === null ? (
             <Avatar className="w-10 mr-5" />
           ) : (
             <img
               className="w-10 mr-5"
-              src={user?.avatar_url + "?d=" + Date.now()}
+              src={user?.avatar_image_url + "?d=" + Date.now()}
               alt="avatar"
             />
           )}

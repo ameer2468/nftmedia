@@ -7,7 +7,7 @@ export interface IUserProfile {
     id: number;
     display_name: string;
     created_at: string;
-    avatar_url: string;
+    avatar_image_url: string;
     wallet: string;
     isFollowing?: boolean;
     nonce?: number;
