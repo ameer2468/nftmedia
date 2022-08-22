@@ -2,7 +2,6 @@ import React from "react";
 import Button from "../../global/button";
 import ViewCount from "../../global/view-count";
 import CommentCount from "../../global/comment-count";
-import { Avatar } from "../../global/avatar";
 import VoteCount from "../../global/vote-count";
 import { Link } from "react-router-dom";
 import { IPost } from "../../../types/posts";

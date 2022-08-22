@@ -42,9 +42,9 @@ const Topbar = () => {
               <Avatar className="w-10" />
             ) : (
               <img
-                src={user?.avatar_image_url + "?a=" + Date.now()}
+                src={user?.avatar_image_url + "?v=" + Date.now()}
                 alt="user"
-                className="w-8 h-8"
+                className="w-8 h-8 rounded-full"
               />
             )}
             <p>{user?.display_name || "NA"}</p>

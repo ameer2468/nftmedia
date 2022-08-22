@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { fetchUserProfile } from "../services/user";
 import { UserContext } from "../context/UserContext";
-import { IUserProfile } from "../types/user";
+import { IUser, IUserProfile } from "../types/user";
 import { supabase } from "../constants/supabase";
 
 export const useProfileGet = (setProfile: (arg: IUserProfile) => void) => {
@@ -50,8 +50,15 @@ export const useProfile = () => {
         // const reader = new FileReader();
         // reader.readAsDataURL(file);
         // reader.onload = () => {
+        setUser({ ...user, avatar_image_url: false });
         setUser({ ...user, avatar_image_url: userData.avatar_image_url });
-        console.log(userData);
+        setProfile({
+          ...profile,
+          user: {
+            ...(profile?.user as IUser),
+            avatar_image_url: userData.avatar_image_url,
+          },
+        });
       });
     setImageLoading(false);
     if (uploadError) {
