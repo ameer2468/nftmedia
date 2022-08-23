@@ -38,7 +38,7 @@ export interface IPostComment {
   thread_title: string;
   display_name: string;
   user_id: number;
-  avatar_url: string;
+  avatar_image_url: string;
   comment: string;
 }
 

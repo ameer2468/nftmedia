@@ -47,10 +47,10 @@ const Comment = ({
       <div className="flex justify-between items-center mb-5">
         <NavLink to={`/profile/${comment.user_id}`}>
           <div className="flex items-center transition-all duration-200 hover:opacity-50 cursor-pointer">
-            {comment.avatar_url ? (
+            {comment.avatar_image_url ? (
               <img
                 className="w-8 mr-3"
-                src={comment.avatar_url + "?v=" + Date.now()}
+                src={comment.avatar_image_url + "?v=" + Date.now()}
                 alt="avatar"
               />
             ) : (

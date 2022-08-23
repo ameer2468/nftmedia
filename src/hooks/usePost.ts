@@ -240,7 +240,7 @@ export const usePost = (form?: args) => {
                 created_at: new Date().toISOString(),
                 display_name: display_name,
                 user_id: user_id,
-                avatar_url: user?.avatar_image_url || null,
+                avatar_image_url: user?.avatar_image_url || null,
               },
             ],
           });
@@ -282,11 +282,11 @@ export const useFetchHomePosts = () => {
 export const useFetchPost = () => {
   const [post, setPost] = useState<IThread | null>(null);
   const [loading, setLoading] = useState(true);
-  const { user } = useContext(UserContext);
   const postId = useParams().id;
+  const { user } = useContext(UserContext);
   const fetchPost = useCallback(async () => {
     setLoading(true);
-    await fetchPostService(Number(user?.id), postId).then((data: any) => {
+    await fetchPostService(postId, user?.id).then((data: any) => {
       setPost(data);
       setLoading(false);
     });

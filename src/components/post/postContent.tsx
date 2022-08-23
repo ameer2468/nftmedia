@@ -49,8 +49,6 @@ const PostContent = ({ post, loading, vote, voteLoading }: props) => {
     );
   };
 
-  console.log(post);
-
   return (
     <div className="bg-gradient-to-br to-zinc-50 from-sky-50 rounded-xl p-10 border border-white">
       {loading ? (

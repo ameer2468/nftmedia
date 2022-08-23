@@ -4,10 +4,10 @@ import axios from "axios";
 const api = process.env.REACT_APP_API_URL;
 
 export const fetchPostService = async (
-  userid: number,
-  postid: string | undefined
+  postid: string | undefined,
+  userid: number | undefined
 ) => {
-  return await getRequest(`${api}/post`, { userid, postid });
+  return await getRequest(`${api}/post`, { postid, userid });
 };
 
 export const getRecentPosts = async () => {
