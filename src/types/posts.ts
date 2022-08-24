@@ -34,11 +34,10 @@ export interface IPostComment {
   id: number;
   created_at: string;
   thread_id: number;
-  comment_id: number;
   thread_title: string;
   display_name: string;
   user_id: number;
-  avatar_image_url: string;
+  avatar_image_url: string | null;
   comment: string;
 }
 
@@ -59,23 +58,23 @@ export interface IVote {
 
 export interface INewComment {
   input: string;
-  thread_id: number | undefined;
-  thread_title: string | undefined;
-  display_name: string | undefined;
-  user_id: number | undefined;
+  thread_id: number;
+  thread_title: string;
+  display_name: string;
+  user_id: number;
   post: IThread | null;
   setPost: Dispatch<IThread>;
 }
 
 export interface IThread {
-  comments?: IPostComment[];
+  comments: IPostComment[];
   thread: {
     post: string;
     title: string;
     view_count: number;
     comment_count: number;
     vote_count: number;
-    avatar_image_url: string;
+    avatar_image_url: string | null;
     didUserVote: {
       dir: number;
       id: number;

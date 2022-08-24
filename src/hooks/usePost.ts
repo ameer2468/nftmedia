@@ -79,13 +79,13 @@ export const usePost = (form?: args) => {
       .then((res: any) => {
         const updatedComment = res.data[0];
         setCommentLoading(false);
-        const updateComment = post?.comments?.map((comment) => {
-          if (comment.id === updatedComment.id) {
-            return updatedComment;
-          }
-          return comment;
-        });
         if (post) {
+          const updateComment = post.comments?.map((comment) => {
+            if (comment.id === updatedComment.id) {
+              return updatedComment;
+            }
+            return comment;
+          });
           setPost({ ...post, comments: updateComment });
         }
       });
@@ -231,7 +231,7 @@ export const usePost = (form?: args) => {
               comment_count: post.thread.comment_count + 1,
             },
             comments: [
-              ...(post.comments as any),
+              ...post.comments,
               {
                 id: newComment.id,
                 thread_id: thread_id,

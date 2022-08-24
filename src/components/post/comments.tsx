@@ -35,17 +35,19 @@ const Comments = ({ comments, loading, post, setPost }: props) => {
     editCommentHandler,
   } = usePost();
   const submitComment = () => {
-    newCommentHandler({
-      input: comment,
-      thread_id: post?.thread.id,
-      thread_title: post?.thread.title,
-      display_name: user?.display_name,
-      user_id: user?.id,
-      post: post,
-      setPost: setPost,
-    }).then(() => {
-      resetForm();
-    });
+    if (post && user) {
+      newCommentHandler({
+        input: comment,
+        thread_id: post.thread.id,
+        thread_title: post.thread.title,
+        display_name: user.display_name,
+        user_id: user.id,
+        post: post,
+        setPost: setPost,
+      }).then(() => {
+        resetForm();
+      });
+    }
   };
   return (
     <div className="bg-gradient-to-br to-zinc-50 from-sky-50 rounded-xl p-10 border border-white">
