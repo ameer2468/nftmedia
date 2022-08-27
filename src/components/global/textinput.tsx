@@ -40,7 +40,7 @@ const TextInput = ({
       value={value}
       onKeyDown={(e) => {
         if (e.key === "Enter" && enterKeyHandler) {
-          enterKeyHandler && enterKeyHandler(e);
+          enterKeyHandler(e);
         }
       }}
       minLength={minLength}

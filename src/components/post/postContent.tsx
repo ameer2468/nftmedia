@@ -48,7 +48,6 @@ const PostContent = ({ post, loading, vote, voteLoading }: props) => {
       </div>
     );
   };
-
   return (
     <div className="bg-gradient-to-br to-zinc-50 from-sky-50 rounded-xl p-10 border border-white">
       {loading ? (
@@ -86,7 +85,7 @@ const PostContent = ({ post, loading, vote, voteLoading }: props) => {
             <div className="flex gap-10">
               <CommentCount count={post?.comment_count} />
               <ViewCount count={post?.view_count} />
-              <VoteCount count={post?.vote_count} />
+              <VoteCount count={Number(post?.vote_count)} />
             </div>
           </div>
           <div className="flex items-center gap-2 mb-5">

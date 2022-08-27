@@ -101,21 +101,13 @@ export const usePost = (form?: args) => {
     dir: string,
     userVote: number | null | undefined
   ) => {
-    if (post.thread.vote_count === 0 && dir === "up") {
-      return post.thread.vote_count + 1;
-    } else if (post.thread.vote_count === 0 && dir === "down") {
-      return post.thread.vote_count - 1;
-    } else if (post.thread.vote_count === 1 && dir === "down") {
-      return post.thread.vote_count - 2;
-    } else if (post.thread.vote_count === -1 && dir === "up") {
-      return post.thread.vote_count + 2;
-    } else if (userVote === 1 && dir === "up") {
+    if (userVote === 1 && dir === "up") {
       return post.thread.vote_count - 1;
     } else if (userVote === -1 && dir === "down") {
       return post.thread.vote_count + 1;
-    } else if (dir === "up") {
+    } else if (userVote === null && dir === "up") {
       return post.thread.vote_count + 1;
-    } else {
+    } else if (userVote === null && dir === "down") {
       return post.thread.vote_count - 1;
     }
   };
@@ -157,7 +149,7 @@ export const usePost = (form?: args) => {
                 ...post,
                 thread: {
                   ...post.thread,
-                  vote_count: voteUpdate(post, dir, userVote),
+                  vote_count: voteUpdate(post, dir, userVote.dir),
                   didUserVote: { dir: data.dir, id: data.id },
                 },
               });
@@ -180,7 +172,7 @@ export const usePost = (form?: args) => {
                 ...post,
                 thread: {
                   ...post.thread,
-                  vote_count: voteUpdate(post, dir, userVote),
+                  vote_count: voteUpdate(post, dir, userVote.dir),
                   didUserVote: { dir: data.dir, id: data.id },
                 },
               });
