@@ -32,18 +32,22 @@ export const useProfile = () => {
     const fileName = `${profile?.user.id}.${fileExt}`;
     const filePath = `${fileName}`;
     const oldUserAvatar = profile?.user.avatar_image_url;
-    const getExtension = oldUserAvatar?.split(".").pop();
+    const findImageExtension = oldUserAvatar
+      ?.split(`/${profile?.user.id}.`)[1]
+      .substring(0, 3);
     setImageLoading(true);
     await supabase.storage
       .from("avatars")
-      .remove([`${profile?.user.id}.${getExtension}`]);
+      .remove([`${profile?.user.id}.${findImageExtension}`]);
     let { error: uploadError } = await supabase.storage
       .from("avatars")
       .upload(filePath, file);
-    const avatar_url = supabase.storage.from("avatars").getPublicUrl(fileName);
+    const avatar_url = await supabase.storage
+      .from("avatars")
+      .createSignedUrl(fileName, 10000);
     await supabase
       .from("auth")
-      .update({ avatar_image_url: avatar_url.data?.publicURL })
+      .update({ avatar_image_url: avatar_url.data?.signedURL })
       .eq("id", profile?.user.id)
       .then((res: any) => {
         const userData = res.data[0];

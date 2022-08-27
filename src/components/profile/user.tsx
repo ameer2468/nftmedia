@@ -67,7 +67,7 @@ const User = ({
             <img
               alt="user"
               className="w-24 h-24 rounded-full mb-5"
-              src={profile?.avatar_image_url + "?v=" + Date.now()}
+              src={profile?.avatar_image_url}
             />
           )}
           {user?.id === profile?.id ? (

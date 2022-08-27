@@ -59,7 +59,7 @@ const Comments = ({ comments, loading, post, setPost }: props) => {
           ) : (
             <img
               className="w-10 mr-5"
-              src={user?.avatar_image_url + "?d=" + Date.now()}
+              src={user?.avatar_image_url}
               alt="avatar"
             />
           )}

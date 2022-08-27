@@ -20,6 +20,7 @@ const Topbar = () => {
   const clickHandler = () => {
     setActive(!active);
   };
+  console.log(user);
   return (
     <div
       className="topbar z-50  w-full gap-5 h-24 px-0 fixed right-0 top-0
@@ -42,7 +43,7 @@ const Topbar = () => {
               <Avatar className="w-10" />
             ) : (
               <img
-                src={user?.avatar_image_url + "?v=" + Date.now()}
+                src={user?.avatar_image_url}
                 alt="user"
                 className="w-8 h-8 rounded-full"
               />

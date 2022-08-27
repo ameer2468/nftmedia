@@ -97,7 +97,7 @@ const PostContent = ({ post, loading, vote, voteLoading }: props) => {
                   ) : (
                     <img
                       className="w-10 mr-3"
-                      src={post?.avatar_image_url + "?v=" + Date.now()}
+                      src={post?.avatar_image_url}
                       alt="avatar"
                     />
                   )}
