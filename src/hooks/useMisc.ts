@@ -18,6 +18,7 @@ export const useMisc = () => {
         setUser({ ...user, avatar_image_url: avatar_url });
       });
   };
+
   return {
     refetchImage,
   };

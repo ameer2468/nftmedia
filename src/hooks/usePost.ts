@@ -109,6 +109,10 @@ export const usePost = (form?: args) => {
       return post.thread.vote_count + 1;
     } else if (userVote === null && dir === "down") {
       return post.thread.vote_count - 1;
+    } else if (userVote === 1 && dir === "down") {
+      return post.thread.vote_count - 2;
+    } else if (userVote === -1 && dir === "up") {
+      return post.thread.vote_count + 2;
     }
   };
 

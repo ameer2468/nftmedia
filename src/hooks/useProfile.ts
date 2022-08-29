@@ -42,12 +42,12 @@ export const useProfile = () => {
     let { error: uploadError } = await supabase.storage
       .from("avatars")
       .upload(filePath, file);
-    const avatar_url = await supabase.storage
+    const { publicURL: avatar_url } = await supabase.storage
       .from("avatars")
-      .createSignedUrl(fileName, 10000);
+      .getPublicUrl(filePath);
     await supabase
       .from("auth")
-      .update({ avatar_image_url: avatar_url.data?.signedURL })
+      .update({ avatar_image_url: avatar_url })
       .eq("id", profile?.user.id)
       .then((res: any) => {
         const userData = res.data[0];

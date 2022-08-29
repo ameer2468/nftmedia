@@ -9,7 +9,8 @@ import Circle from "../skeleton/circle";
 import Rectangle from "../skeleton/rectangle";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencilAlt } from "@fortawesome/free-solid-svg-icons";
-import { Avatar } from "../global/avatar";
+import { AvatarMemo } from "../global/avatar";
+import { useImageBroken } from "../../hooks/useImageBroken";
 
 interface props {
   profile: IUser | undefined;
@@ -31,6 +32,7 @@ const User = ({
   const { user } = useContext(UserContext);
   const loadingCheck = loading;
   const fileRef = React.createRef<HTMLInputElement>();
+  const { imageBroken, handleImageError } = useImageBroken();
   const skeleton = () => {
     let arr = [];
     for (let i = 0; i < 4; i++) {
@@ -61,13 +63,14 @@ const User = ({
           />
           {imageLoading ? (
             <Circle />
-          ) : profile?.avatar_image_url === null ? (
-            <Avatar className="w-24" />
+          ) : profile?.avatar_image_url === null || imageBroken ? (
+            <AvatarMemo className="w-24" />
           ) : (
             <img
               alt="user"
+              onError={handleImageError}
               className="w-24 h-24 rounded-full mb-5"
-              src={profile?.avatar_image_url}
+              src={profile?.avatar_image_url + "?v=" + Date.now()}
             />
           )}
           {user?.id === profile?.id ? (

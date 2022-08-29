@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import Comment from "./comment";
 import TextInput from "../global/textinput";
-import { Avatar } from "../global/avatar";
+import { AvatarMemo } from "../global/avatar";
 import Button from "../global/button";
 import { AnimatePresence, motion } from "framer-motion";
 import { useFormHook } from "../../hooks/useFormHook";
@@ -55,11 +55,11 @@ const Comments = ({ comments, loading, post, setPost }: props) => {
       <div className="mt-5 flex-col flex gap-5">
         <div className="flex w-full items-center">
           {user?.avatar_image_url === null ? (
-            <Avatar className="w-10 mr-5" />
+            <AvatarMemo className="w-10 mr-5" />
           ) : (
             <img
               className="w-10 mr-5"
-              src={user?.avatar_image_url}
+              src={user?.avatar_image_url + "?v=" + Date.now()}
               alt="avatar"
             />
           )}

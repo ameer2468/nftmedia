@@ -1,5 +1,5 @@
 import React, { useRef, useContext, useState, useEffect } from "react";
-import { Avatar } from "../global/avatar";
+import { AvatarMemo } from "../global/avatar";
 import { NavLink } from "react-router-dom";
 import moment from "moment";
 import { IPostComment, IThread } from "../../types/posts";
@@ -8,6 +8,7 @@ import Actions from "./actions";
 import Textarea from "../global/textarea";
 import Button from "../global/button";
 import Loading from "../global/loading";
+import { useImageBroken } from "../../hooks/useImageBroken";
 
 interface props {
   comment: IPostComment;
@@ -38,6 +39,7 @@ const Comment = ({
   const user = useContext(UserContext);
   const [editComment, setEditComment] = useState(false);
   const focusRef = useRef<HTMLTextAreaElement>(null);
+  const { handleImageError, imageBroken } = useImageBroken();
   useEffect(() => {
     if (editComment) {
       focusRef.current?.focus();
@@ -49,14 +51,15 @@ const Comment = ({
       <div className="flex justify-between items-center mb-5">
         <NavLink to={`/profile/${comment.user_id}`}>
           <div className="flex items-center transition-all duration-200 hover:opacity-50 cursor-pointer">
-            {comment.avatar_image_url ? (
+            {comment.avatar_image_url && !imageBroken ? (
               <img
                 className="w-8 mr-3"
-                src={comment.avatar_image_url}
+                src={comment.avatar_image_url + "?v=" + Date.now()}
+                onError={handleImageError}
                 alt="avatar"
               />
             ) : (
-              <Avatar className="w-10" />
+              <AvatarMemo className="w-10" />
             )}
             <p className="font-bold text-sky-500">{comment.display_name}</p>
             {post?.thread.user_id === comment.user_id && (

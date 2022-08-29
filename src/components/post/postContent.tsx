@@ -2,7 +2,7 @@ import React from "react";
 import ViewCount from "../global/view-count";
 import CommentCount from "../global/comment-count";
 import VoteCount from "../global/vote-count";
-import { Avatar } from "../global/avatar";
+import { AvatarMemo } from "../global/avatar";
 import moment from "moment";
 import { IThread } from "../../types/posts";
 import Rectangle from "../skeleton/rectangle";
@@ -10,6 +10,7 @@ import Button from "../global/button";
 import { faArrowDown, faArrowUp } from "@fortawesome/free-solid-svg-icons";
 import Tippy from "@tippyjs/react";
 import { Link } from "react-router-dom";
+import { useImageBroken } from "../../hooks/useImageBroken";
 
 interface props {
   post: IThread["thread"] | undefined;
@@ -19,6 +20,7 @@ interface props {
 }
 
 const PostContent = ({ post, loading, vote, voteLoading }: props) => {
+  const { handleImageError, imageBroken } = useImageBroken();
   const skeleton = () => {
     return (
       <div>
@@ -92,12 +94,13 @@ const PostContent = ({ post, loading, vote, voteLoading }: props) => {
             <div className="flex items-center justify-between w-full">
               <Link to={`/profile/${post?.user_id}`}>
                 <div className="flex items-center transition-all duration-200 hover:opacity-50 cursor-pointer">
-                  {post?.avatar_image_url === null ? (
-                    <Avatar className="w-10" />
+                  {post?.avatar_image_url === null || imageBroken ? (
+                    <AvatarMemo className="w-10" />
                   ) : (
                     <img
                       className="w-10 mr-3"
                       src={post?.avatar_image_url}
+                      onError={handleImageError}
                       alt="avatar"
                     />
                   )}

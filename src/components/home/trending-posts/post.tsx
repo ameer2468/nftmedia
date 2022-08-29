@@ -2,7 +2,7 @@ import React from "react";
 import Button from "../../global/button";
 import ViewCount from "../../global/view-count";
 import CommentCount from "../../global/comment-count";
-import { Avatar } from "../../global/avatar";
+import { AvatarMemo } from "../../global/avatar";
 import VoteCount from "../../global/vote-count";
 import { Link } from "react-router-dom";
 
@@ -11,7 +11,7 @@ const Post = () => {
     <div className="px-12 py-8 w-full bg-gradient-to-br to-zinc-50 from-sky-50 border border-sky-100  rounded-xl text-center">
       <h1 className="text-center text-[25px] font-bold lg:text-[30px]">Post</h1>
       <div className="font-bold flex items-center transition-all duration-200 justify-center gap-2 hover:opacity-50 cursor-pointer">
-        <Avatar className="w-10" />
+        <AvatarMemo className="w-10" />
         <p className="text-sky-500 mt-3">John Doe</p>
       </div>
       <p className="py-5 leading-7 text-center">

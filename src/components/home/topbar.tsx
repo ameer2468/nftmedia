@@ -9,7 +9,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { faSignOut, faUser } from "@fortawesome/free-solid-svg-icons";
 import { useDetectOutsideClick } from "../../hooks/useDetectOutsideClick";
 import { useNavigate } from "react-router-dom";
-import { Avatar } from "../global/avatar";
+import { AvatarMemo } from "../global/avatar";
 import { useMisc } from "../../hooks/useMisc";
 
 const Topbar = () => {
@@ -41,10 +41,10 @@ const Topbar = () => {
             className="flex gap-3 items-center"
           >
             {user?.avatar_image_url === null ? (
-              <Avatar className="w-10" />
+              <AvatarMemo className="w-10" />
             ) : (
               <img
-                src={user?.avatar_image_url}
+                src={user?.avatar_image_url + "?v=" + Date.now()}
                 alt="user"
                 onError={() => refetchImage()}
                 className="w-8 h-8 rounded-full"

@@ -1,10 +1,11 @@
 import { BigHead } from "@bigheads/core";
+import React, { memo } from "react";
 
 interface props {
   className?: string;
 }
 
-export const Avatar = ({ className }: props) => {
+const Avatar = ({ className }: props) => {
   return (
     <div className={className}>
       <BigHead
@@ -31,3 +32,5 @@ export const Avatar = ({ className }: props) => {
     </div>
   );
 };
+
+export const AvatarMemo = memo(Avatar);
