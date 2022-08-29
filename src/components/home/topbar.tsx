@@ -10,6 +10,7 @@ import { faSignOut, faUser } from "@fortawesome/free-solid-svg-icons";
 import { useDetectOutsideClick } from "../../hooks/useDetectOutsideClick";
 import { useNavigate } from "react-router-dom";
 import { Avatar } from "../global/avatar";
+import { useMisc } from "../../hooks/useMisc";
 
 const Topbar = () => {
   const { logout } = useLogin();
@@ -20,7 +21,7 @@ const Topbar = () => {
   const clickHandler = () => {
     setActive(!active);
   };
-  console.log(user);
+  const { refetchImage } = useMisc();
   return (
     <div
       className="topbar z-50  w-full gap-5 h-24 px-0 fixed right-0 top-0
@@ -45,6 +46,7 @@ const Topbar = () => {
               <img
                 src={user?.avatar_image_url}
                 alt="user"
+                onError={() => refetchImage()}
                 className="w-8 h-8 rounded-full"
               />
             )}

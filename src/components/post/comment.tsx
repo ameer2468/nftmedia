@@ -2,7 +2,7 @@ import React, { useRef, useContext, useState, useEffect } from "react";
 import { Avatar } from "../global/avatar";
 import { NavLink } from "react-router-dom";
 import moment from "moment";
-import { IPostComment } from "../../types/posts";
+import { IPostComment, IThread } from "../../types/posts";
 import { UserContext } from "../../context/UserContext";
 import Actions from "./actions";
 import Textarea from "../global/textarea";
@@ -14,6 +14,7 @@ interface props {
   deleteComment: (id: number) => void;
   editedComment: string;
   onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  post: IThread | null;
   resetForm: () => void;
   commentLoading: boolean;
   createCommentLoading: boolean;
@@ -28,6 +29,7 @@ const Comment = ({
   editedComment,
   onChange,
   resetForm,
+  post,
   index,
   editCommentIndex,
   commentLoading,
@@ -50,13 +52,22 @@ const Comment = ({
             {comment.avatar_image_url ? (
               <img
                 className="w-8 mr-3"
-                src={comment.avatar_image_url + "?v=" + Date.now()}
+                src={comment.avatar_image_url}
                 alt="avatar"
               />
             ) : (
               <Avatar className="w-10" />
             )}
             <p className="font-bold text-sky-500">{comment.display_name}</p>
+            {post?.thread.user_id === comment.user_id && (
+              <p
+                className=" bg-sky-200 px-2 py-1 rounded-md
+              ml-4
+              text-xs"
+              >
+                Author
+              </p>
+            )}
           </div>
         </NavLink>
         <div className="flex items-center gap-5">

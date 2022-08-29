@@ -12,7 +12,7 @@ export const useProfileGet = (setProfile: (arg: IUserProfile) => void) => {
 
   useEffect(() => {
     setLoading(true);
-    fetchUserProfile(userId, user?.id as number).then((data) => {
+    fetchUserProfile(Number(userId) as any).then((data) => {
       setProfile(data);
       setLoading(false);
     });

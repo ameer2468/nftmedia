@@ -79,7 +79,7 @@ export interface IThread {
       dir: number;
       id: number;
     };
-    user_id: string;
+    user_id: number;
     id: number;
     created_at: string;
     display_name: string;

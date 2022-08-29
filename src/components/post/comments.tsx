@@ -117,6 +117,7 @@ const Comments = ({ comments, loading, post, setPost }: props) => {
                       onChangeHandler(e);
                     }}
                     index={index}
+                    post={post}
                     editCommentIndex={editCommentIndex}
                     resetForm={resetForm}
                     editCommentHandler={(commentId: number) => {
