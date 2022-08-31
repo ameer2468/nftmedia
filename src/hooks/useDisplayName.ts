@@ -8,6 +8,7 @@ export const useDisplayname = () => {
   const [loading, setLoading] = useState(false);
   const { setModalId } = useContext(ModalContext);
   const { setUser } = useContext(UserContext);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
@@ -18,30 +19,48 @@ export const useDisplayname = () => {
     e?.preventDefault();
     if (displayName) {
       setLoading(true);
+      //Check if name already exists
       await supabase
         .from("auth")
-        .update({ display_name: displayName })
-        .eq("wallet", JSON.parse(localStorage.getItem("user") as string).wallet)
-        .then(async () => {
-          await supabase
-            .from("auth")
-            .select("display_name")
-            .eq(
-              "display_name",
-              JSON.parse(localStorage.getItem("user") as string).display_name
-            )
-            .then(() => {
-              setModalId(null);
-              setLoading(false);
-              localStorage.setItem(
-                "user",
-                JSON.stringify({
-                  ...JSON.parse(localStorage.getItem("user") as string),
-                  display_name: displayName,
-                })
-              );
-              setUser(JSON.parse(localStorage.getItem("user") as string));
-            });
+        .select("display_name")
+        .eq("display_name", displayName)
+        .then(async (res: any) => {
+          if (res.data?.length > 0) {
+            setLoading(false);
+            return setErrorMessage(
+              "Display name taken - please try another name"
+            );
+          } else {
+            await supabase
+              .from("auth")
+              .update({ display_name: displayName })
+              .eq(
+                "wallet",
+                JSON.parse(localStorage.getItem("user") as string).wallet
+              )
+              .then(async () => {
+                await supabase
+                  .from("auth")
+                  .select("display_name")
+                  .eq(
+                    "display_name",
+                    JSON.parse(localStorage.getItem("user") as string)
+                      .display_name
+                  )
+                  .then(() => {
+                    setModalId(null);
+                    setLoading(false);
+                    localStorage.setItem(
+                      "user",
+                      JSON.stringify({
+                        ...JSON.parse(localStorage.getItem("user") as string),
+                        display_name: displayName,
+                      })
+                    );
+                    setUser(JSON.parse(localStorage.getItem("user") as string));
+                  });
+              });
+          }
         });
     }
   };
@@ -51,6 +70,7 @@ export const useDisplayname = () => {
     handler,
     loading,
     submit,
+    errorMessage,
     setDisplayName,
   };
 };

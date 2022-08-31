@@ -13,6 +13,7 @@ interface props {
   hideButton?: boolean;
   hideClose?: boolean;
   loading?: boolean;
+  disabled?: any;
   subtext?: string;
   lottie: any;
 }
@@ -23,6 +24,7 @@ const Modal = ({
   onClick,
   hideButton,
   loading,
+  disabled,
   subtext,
   hideClose,
   lottie,
@@ -69,9 +71,12 @@ const Modal = ({
                 {hideButton ? null : (
                   <Button
                     loading={loading}
-                    disabled={loading}
+                    disabled={loading || disabled}
                     onClick={onClick}
-                    className="bg-sky-500 h-14 w-full normal-case font-normal text-[14px] ml-auto mr-auto"
+                    className={`
+                      bg-sky-500 h-14 w-full normal-case font-normal text-[14px] ml-auto mr-auto
+                      ${disabled ? "bg-gray-500 cursor-not-allowed" : ""}
+                    `}
                     text="Confirm"
                   />
                 )}

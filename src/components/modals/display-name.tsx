@@ -5,7 +5,8 @@ import { useDisplayname } from "../../hooks/useDisplayName";
 import thinking from "../../lottie/thinking.json";
 
 const DisplayName = () => {
-  const { handler, loading, submit } = useDisplayname();
+  const { handler, loading, submit, errorMessage, displayName } =
+    useDisplayname();
   const defaultOptions = {
     loop: true,
     autoplay: true,
@@ -20,6 +21,7 @@ const DisplayName = () => {
       onClick={() => submit()}
       loading={loading}
       hideClose={true}
+      disabled={displayName === ""}
       subtext="A name of your choice that you can be identified by: can be changed once every 30 days"
       lottie={defaultOptions}
     >
@@ -34,6 +36,9 @@ const DisplayName = () => {
           placeholder="Enter name"
         />
       </div>
+      <p className="text-xs text-center text-red-500 mt-2 w-full">
+        {errorMessage}
+      </p>
     </Modal>
   );
 };
