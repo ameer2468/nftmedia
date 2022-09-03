@@ -3,7 +3,7 @@ import { useCallback, useEffect } from "react";
 import { useLogin } from "./useLogin";
 
 export const useCheckSession = () => {
-  const sessionToken = localStorage.getItem("user");
+  const sessionToken: any = localStorage.getItem("user");
   const path = useLocation().pathname;
   const { logout } = useLogin();
   // const parseJwt = (token: string) => {
@@ -14,8 +14,8 @@ export const useCheckSession = () => {
   //   }
   // };
   const checkSession = useCallback(async () => {
-    if (sessionToken != null) {
-      const userData = JSON.parse(sessionToken);
+    const userData = JSON.parse(sessionToken);
+    if (sessionToken != null && userData.token != null) {
       if (userData.token.exp * 1000 < Date.now()) {
         await logout(userData.id);
       }

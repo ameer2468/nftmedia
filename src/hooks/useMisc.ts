@@ -16,6 +16,10 @@ export const useMisc = () => {
       .then((res) => {
         const avatar_url = res.data?.signedURL;
         setUser({ ...user, avatar_image_url: avatar_url });
+        localStorage.setItem(
+          "user",
+          JSON.stringify({ ...user, avatar_image_url: avatar_url })
+        );
       });
   };
 

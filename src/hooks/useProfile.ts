@@ -42,7 +42,7 @@ export const useProfile = () => {
     let { error: uploadError } = await supabase.storage
       .from("avatars")
       .upload(filePath, file);
-    const { publicURL: avatar_url } = await supabase.storage
+    const { publicURL: avatar_url } = supabase.storage
       .from("avatars")
       .getPublicUrl(filePath);
     await supabase
@@ -51,11 +51,14 @@ export const useProfile = () => {
       .eq("id", profile?.user.id)
       .then((res: any) => {
         const userData = res.data[0];
-        // const reader = new FileReader();
-        // reader.readAsDataURL(file);
-        // reader.onload = () => {
-        setUser({ ...user, avatar_image_url: false });
-        setUser({ ...user, avatar_image_url: userData.avatar_image_url });
+        setUser(userData);
+        localStorage.setItem(
+          "user",
+          JSON.stringify({
+            ...user,
+            avatar_image_url: userData.avatar_image_url,
+          })
+        );
         setProfile({
           ...profile,
           user: {

@@ -5,6 +5,7 @@ import CommentCount from "../../global/comment-count";
 import VoteCount from "../../global/vote-count";
 import { Link } from "react-router-dom";
 import { IPost } from "../../../types/posts";
+import { AvatarMemo } from "../../global/avatar";
 
 interface props {
   data: null | IPost;
@@ -18,11 +19,15 @@ const Post = ({ data }: props) => {
       </h1>
       <Link to={`/profile/${data?.user_id}`}>
         <div className="font-bold flex items-center transition-all duration-200 justify-center mt-5 gap-2 hover:opacity-50 cursor-pointer">
-          <img
-            src={data?.avatar_image_url + "?v=" + Date.now()}
-            alt="user"
-            className="w-8 h-8"
-          />
+          {data?.avatar_image_url ? (
+            <img
+              src={data?.avatar_image_url + "?v=" + Date.now()}
+              alt="user"
+              className="w-8 h-8"
+            />
+          ) : (
+            <AvatarMemo className="w-10" />
+          )}
           <p className="text-sky-500">{data?.display_name}</p>
         </div>
       </Link>

@@ -14,7 +14,7 @@ export const useCheckUser = () => {
       }
     }
     if (
-      !checkStorage &&
+      checkStorage === null &&
       location.pathname !== "/login" &&
       location.pathname !== "/signup"
     ) {
