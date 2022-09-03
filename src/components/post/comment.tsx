@@ -45,7 +45,6 @@ const Comment = ({
       focusRef.current?.focus();
     }
   }, [editComment]);
-
   return (
     <div className="bg-white rounded-xl p-5 border border-sky-100">
       <div className="flex justify-between items-center mb-5">

@@ -49,7 +49,6 @@ const Comments = ({ comments, loading, post, setPost }: props) => {
       });
     }
   };
-  console.log(user);
   return (
     <div className="bg-gradient-to-br to-zinc-50 from-sky-50 rounded-xl p-10 border border-white">
       <h2 className="font-bold text-[25px] lg:text-[30px]">Comments</h2>
