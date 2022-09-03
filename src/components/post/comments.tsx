@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Comment from "./comment";
 import TextInput from "../global/textinput";
 import { AvatarMemo } from "../global/avatar";
@@ -9,6 +9,7 @@ import { IPostComment, IThread } from "../../types/posts";
 import { usePost } from "../../hooks/usePost";
 import { UserContext } from "../../context/UserContext";
 import { Scrollbars } from "react-custom-scrollbars-2";
+import TagUser from "./tagUser";
 
 interface props {
   comments: IPostComment[] | undefined;
@@ -19,6 +20,7 @@ interface props {
 
 const Comments = ({ comments, loading, post, setPost }: props) => {
   const [show, setShow] = useState(false);
+  const [showTag, setShowTag] = useState(false);
   const [editCommentIndex, setEditCommentIndex] = useState<number | null>(null);
   const inputObj = {
     comment: "",
@@ -27,6 +29,7 @@ const Comments = ({ comments, loading, post, setPost }: props) => {
   const { user } = useContext(UserContext);
   const { onChangeHandler, inputValues, resetForm } = useFormHook(inputObj);
   const { comment, editedComment } = inputValues;
+  const findTag = comment.match(/@\w+/g);
   const {
     newCommentHandler,
     commentLoading,
@@ -49,6 +52,13 @@ const Comments = ({ comments, loading, post, setPost }: props) => {
       });
     }
   };
+  useEffect(() => {
+    if (findTag) {
+      setShowTag(true);
+    } else {
+      setShowTag(false);
+    }
+  }, [findTag]);
   return (
     <div className="bg-gradient-to-br to-zinc-50 from-sky-50 rounded-xl p-10 border border-white">
       <h2 className="font-bold text-[25px] lg:text-[30px]">Comments</h2>
@@ -63,19 +73,22 @@ const Comments = ({ comments, loading, post, setPost }: props) => {
               alt="avatar"
             />
           )}
-          <TextInput
-            className="w-full"
-            name="comment"
-            value={comment}
-            onChange={(e) => {
-              onChangeHandler(e);
-            }}
-            enterKeyHandler={submitComment}
-            onFocus={() => {
-              setShow(true);
-            }}
-            placeholder="Add a comment"
-          />
+          <div className="relative w-full">
+            <TextInput
+              className="w-full"
+              name="comment"
+              value={comment}
+              onChange={(e) => {
+                onChangeHandler(e);
+              }}
+              enterKeyHandler={submitComment}
+              onFocus={() => {
+                setShow(true);
+              }}
+              placeholder="Add a comment"
+            />
+            {showTag && <TagUser />}
+          </div>
         </div>
         <AnimatePresence>
           {show ? (
