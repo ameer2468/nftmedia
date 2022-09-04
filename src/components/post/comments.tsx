@@ -74,7 +74,7 @@ const Comments = ({ comments, loading, post, setPost }: props) => {
             <AvatarMemo className="w-10 mr-5" />
           ) : (
             <img
-              className="w-10 mr-5"
+              className="w-10 h-10 mr-5"
               src={user?.avatar_image_url + "?v=" + Date.now()}
               alt="avatar"
             />

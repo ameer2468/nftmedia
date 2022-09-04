@@ -19,29 +19,31 @@ const TagUser = ({ data, onUserClick }: props) => {
      bg-white border-sky-100 p-3 rounded-xl absolute z-10 border"
         >
           <Scrollbars autoHeight autoHeightMax={200} autoHeightMin={30}>
-            {data?.map((value) => {
-              return (
-                <div
-                  onClick={() => {
-                    onUserClick(value);
-                  }}
-                  key={value.id}
-                  className="flex mb-2 items-center gap-2 cursor-pointer
+            <div className="flex flex-col gap-2">
+              {data?.map((value) => {
+                return (
+                  <div
+                    onClick={() => {
+                      onUserClick(value);
+                    }}
+                    key={value.id}
+                    className="flex items-center gap-2 cursor-pointer
                    hover:text-sky-500 transition-all duration-200"
-                >
-                  {value.avatar_image_url ? (
-                    <img
-                      className="w-7 h-7"
-                      src={value.avatar_image_url}
-                      alt="avatar"
-                    />
-                  ) : (
-                    <AvatarMemo className="w-7 h-7" />
-                  )}
-                  <div className="text-sm">{value.display_name}</div>
-                </div>
-              );
-            })}
+                  >
+                    {value.avatar_image_url ? (
+                      <img
+                        className="w-7 h-7"
+                        src={value.avatar_image_url}
+                        alt="avatar"
+                      />
+                    ) : (
+                      <AvatarMemo className="w-7 h-7" />
+                    )}
+                    <div className="text-sm">{value.display_name}</div>
+                  </div>
+                );
+              })}
+            </div>
           </Scrollbars>
         </div>
       )}
