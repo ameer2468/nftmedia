@@ -17,6 +17,13 @@ export interface IUserProfile {
   };
 }
 
+export interface IUserInfo {
+  id: number;
+  display_name: string;
+  created_at: string;
+  avatar_image_url: string;
+}
+
 export type IUser = IUserProfile["user"];
 export type IProfileComments = IUserProfile["comments"];
 export type IProfileThreads = IUserProfile["threads"];

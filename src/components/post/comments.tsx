@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
 import Comment from "./comment";
-import TextInput from "../global/textinput";
 import { AvatarMemo } from "../global/avatar";
 import Button from "../global/button";
 import { AnimatePresence, motion } from "framer-motion";
@@ -10,6 +9,9 @@ import { usePost } from "../../hooks/usePost";
 import { UserContext } from "../../context/UserContext";
 import { Scrollbars } from "react-custom-scrollbars-2";
 import TagUser from "./tagUser";
+import { useDebounce } from "../../hooks/useDebounce";
+import { useSearchUsers } from "../../hooks/useSearchUsers";
+import TextAreaInput from "../global/textarea";
 
 interface props {
   comments: IPostComment[] | undefined;
@@ -27,9 +29,13 @@ const Comments = ({ comments, loading, post, setPost }: props) => {
     editedComment: "",
   };
   const { user } = useContext(UserContext);
-  const { onChangeHandler, inputValues, resetForm } = useFormHook(inputObj);
+  const { onChangeHandler, inputValues, resetForm, setInputValues } =
+    useFormHook(inputObj);
   const { comment, editedComment } = inputValues;
   const findTag = comment.match(/@\w+/g);
+  const pullNameFromTag = findTag?.map((tag: string | any[]) => tag.slice(1));
+  const nameDebounce = useDebounce(pullNameFromTag?.[0], 300);
+  const { users } = useSearchUsers(nameDebounce);
   const {
     newCommentHandler,
     commentLoading,
@@ -63,7 +69,7 @@ const Comments = ({ comments, loading, post, setPost }: props) => {
     <div className="bg-gradient-to-br to-zinc-50 from-sky-50 rounded-xl p-10 border border-white">
       <h2 className="font-bold text-[25px] lg:text-[30px]">Comments</h2>
       <div className="mt-5 flex-col flex gap-5">
-        <div className="flex w-full items-center">
+        <div className="flex w-full">
           {user?.avatar_image_url === null ? (
             <AvatarMemo className="w-10 mr-5" />
           ) : (
@@ -74,10 +80,12 @@ const Comments = ({ comments, loading, post, setPost }: props) => {
             />
           )}
           <div className="relative w-full">
-            <TextInput
+            <TextAreaInput
               className="w-full"
               name="comment"
               value={comment}
+              hideLimit={true}
+              maxLength={300}
               onChange={(e) => {
                 onChangeHandler(e);
               }}
@@ -87,7 +95,21 @@ const Comments = ({ comments, loading, post, setPost }: props) => {
               }}
               placeholder="Add a comment"
             />
-            {showTag && <TagUser />}
+            {showTag && (
+              <TagUser
+                onUserClick={(user) => {
+                  const updateComment = inputValues.comment.replace(
+                    /@\w+/g,
+                    user.display_name
+                  );
+                  setInputValues({
+                    comment: updateComment,
+                  });
+                  setShowTag(false);
+                }}
+                data={users}
+              />
+            )}
           </div>
         </div>
         <AnimatePresence>

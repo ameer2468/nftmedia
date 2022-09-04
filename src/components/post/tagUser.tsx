@@ -1,14 +1,51 @@
 import React from "react";
+import { IUserInfo } from "../../types/user";
+import { AvatarMemo } from "../global/avatar";
+import { Scrollbars } from "react-custom-scrollbars-2";
 
-const TagUser = () => {
+interface props {
+  data: IUserInfo[] | null;
+  onUserClick: (user: IUserInfo) => void;
+}
+
+const TagUser = ({ data, onUserClick }: props) => {
   return (
-    <div
-      className="w-[300px] mt-1
+    <>
+      {data?.length === 0 ? (
+        ""
+      ) : (
+        <div
+          className="w-[300px]
      bg-white border-sky-100 p-3 rounded-xl absolute z-10 border"
-    >
-      <p>User</p>
-      <p>User20</p>
-    </div>
+        >
+          <Scrollbars autoHeight autoHeightMax={200} autoHeightMin={30}>
+            {data?.map((value) => {
+              return (
+                <div
+                  onClick={() => {
+                    onUserClick(value);
+                  }}
+                  key={value.id}
+                  className="flex mb-2 items-center gap-2 cursor-pointer
+                   hover:text-sky-500 transition-all duration-200"
+                >
+                  {value.avatar_image_url ? (
+                    <img
+                      className="w-7 h-7"
+                      src={value.avatar_image_url}
+                      alt="avatar"
+                    />
+                  ) : (
+                    <AvatarMemo className="w-7 h-7" />
+                  )}
+                  <div className="text-sm">{value.display_name}</div>
+                </div>
+              );
+            })}
+          </Scrollbars>
+        </div>
+      )}
+    </>
   );
 };
 

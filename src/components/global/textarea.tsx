@@ -12,6 +12,8 @@ interface props {
   inputref?: RefObject<any>;
   value?: string;
   onBlur?: (e: React.FocusEvent<HTMLTextAreaElement>) => void;
+  enterKeyHandler?: (e: React.KeyboardEvent<HTMLTextAreaElement>) => void;
+  hideLimit?: boolean;
 }
 
 const TextAreaInput = ({
@@ -21,10 +23,12 @@ const TextAreaInput = ({
   onBlur,
   inputref,
   onFocus,
+  hideLimit,
   name,
   value,
   maxLength,
   minLength,
+  enterKeyHandler,
 }: props) => {
   return (
     <div>
@@ -37,6 +41,11 @@ const TextAreaInput = ({
         name={name}
         onBlur={onBlur}
         ref={inputref}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" && enterKeyHandler) {
+            enterKeyHandler(e);
+          }
+        }}
         minLength={minLength}
         value={value}
         maxLength={maxLength}
@@ -46,7 +55,11 @@ const TextAreaInput = ({
          ${className}
       `}
       />
-      <p className="mt-4 w-full text-right">{`${value?.length} / ${maxLength}`}</p>
+      {hideLimit ? (
+        ""
+      ) : (
+        <p className="mt-4 w-full text-right">{`${value?.length} / ${maxLength}`}</p>
+      )}
     </div>
   );
 };
