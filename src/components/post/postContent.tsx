@@ -53,7 +53,10 @@ const PostContent = ({ post, loading, vote, voteLoading }: props) => {
     );
   };
   return (
-    <div className="bg-gradient-to-br to-zinc-50 from-sky-50 rounded-xl p-10 border border-white">
+    <div
+      className="bg-gradient-to-br to-zinc-50 from-sky-50
+    rounded-xl p-10 border border-white"
+    >
       {loading ? (
         skeleton()
       ) : (

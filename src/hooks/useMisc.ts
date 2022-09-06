@@ -5,10 +5,13 @@ import { UserContext } from "../context/UserContext";
 export const useMisc = () => {
   const { user, setUser } = useContext(UserContext);
   const userAvatar = user?.avatar_image_url;
+  console.log(user);
   const findImageExtension = userAvatar
     ?.split(`/${user?.id}.`)[1]
     .substring(0, 3);
   const fileName = `${user?.id}.${findImageExtension}`;
+  console.log("get image extension", findImageExtension);
+
   const refetchImage = async () => {
     await supabase.storage
       .from("avatars")

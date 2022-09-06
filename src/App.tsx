@@ -19,6 +19,7 @@ import New from "./pages/new";
 import { useScrollTop } from "./hooks/useScrollTop";
 import Profile from "./pages/profile";
 import { useCheckSession } from "./hooks/useCheckSession";
+import Messages from "./pages/messages";
 
 function App() {
   const appRoutes = [
@@ -27,6 +28,7 @@ function App() {
     "/settings",
     "/profile",
     "/new",
+    "/messages",
     `/post/${useLocation().pathname.split("/")[2]}`,
     `/profile/${useLocation().pathname.split("/")[2]}`,
   ];
@@ -47,6 +49,7 @@ function App() {
     { path: "/profile/:id", element: <Profile /> },
     { path: "/settings", element: <Settings /> },
     { path: "/new", element: <New /> },
+    { path: "/messages", element: <Messages /> },
   ];
   const guestRoutes = [{ path: "/login", element: <Login /> }];
   useScrollTop();

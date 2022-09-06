@@ -18,7 +18,10 @@ const Post = ({ data }: props) => {
         {data?.title}
       </h1>
       <Link to={`/profile/${data?.user_id}`}>
-        <div className="font-bold flex items-center transition-all duration-200 justify-center mt-5 gap-2 hover:opacity-50 cursor-pointer">
+        <div
+          className="font-bold flex items-center transition-all
+        duration-200 justify-center mt-5 gap-2 hover:opacity-50 cursor-pointer"
+        >
           {data?.avatar_image_url ? (
             <img
               src={data?.avatar_image_url + "?v=" + Date.now()}
