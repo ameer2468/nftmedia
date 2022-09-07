@@ -5,7 +5,7 @@ const User = () => {
   return (
     <div
       className="w-full height-12 border-b border-sky-100 p-3 hover:bg-zinc-50
-     transition-all duration-200 cursor-pointer"
+     transition-all duration-200 cursor-pointer rounded-tl-xl"
     >
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-1">

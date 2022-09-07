@@ -9,8 +9,8 @@ const Messages = () => {
       <h2 className="font-bold text-[30px] lg:text-[40px] mb-10">
         📨 Messages
       </h2>
-      <div className="flex h-[600px] border-white border">
-        <div className="w-[30%] bg-white">
+      <div className="flex h-[600px]">
+        <div className="w-[30%] bg-white border-white border rounded-tl-xl">
           <Scrollbars style={{ height: "600px" }}>
             <User />
             <User />

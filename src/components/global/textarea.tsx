@@ -10,6 +10,7 @@ interface props {
   name?: string;
   onFocus?: () => void;
   inputref?: RefObject<any>;
+  disableResize?: boolean;
   value?: string;
   onBlur?: (e: React.FocusEvent<HTMLTextAreaElement>) => void;
   enterKeyHandler?: (e: React.KeyboardEvent<HTMLTextAreaElement>) => void;
@@ -29,9 +30,10 @@ const TextAreaInput = ({
   maxLength,
   minLength,
   enterKeyHandler,
+  disableResize,
 }: props) => {
   return (
-    <div>
+    <>
       <textarea
         placeholder={placeholder}
         onChange={(e: any) => {
@@ -51,7 +53,9 @@ const TextAreaInput = ({
         maxLength={maxLength}
         className={`text-sm bg-white px-5 w-full p-5 rounded-xl transition-all duration-200
          border-transparent border-2 h-14 placeholder-black text-black 
-         focus:outline-0 focus:border-sky-500
+         focus:outline-0 focus:border-sky-500 ${
+           disableResize ? "resize-none" : "resize-y"
+         }
          ${className}
       `}
       />
@@ -60,7 +64,7 @@ const TextAreaInput = ({
       ) : (
         <p className="mt-4 w-full text-right">{`${value?.length} / ${maxLength}`}</p>
       )}
-    </div>
+    </>
   );
 };
 

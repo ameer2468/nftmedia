@@ -11,7 +11,7 @@ const Message = () => {
         </div>
         <p className="text-zinc-400 text-xs">11:26PM</p>
       </div>
-      <p className="text-xs leading-5">
+      <p className="text-sm leading-6">
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus
         aliquam, blanditiis consequatur culpa cum deleniti, ea eligendi eveniet
         harum iusto laudantium molestias nobis optio provident quo recusandae

@@ -5,6 +5,7 @@ import Button from "../components/global/button";
 import Picker from "emoji-picker-react";
 import { useFormHook } from "../hooks/useFormHook";
 import { usePost } from "../hooks/usePost";
+import { onEmojiClick } from "../helpers/emojiClick";
 
 const New = () => {
   const inputRef: any = useRef(0);
@@ -16,21 +17,6 @@ const New = () => {
   const { inputValues, setInputValues, onChangeHandler } = useFormHook(form);
   const { submitNewPost, createLoading } = usePost(inputValues);
   const formCheck = inputValues.title.length > 0 && inputValues.post.length > 0;
-  const onEmojiClick = (event: any, emojiObject: any) => {
-    const selectionEnd = inputRef.current.selectionEnd;
-    const postUpdate = () => {
-      let arr = [];
-      for (let i = 0; i < inputValues.post.length; i++) {
-        arr.push(inputValues.post[i]);
-      }
-      arr.splice(selectionEnd, 0, emojiObject?.emoji);
-      return arr.join("");
-    };
-    setInputValues({
-      ...inputValues,
-      post: postUpdate(),
-    });
-  };
 
   return (
     <div className="w-full h-auto top-post pt-48 px-5 lg:pl-64 lg:pr-32 lg:pt-48">
@@ -53,7 +39,16 @@ const New = () => {
               marginBottom: "20px",
               height: "250px",
             }}
-            onEmojiClick={onEmojiClick}
+            onEmojiClick={(event, emojiObject) => {
+              onEmojiClick(
+                event,
+                emojiObject,
+                inputRef,
+                "post",
+                inputValues,
+                setInputValues
+              );
+            }}
           />
           <TextAreaInput
             name={"post"}
