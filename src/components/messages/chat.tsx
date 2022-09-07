@@ -16,7 +16,7 @@ const Chat = () => {
   const emojiRef = React.useRef(null);
   const [showEmojis, setShowEmojis] = useDetectOutsideClick(emojiRef, false);
   return (
-    <div className="bg-gradient-to-br to-zinc-50 from-sky-50 w-[70%] rounded-r-lg">
+    <div className="bg-gradient-to-br to-zinc-50 from-sky-50 w-[70%] rounded-r-lg border-white border">
       <div className="w-full h-[500px] p-5">
         <Message />
       </div>
