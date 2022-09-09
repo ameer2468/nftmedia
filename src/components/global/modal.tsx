@@ -16,6 +16,8 @@ interface props {
   disabled?: any;
   subtext?: string;
   lottie: any;
+  lottieWidth?: string;
+  lottieHeight?: string;
 }
 
 const Modal = ({
@@ -27,6 +29,8 @@ const Modal = ({
   disabled,
   subtext,
   hideClose,
+  lottieWidth,
+  lottieHeight,
   lottie,
 }: props) => {
   const { setModalId, modalId } = useContext(ModalContext);
@@ -58,8 +62,8 @@ const Modal = ({
                 <Lottie
                   isClickToPauseDisabled={true}
                   options={lottie}
-                  height={"100%"}
-                  width={"100%"}
+                  height={lottieHeight || "100%"}
+                  width={lottieWidth || "100%"}
                 />
               </div>
               <div className="w-[50%] p-10 py-20">

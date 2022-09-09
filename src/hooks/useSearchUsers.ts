@@ -17,11 +17,11 @@ export const useSearchUsers = (search: string) => {
   };
 
   useEffect(() => {
-    if (search !== undefined) {
+    if (search) {
       fetchUsers(search);
     } else {
       return;
     }
   }, [search]);
-  return { users, search, fetchUsers, searchLoading };
+  return { users, search, fetchUsers, setUsers, searchLoading };
 };
