@@ -1,9 +1,14 @@
 import React from "react";
 import { AvatarMemo } from "../global/avatar";
 
-const User = () => {
+interface props {
+  onClick: () => void
+}
+
+const User = ({onClick}: props) => {
   return (
     <div
+    onClick={onClick}
       className="w-full height-12 border-b border-sky-100 p-3 hover:bg-zinc-50
      transition-all duration-200 cursor-pointer rounded-tl-xl"
     >

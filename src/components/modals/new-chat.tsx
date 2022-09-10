@@ -9,10 +9,13 @@ import { useFormHook } from "../../hooks/useFormHook";
 import { supabase } from "../../constants/supabase";
 import { UserContext } from "../../context/UserContext";
 import { ModalContext } from "../../context/ModalContext";
+import { ChatsContext } from "../../context/ChatsContext";
 
 const NewChat = () => {
   const { user } = useContext(UserContext);
+  const [createLoading, setCreateLoading] = useState(false);
   const { setModalId } = useContext(ModalContext);
+  const {chats, setChats} = useContext(ChatsContext);
   const defaultOptions = {
     loop: true,
     autoplay: true,
@@ -34,16 +37,22 @@ const NewChat = () => {
     }
   }, [inputValues.display_name, userSelected, users]);
   const createChat = async () => {
+    setCreateLoading(true);
     await supabase
       .from("chats")
-      .insert({ users: [user?.display_name, userSelected] });
+      .insert({ users: [user?.display_name, userSelected] }).then(({data}) => {
+        console.log(data)
+         setChats([...chats, data])
+      });
     setModalId(null);
+    setCreateLoading(false);
   };
   return (
     <Modal
       lottieWidth={"50%"}
       lottieHeight={"50%"}
       title="New Chat"
+      loading={createLoading}
       onClick={createChat}
       disabled={!userSelected}
       subtext="Who would you like to message?"

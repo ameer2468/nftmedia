@@ -1,34 +1,18 @@
-import { useCallback, useLayoutEffect, useState } from "react";
+import { useState } from "react";
 import { supabase } from "../constants/supabase";
+import { IChat } from "../types/chat";
 export const useChat = () => {
   const [messages, setMessages] = useState([{}]);
-  const [chats, setChats] = useState([{}]);
+  const [chats, setChats] = useState<IChat[]>([]);
   const [activeChat, setActiveChat] = useState<number | null>(null);
 
-  const fetchChats = async () => {
-    await supabase
-      .from("chats")
-      .select("*")
-      .then(({ data }: any) => {
-        setChats(data);
-      });
-  };
-
-  const getMessages = useCallback(async () => {
-    await Promise.all([
-      supabase
-        .from("messages:chat_id=eq." + activeChat)
-        .on("INSERT", (payload) => {
+  const getMessages = () => {
+      supabase.from("messages:chat_id=eq." + activeChat)
+      .on("INSERT", (payload) => {
           setMessages((messages) => [...messages, payload.new]);
         })
-        .subscribe(),
-    ]);
-  }, [activeChat]);
+        .subscribe()
+  };
 
-  useLayoutEffect(() => {
-    if (activeChat) {
-      getMessages();
-    }
-  }, [activeChat, getMessages, messages]);
-  return { messages, chats, fetchChats, activeChat, setActiveChat };
+  return { messages, chats, setChats, activeChat, setActiveChat };
 };

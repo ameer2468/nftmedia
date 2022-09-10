@@ -8,7 +8,11 @@ import EmojiPicker from "emoji-picker-react";
 import { useDetectOutsideClick } from "../../hooks/useDetectOutsideClick";
 import { onEmojiClick } from "../../helpers/emojiClick";
 
-const Chat = () => {
+interface props {
+  activeChat: number | null;
+}
+
+const Chat = ({activeChat}: props) => {
   const { onChangeHandler, inputValues, setInputValues } = useFormHook({
     message: "",
   });

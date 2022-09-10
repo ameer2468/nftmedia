@@ -1,17 +1,25 @@
-import React, { useContext, useEffect } from "react";
+import { useContext, useEffect} from "react";
 import User from "../components/messages/user";
 import { Scrollbars } from "react-custom-scrollbars-2";
 import Chat from "../components/messages/chat";
-import { useChat } from "../hooks/useChat";
 import Button from "../components/global/button";
 import { ModalContext } from "../context/ModalContext";
+import { ChatsContext } from "../context/ChatsContext";
+import { supabase } from "../constants/supabase";
+import { useChat } from "../hooks/useChat";
 
 const Messages = () => {
-  const { chats, messages, activeChat, setActiveChat, fetchChats } = useChat();
+  const { chats, setChats } = useContext(ChatsContext);
   const { setModalId } = useContext(ModalContext);
+  const {activeChat, setActiveChat} = useChat();
   useEffect(() => {
-    fetchChats();
-  }, []);
+   supabase
+      .from("chats")
+      .select("*")
+      .then(({ data }: any) => {
+        setChats(data)
+      });
+  }, [setChats]);
   return (
     <div className="w-full top-post pt-48 px-5  lg:pl-64 lg:pr-32 lg:pt-48">
       <div className="flex justify-between">
@@ -29,12 +37,14 @@ const Messages = () => {
             text="+ New Chat"
           />
           <Scrollbars style={{ height: "600px" }}>
-            {chats.map((chat) => {
-              return <User />;
+            {chats?.map((chat) => {
+              return <User onClick={() => {
+                setActiveChat(chat?.id)
+              }} key={chat.id} />;
             })}
           </Scrollbars>
         </div>
-        <Chat />
+        <Chat activeChat={activeChat} />
       </div>
     </div>
   );

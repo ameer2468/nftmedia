@@ -20,6 +20,8 @@ import { useScrollTop } from "./hooks/useScrollTop";
 import Profile from "./pages/profile";
 import { useCheckSession } from "./hooks/useCheckSession";
 import Messages from "./pages/messages";
+import { ChatsContext } from "./context/ChatsContext";
+import { useChat } from "./hooks/useChat";
 
 function App() {
   const appRoutes = [
@@ -37,6 +39,7 @@ function App() {
     return appRoutes.includes(path);
   };
   const { user, setUser } = useCheckUser();
+  const {chats, setChats} = useChat();
   useMemo(() => {
     if (user && user.display_name === null) {
       setModalId("display_name");
@@ -59,6 +62,7 @@ function App() {
     <MetaMaskProvider>
       <UserProvider value={{ user, setUser }}>
         <ModalContext.Provider value={{ modalId, setModalId }}>
+          <ChatsContext.Provider value={{ chats, setChats }}>
           <ModalManager />
           {checkRoute(useLocation().pathname) ? (
             <>
@@ -84,6 +88,7 @@ function App() {
                   />
                 ))}
           </Routes>
+          </ChatsContext.Provider>
         </ModalContext.Provider>
       </UserProvider>
     </MetaMaskProvider>
