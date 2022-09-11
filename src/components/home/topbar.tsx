@@ -46,7 +46,7 @@ const Topbar = () => {
               <img
                 src={user?.avatar_image_url + "?v=" + Date.now()}
                 alt="user"
-                onError={() => refetchImage()}
+                onError={() =>''}
                 className="w-8 h-8 rounded-full"
               />
             )}

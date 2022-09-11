@@ -38,7 +38,7 @@ const Messages = () => {
           />
           <Scrollbars style={{ height: "600px" }}>
             {chats?.map((chat) => {
-              return <User onClick={() => {
+              return <User chat={chat} activeChat={activeChat} onClick={() => {
                 setActiveChat(chat?.id)
               }} key={chat.id} />;
             })}

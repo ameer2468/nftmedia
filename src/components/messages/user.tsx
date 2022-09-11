@@ -1,16 +1,19 @@
 import React from "react";
 import { AvatarMemo } from "../global/avatar";
+import {IChat} from '../../types/chat';
 
 interface props {
   onClick: () => void
+  activeChat: number | null;
+  chat: IChat;
 }
 
-const User = ({onClick}: props) => {
+const User = ({onClick, activeChat, chat}: props) => {
   return (
     <div
     onClick={onClick}
-      className="w-full height-12 border-b border-sky-100 p-3 hover:bg-zinc-50
-     transition-all duration-200 cursor-pointer rounded-tl-xl"
+      className={`w-full height-12 border-b border-sky-100 p-3 hover:brightness-90
+     transition-all duration-200 cursor-pointer  ${chat.id === activeChat ? 'bg-sky-50' : ''}`}
     >
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-1">
