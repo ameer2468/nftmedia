@@ -109,7 +109,7 @@ const Comment = ({
                 setEditComment(false);
                 resetForm();
               }}
-              className="bg-transparent border-2 border-sky-500 h-14 normal-case w-32 text-sky-500"
+              className="bg-sky-500 border-2 border-sky-500 h-14 normal-case w-32 text-sky-500"
               text="Cancel"
             />
             <Button

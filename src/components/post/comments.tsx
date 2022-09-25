@@ -124,7 +124,7 @@ const Comments = ({ comments, loading, post, setPost }: props) => {
                 onClick={() => {
                   setShow(false);
                 }}
-                className="bg-transparent border-2 border-sky-500 h-14 normal-case w-32 text-sky-500"
+                className="bg-sky-500 border-2 border-sky-500 h-14 normal-case w-32 text-sky-500"
                 text="Cancel"
               />
               <Button
@@ -145,7 +145,7 @@ const Comments = ({ comments, loading, post, setPost }: props) => {
         <div className="mt-5 flex flex-col gap-5">
           {loading
             ? ""
-            : comments?.map((commentPost, index) => {
+            : comments?.sort((a,b) => b.id - a.id).map((commentPost, index) => {
                 return (
                   <Comment
                     onChange={(e) => {

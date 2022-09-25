@@ -77,7 +77,7 @@ export const usePost = (form?: args) => {
       .update({ comment: editedComment })
       .eq("id", commentId)
       .then((res: any) => {
-        const updatedComment = res.data[0];
+        const updatedComment = {...res.data[0], avatar_image_url: user?.avatar_image_url};
         setCommentLoading(false);
         if (post) {
           const updateComment = post.comments?.map((comment) => {
