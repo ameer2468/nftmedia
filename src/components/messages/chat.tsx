@@ -53,21 +53,22 @@ const Chat = ({activeChat}: props) => {
      await supabase.from('messages').insert({
         chat_id: activeChat,
         message: inputValues.message,
-        user: user?.display_name
+        user: user?.display_name,
+        avatar_image_url: user?.avatar_image_url,
       })
       setInputValues({message: ''});
   }
   return (
     <div className="bg-gradient-to-br to-zinc-50 from-sky-50 w-[70%] rounded-r-lg border-white border">
-      <div className="flex w-full h-[530px] p-5">
-        <Scrollbars className="relative" ref={chatRef} autoHeight autoHeightMin={480}>
+      <div className="flex w-full h-[530px] p-5 overflow-hidden">
+        <Scrollbars className="relative overflow-hidden" ref={chatRef} autoHeight autoHeightMin={480}>
         {messages?.map((message, index) => (
          message.user === user?.display_name ? 
            <Message className="ml-auto" key={index} message={message} />
            : 
            <Message className="bg-white" key={index} message={message} />
         ))}
-                {messages && messages?.length > 0 && <div className="absolute" ref={messageRef}/>}
+                {messages && messages?.length > 0 && <div className="h-0" ref={messageRef}/>}
         </Scrollbars>
       </div>
       <div

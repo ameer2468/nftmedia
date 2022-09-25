@@ -9,5 +9,6 @@ export interface IChatMessage {
     chat_id: number;
     message: string;
     user: string;
+    avatar_image_url: string | null;
     created_at: Date;
 }
