@@ -1,5 +1,4 @@
-import  { useCallback, useContext, 
-  useEffect, useRef, useState } from "react";
+import { useCallback, useContext, useEffect, useRef, useState } from "react";
 import TextAreaInput from "../global/textarea";
 import { useFormHook } from "../../hooks/useFormHook";
 import Message from "./message";
@@ -9,7 +8,7 @@ import EmojiPicker from "emoji-picker-react";
 import { useDetectOutsideClick } from "../../hooks/useDetectOutsideClick";
 import { onEmojiClick } from "../../helpers/emojiClick";
 import { IChatMessage } from "../../types/chat";
-import {supabase} from "../../constants/supabase";
+import { supabase } from "../../constants/supabase";
 import { UserContext } from "../../context/UserContext";
 import Scrollbars from "react-custom-scrollbars-2";
 
@@ -17,11 +16,11 @@ interface props {
   activeChat: number | null;
 }
 
-const Chat = ({activeChat}: props) => {
+const Chat = ({ activeChat }: props) => {
   const { onChangeHandler, inputValues, setInputValues } = useFormHook({
     message: "",
   });
-  const {user} = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const [messages, setMessages] = useState<IChatMessage[] | null>(null);
   const inputRef: any = useRef(0);
   const chatRef = useRef<any>(null);
@@ -31,44 +30,58 @@ const Chat = ({activeChat}: props) => {
   const getData = useCallback(async () => {
     if (activeChat) {
       setMessages([]);
-       await supabase.from('messages').select('*').eq('chat_id', activeChat).then(({data, error}) => {
-          setMessages(data)
-        })
-      }
-  }, [activeChat])
+      await supabase
+        .from("messages")
+        .select("*")
+        .eq("chat_id", activeChat)
+        .then(({ data, error }) => {
+          setMessages(data);
+        });
+    }
+  }, [activeChat]);
   useEffect(() => {
     getData();
-  }, [activeChat, getData])
+  }, [activeChat, getData]);
   useEffect(() => {
-  supabase.from(`messages:chat_id=eq.${activeChat}`)
-    .on("INSERT", (payload) => {
-        setMessages((messages) => [...messages as [], payload.new]);
-    }).subscribe();
-  }, [activeChat])
+    supabase
+      .from(`messages:chat_id=eq.${activeChat}`)
+      .on("INSERT", (payload) => {
+        setMessages((messages) => [...(messages as []), payload.new]);
+      })
+      .subscribe();
+  }, [activeChat]);
   useEffect(() => {
     messageRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages])
+  }, [messages]);
   const sendMessage = async () => {
     if (inputValues.message.length === 0) return;
-     await supabase.from('messages').insert({
-        chat_id: activeChat,
-        message: inputValues.message,
-        user: user?.display_name,
-        avatar_image_url: user?.avatar_image_url,
-      })
-      setInputValues({message: ''});
-  }
+    await supabase.from("messages").insert({
+      chat_id: activeChat,
+      message: inputValues.message,
+      user: user?.display_name,
+      avatar_image_url: user?.avatar_image_url,
+    });
+    setInputValues({ message: "" });
+  };
   return (
     <div className="bg-gradient-to-br to-zinc-50 from-sky-50 w-[70%] rounded-r-lg border-white border">
       <div className="flex w-full h-[530px] p-5 overflow-hidden">
-        <Scrollbars className="relative overflow-hidden" ref={chatRef} autoHeight autoHeightMin={480}>
-        {messages?.map((message, index) => (
-         message.user === user?.display_name ? 
-           <Message className="ml-auto" key={index} message={message} />
-           : 
-           <Message className="bg-white" key={index} message={message} />
-        ))}
-                {messages && messages?.length > 0 && <div className="h-0" ref={messageRef}/>}
+        <Scrollbars
+          className="relative overflow-hidden"
+          ref={chatRef}
+          autoHeight
+          autoHeightMin={480}
+        >
+          {messages?.map((message, index) => {
+            return message.user === user?.display_name ? (
+              <Message className="ml-auto" key={index} message={message} />
+            ) : (
+              <Message className="bg-white" key={index} message={message} />
+            );
+          })}
+          {messages && messages?.length > 0 && (
+            <div className="h-0" ref={messageRef} />
+          )}
         </Scrollbars>
       </div>
       <div
@@ -105,7 +118,11 @@ const Chat = ({activeChat}: props) => {
           />
           <div
             onClick={sendMessage}
-            className={`${inputValues.message.length === 0 ? 'bg-gray-300 cursor-not-allowed hover:bg-gray-300' : ''}
+            className={`${
+              inputValues.message.length === 0
+                ? "bg-gray-300 cursor-not-allowed hover:bg-gray-300"
+                : ""
+            }
             bg-black flex items-center w-12 h-12 justify-center
            p-3 rounded-full hover:bg-zinc-700 transition-all duration-200 cursor-pointer`}
           >

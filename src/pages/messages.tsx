@@ -1,4 +1,4 @@
-import { useContext, useEffect} from "react";
+import { useContext, useEffect, useState } from "react";
 import User from "../components/messages/user";
 import { Scrollbars } from "react-custom-scrollbars-2";
 import Chat from "../components/messages/chat";
@@ -13,14 +13,14 @@ import { supabase } from "../constants/supabase";
 const Messages = () => {
   const { chats, setChats } = useContext(ChatsContext);
   const { setModalId } = useContext(ModalContext);
-  const {activeChat, setActiveChat} = useChat();
-  const {user} = useContext(UserContext);
+  const { activeChat, setActiveChat } = useChat();
+  const { user } = useContext(UserContext);
   useEffect(() => {
-   if (user) {
-    fetchChatsService(user.display_name).then((res) => {
-      setChats(res);
-    });
-   }
+    if (user) {
+      fetchChatsService(user.display_name).then((res) => {
+        setChats(res);
+      });
+    }
   }, [setChats, user]);
   return (
     <div className="w-full top-post pt-48 px-5  lg:pl-64 lg:pr-32 lg:pt-48">
@@ -40,10 +40,17 @@ const Messages = () => {
           />
           <Scrollbars style={{ height: "600px" }}>
             {chats?.map((chat) => {
-              return <User chat={chat} activeChat={activeChat} onClick={() => {
-                supabase.removeAllSubscriptions();
-                setActiveChat(chat?.id)
-              }} key={chat.id} />;
+              return (
+                <User
+                  chat={chat}
+                  activeChat={activeChat}
+                  onClick={() => {
+                    supabase.removeAllSubscriptions();
+                    setActiveChat(chat?.id);
+                  }}
+                  key={chat.id}
+                />
+              );
             })}
           </Scrollbars>
         </div>

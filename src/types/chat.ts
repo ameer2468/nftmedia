@@ -1,14 +1,21 @@
 export interface IChat {
-    id: number;
+  id: number;
+  created_at: string;
+  users: {
+    user: string;
+    avatar_image_url: string;
+  }[];
+  last_message: {
+    message: string;
     created_at: string;
-    users: string[];
+  };
 }
 
 export interface IChatMessage {
-    id: number;
-    chat_id: number;
-    message: string;
-    user: string;
-    avatar_image_url: string | null;
-    created_at: Date;
+  id: number;
+  chat_id: number;
+  message: string;
+  user: string;
+  avatar_image_url: string | null;
+  created_at: Date;
 }
