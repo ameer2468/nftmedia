@@ -24,7 +24,7 @@ const User = ({ onClick, activeChat, chat }: props) => {
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-1">
           <div className="w-8">
-            {chat ? (
+            {chat && userChat?.avatar_image_url ? (
               <img alt="avatar" src={userChat?.avatar_image_url} />
             ) : (
               <AvatarMemo className="w-10" />
@@ -33,7 +33,10 @@ const User = ({ onClick, activeChat, chat }: props) => {
           <p className="font-bold text-sm ml-2">{chat ? userChat?.user : ""}</p>
         </div>
         <p className="text-zinc-400 text-xs">
-          {chat ? moment(chat.last_message.created_at).format("lll") : ""}
+          {chat
+            ? chat.last_message.created_at &&
+              moment(chat.last_message.created_at).format("lll")
+            : ""}
         </p>
       </div>
       <p className="text-sm mt-2">{chat ? chat.last_message.message : ""}</p>

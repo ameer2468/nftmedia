@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import User from "../components/messages/user";
 import { Scrollbars } from "react-custom-scrollbars-2";
 import Chat from "../components/messages/chat";
@@ -8,7 +8,6 @@ import { ChatsContext } from "../context/ChatsContext";
 import { UserContext } from "../context/UserContext";
 import { useChat } from "../hooks/useChat";
 import { fetchChatsService } from "../services/messages";
-import { supabase } from "../constants/supabase";
 
 const Messages = () => {
   const { chats, setChats } = useContext(ChatsContext);
@@ -44,8 +43,7 @@ const Messages = () => {
                 <User
                   chat={chat}
                   activeChat={activeChat}
-                  onClick={() => {
-                    supabase.removeAllSubscriptions();
+                  onClick={async () => {
                     setActiveChat(chat?.id);
                   }}
                   key={chat.id}

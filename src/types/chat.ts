@@ -11,6 +11,11 @@ export interface IChat {
   };
 }
 
+export interface IUserSelect {
+  user: string;
+  avatar_image_url: string;
+}
+
 export interface IChatMessage {
   id: number;
   chat_id: number;

@@ -1,5 +1,4 @@
 import { useCallback, useContext, useEffect, useRef, useState } from "react";
-import TextAreaInput from "../global/textarea";
 import { useFormHook } from "../../hooks/useFormHook";
 import Message from "./message";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -11,6 +10,7 @@ import { IChatMessage } from "../../types/chat";
 import { supabase } from "../../constants/supabase";
 import { UserContext } from "../../context/UserContext";
 import Scrollbars from "react-custom-scrollbars-2";
+import TextInput from "../global/textinput";
 
 interface props {
   activeChat: number | null;
@@ -34,22 +34,23 @@ const Chat = ({ activeChat }: props) => {
         .from("messages")
         .select("*")
         .eq("chat_id", activeChat)
-        .then(({ data, error }) => {
+        .then(({ data }) => {
           setMessages(data);
         });
     }
   }, [activeChat]);
   useEffect(() => {
     getData();
-  }, [activeChat, getData]);
-  useEffect(() => {
-    supabase
+    const channel = supabase
       .from(`messages:chat_id=eq.${activeChat}`)
       .on("INSERT", (payload) => {
         setMessages((messages) => [...(messages as []), payload.new]);
       })
       .subscribe();
-  }, [activeChat]);
+    return () => {
+      supabase.removeSubscription(channel);
+    };
+  }, [activeChat, getData]);
   useEffect(() => {
     messageRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
@@ -63,6 +64,9 @@ const Chat = ({ activeChat }: props) => {
     });
     setInputValues({ message: "" });
   };
+
+  console.log(supabase.getSubscriptions());
+
   return (
     <div className="bg-gradient-to-br to-zinc-50 from-sky-50 w-[70%] rounded-r-lg border-white border">
       <div className="flex w-full h-[530px] p-5 overflow-hidden">
@@ -106,11 +110,10 @@ const Chat = ({ activeChat }: props) => {
           </div>
         ) : null}
         <div className="flex w-full gap-4 items-center">
-          <TextAreaInput
+          <TextInput
             className="flex-auto w-4/5"
-            hideLimit={true}
-            disableResize={true}
-            inputref={inputRef}
+            enterKeyHandler={sendMessage}
+            inputRef={inputRef}
             name="message"
             value={inputValues.message}
             placeholder="Enter message..."
