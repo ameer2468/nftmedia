@@ -12,7 +12,7 @@ export const useProfileGet = (setProfile: (arg: IUserProfile) => void) => {
 
   useEffect(() => {
     setLoading(true);
-    fetchUserProfile(Number(userId) as any).then((data) => {
+    fetchUserProfile(Number(userId)).then((data) => {
       setProfile(data);
       setLoading(false);
     });
@@ -23,7 +23,7 @@ export const useProfileGet = (setProfile: (arg: IUserProfile) => void) => {
 export const useProfile = () => {
   const userId = useParams().id as string;
   const [profile, setProfile] = useState<IUserProfile | null>(null);
-  const [imageLoading, setImageLoading] = React.useState<boolean>(false);
+  const [imageLoading, setImageLoading] = useState<boolean>(false);
   const { user, setUser } = useContext(UserContext);
 
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
