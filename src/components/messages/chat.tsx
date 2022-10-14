@@ -65,8 +65,6 @@ const Chat = ({ activeChat }: props) => {
     setInputValues({ message: "" });
   };
 
-  console.log(supabase.getSubscriptions());
-
   return (
     <div className="bg-gradient-to-br to-zinc-50 from-sky-50 w-[70%] rounded-r-lg border-white border">
       <div className="flex w-full h-[530px] p-5 overflow-hidden">

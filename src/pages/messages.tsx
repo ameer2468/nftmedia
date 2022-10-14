@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, memo } from "react";
 import User from "../components/messages/user";
 import { Scrollbars } from "react-custom-scrollbars-2";
 import Chat from "../components/messages/chat";
@@ -58,4 +58,4 @@ const Messages = () => {
   );
 };
 
-export default Messages;
+export default memo(Messages);

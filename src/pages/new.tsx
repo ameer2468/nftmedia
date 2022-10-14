@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, memo } from "react";
 import TextInput from "../components/global/textinput";
 import TextAreaInput from "../components/global/textarea";
 import Button from "../components/global/button";
@@ -76,4 +76,4 @@ const New = () => {
   );
 };
 
-export default New;
+export default memo(New);

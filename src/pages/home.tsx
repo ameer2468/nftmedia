@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import TopPost from "../components/home/top-post";
 import TrendingPosts from "../components/home/trending-posts/trending-posts";
 import RecentPosts from "../components/home/recent-posts/recent-posts";
@@ -14,4 +14,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default memo(Home);

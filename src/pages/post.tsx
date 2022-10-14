@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import PostContent from "../components/post/postContent";
 import Comments from "../components/post/comments";
 import { useFetchPost, usePost } from "../hooks/usePost";
@@ -53,4 +53,4 @@ const Post = () => {
   );
 };
 
-export default Post;
+export default memo(Post);

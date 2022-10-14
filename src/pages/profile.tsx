@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import Box from "../components/profile/box";
 import { useProfile, useProfileGet } from "../hooks/useProfile";
 import User from "../components/profile/user";
@@ -43,4 +43,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default memo(Profile);

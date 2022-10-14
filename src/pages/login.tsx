@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import Button from "../components/global/button";
 import metamask from "../assets/metamask.png";
 import { useLogin } from "../hooks/useLogin";
@@ -68,4 +68,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default memo(Login);

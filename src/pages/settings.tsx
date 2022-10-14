@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import TextInput from "../components/global/textinput";
 import Button from "../components/global/button";
 import Card from "../components/settings/card";
@@ -18,4 +18,4 @@ const Settings = () => {
   );
 };
 
-export default Settings;
+export default memo(Settings);
