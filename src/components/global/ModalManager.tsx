@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import DisplayName from "../modals/display-name";
 import NewChat from "../modals/new-chat";
 import { ModalContext } from "../../context/ModalContext";
+import Confirm from "../modals/confirm";
 
 const ModalManager = () => {
   const modal = useContext(ModalContext);
@@ -10,6 +11,8 @@ const ModalManager = () => {
       return <DisplayName />;
     case "new_chat":
       return <NewChat />;
+    case "confirm":
+      return <Confirm />;
     default:
       return null;
   }

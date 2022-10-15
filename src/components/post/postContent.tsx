@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import ViewCount from "../global/view-count";
 import CommentCount from "../global/comment-count";
 import VoteCount from "../global/vote-count";
@@ -13,6 +13,7 @@ import { Link } from "react-router-dom";
 import { useImageBroken } from "../../hooks/useImageBroken";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencil, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { ModalContext } from "../../context/ModalContext";
 
 interface props {
   post: IThread["thread"] | undefined;
@@ -23,6 +24,7 @@ interface props {
 
 const PostContent = ({ post, loading, vote, voteLoading }: props) => {
   const { handleImageError, imageBroken } = useImageBroken();
+  const { setModalId } = useContext(ModalContext);
   const skeleton = () => {
     return (
       <div>
@@ -104,6 +106,7 @@ const PostContent = ({ post, loading, vote, voteLoading }: props) => {
                   />
                 </div>
                 <div
+                  onClick={() => setModalId("confirm")}
                   className="bg-sky-500 w-8 h-8 rounded-md flex items-center justify-center
                 hover:bg-sky-400 transition-all duration-200 cursor-pointer"
                 >

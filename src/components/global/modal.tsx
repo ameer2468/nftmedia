@@ -8,7 +8,7 @@ import Lottie from "react-lottie";
 
 interface props {
   title: string;
-  children: React.ReactNode;
+  children?: React.ReactNode;
   onClick?: () => void;
   hideButton?: boolean;
   hideClose?: boolean;
@@ -18,6 +18,8 @@ interface props {
   lottie: any;
   lottieWidth?: string;
   lottieHeight?: string;
+  cancelButton?: boolean;
+  cancelHandler?: () => void;
 }
 
 const Modal = ({
@@ -27,10 +29,12 @@ const Modal = ({
   hideButton,
   loading,
   disabled,
+  cancelHandler,
   subtext,
   hideClose,
   lottieWidth,
   lottieHeight,
+  cancelButton,
   lottie,
 }: props) => {
   const { setModalId, modalId } = useContext(ModalContext);
@@ -83,6 +87,16 @@ const Modal = ({
                     `}
                     text="Confirm"
                   />
+                )}
+                {cancelButton ? (
+                  <Button
+                    onClick={cancelHandler}
+                    className={`bg-gray-400 mt-4 h-14 w-full 
+        normal-case font-normal text-[14px] ml-auto mr-auto`}
+                    text="Cancel"
+                  />
+                ) : (
+                  ""
                 )}
               </div>
             </div>
