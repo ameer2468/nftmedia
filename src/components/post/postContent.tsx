@@ -123,7 +123,7 @@ const PostContent = ({ post, loading, vote, voteLoading }: props) => {
                     <AvatarMemo className="w-10" />
                   ) : (
                     <img
-                      className="w-10 mr-3"
+                      className="w-10 mr-3 rounded-full"
                       src={post?.avatar_image_url + "?v" + Date.now()}
                       onError={handleImageError}
                       alt="avatar"

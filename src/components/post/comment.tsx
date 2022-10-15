@@ -52,7 +52,7 @@ const Comment = ({
           <div className="flex items-center transition-all duration-200 hover:opacity-50 cursor-pointer">
             {comment.avatar_image_url && !imageBroken ? (
               <img
-                className="w-8 mr-3"
+                className="w-8 mr-3 rounded-full"
                 src={comment.avatar_image_url + "?v=" + Date.now()}
                 onError={handleImageError}
                 alt="avatar"

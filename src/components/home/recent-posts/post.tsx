@@ -26,7 +26,7 @@ const Post = ({ data }: props) => {
             <img
               src={data?.avatar_image_url + "?v=" + Date.now()}
               alt="user"
-              className="w-8 h-8"
+              className="w-8 h-8 rounded-full"
             />
           ) : (
             <AvatarMemo className="w-10" />

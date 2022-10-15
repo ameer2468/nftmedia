@@ -35,7 +35,7 @@ const Message = ({ message, className }: props) => {
           {moment(message.created_at).format("lll")}
         </p>
       </div>
-      <p className="text-sm leading-6 mt-3">{message.message}</p>
+      <p className="text-sm leading-6">{message.message}</p>
     </div>
   );
 };

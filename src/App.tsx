@@ -22,6 +22,7 @@ import { useCheckSession } from "./hooks/useCheckSession";
 import Messages from "./pages/messages";
 import { ChatsContext } from "./context/ChatsContext";
 import { useChat } from "./hooks/useChat";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   const appRoutes = [
@@ -39,7 +40,7 @@ function App() {
     return appRoutes.includes(path);
   };
   const { user, setUser } = useCheckUser();
-  const {chats, setChats} = useChat();
+  const { chats, setChats } = useChat();
   useMemo(() => {
     if (user && user.display_name === null) {
       setModalId("display_name");
@@ -60,34 +61,35 @@ function App() {
 
   return (
     <MetaMaskProvider>
+      <Toaster />
       <UserProvider value={{ user, setUser }}>
         <ModalContext.Provider value={{ modalId, setModalId }}>
           <ChatsContext.Provider value={{ chats, setChats }}>
-          <ModalManager />
-          {checkRoute(useLocation().pathname) ? (
-            <>
-              <Topbar />
-              <Sidebar />
-              <MobileMenu />
-            </>
-          ) : null}
-          <Routes>
-            {user === null
-              ? guestRoutes.map((route, index: number) => (
-                  <Route
-                    key={index.toString()}
-                    path={route.path}
-                    element={route.element}
-                  />
-                ))
-              : authedRoutes.map((route, index: number) => (
-                  <Route
-                    key={index.toString()}
-                    path={route.path}
-                    element={route.element}
-                  />
-                ))}
-          </Routes>
+            <ModalManager />
+            {checkRoute(useLocation().pathname) ? (
+              <>
+                <Topbar />
+                <Sidebar />
+                <MobileMenu />
+              </>
+            ) : null}
+            <Routes>
+              {user === null
+                ? guestRoutes.map((route, index: number) => (
+                    <Route
+                      key={index.toString()}
+                      path={route.path}
+                      element={route.element}
+                    />
+                  ))
+                : authedRoutes.map((route, index: number) => (
+                    <Route
+                      key={index.toString()}
+                      path={route.path}
+                      element={route.element}
+                    />
+                  ))}
+            </Routes>
           </ChatsContext.Provider>
         </ModalContext.Provider>
       </UserProvider>

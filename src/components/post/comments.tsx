@@ -74,7 +74,7 @@ const Comments = ({ comments, loading, post, setPost }: props) => {
             <AvatarMemo className="w-10 mr-5" />
           ) : (
             <img
-              className="w-10 h-10 mr-5"
+              className="w-10 h-10 mr-5 rounded-full"
               src={user?.avatar_image_url + "?v=" + Date.now()}
               alt="avatar"
             />
@@ -145,36 +145,38 @@ const Comments = ({ comments, loading, post, setPost }: props) => {
         <div className="mt-5 flex flex-col gap-5">
           {loading
             ? ""
-            : comments?.sort((a,b) => b.id - a.id).map((commentPost, index) => {
-                return (
-                  <Comment
-                    onChange={(e) => {
-                      onChangeHandler(e);
-                    }}
-                    index={index}
-                    post={post}
-                    editCommentIndex={editCommentIndex}
-                    resetForm={resetForm}
-                    editCommentHandler={(commentId: number) => {
-                      setEditCommentIndex(index);
-                      editCommentHandler(
-                        commentId,
-                        editedComment,
-                        post,
-                        setPost
-                      );
-                    }}
-                    commentLoading={commentLoading}
-                    createCommentLoading={createCommentLoading}
-                    editedComment={editedComment}
-                    deleteComment={(commentId: number) => {
-                      deleteCommentHandler(commentId, post, setPost);
-                    }}
-                    key={commentPost.id}
-                    comment={commentPost}
-                  />
-                );
-              })}
+            : comments
+                ?.sort((a, b) => b.id - a.id)
+                .map((commentPost, index) => {
+                  return (
+                    <Comment
+                      onChange={(e) => {
+                        onChangeHandler(e);
+                      }}
+                      index={index}
+                      post={post}
+                      editCommentIndex={editCommentIndex}
+                      resetForm={resetForm}
+                      editCommentHandler={(commentId: number) => {
+                        setEditCommentIndex(index);
+                        editCommentHandler(
+                          commentId,
+                          editedComment,
+                          post,
+                          setPost
+                        );
+                      }}
+                      commentLoading={commentLoading}
+                      createCommentLoading={createCommentLoading}
+                      editedComment={editedComment}
+                      deleteComment={(commentId: number) => {
+                        deleteCommentHandler(commentId, post, setPost);
+                      }}
+                      key={commentPost.id}
+                      comment={commentPost}
+                    />
+                  );
+                })}
         </div>
       </Scrollbars>
     </div>
