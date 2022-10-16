@@ -8,19 +8,22 @@ import { ChatsContext } from "../context/ChatsContext";
 import { UserContext } from "../context/UserContext";
 import { useChat } from "../hooks/useChat";
 import { fetchChatsService } from "../services/messages";
+import { ClipLoader } from "react-spinners";
 
 const Messages = () => {
   const { chats, setChats } = useContext(ChatsContext);
   const { setModalId } = useContext(ModalContext);
-  const { activeChat, setActiveChat } = useChat();
+  const { activeChat, setActiveChat, loading, setLoading } = useChat();
   const { user } = useContext(UserContext);
   useEffect(() => {
     if (user) {
+      setLoading(true);
       fetchChatsService(user.display_name).then((res) => {
         setChats(res);
+        setLoading(false);
       });
     }
-  }, [setChats, user]);
+  }, [setChats, setLoading, user]);
   return (
     <div className="w-full top-post pt-48 px-5  lg:pl-64 lg:pr-32 lg:pt-48">
       <div className="flex justify-between">
@@ -37,20 +40,26 @@ const Messages = () => {
             h-14 items-center hover:bg-sky-600 opacity-100"
             text="+ New Chat"
           />
-          <Scrollbars style={{ height: "600px" }}>
-            {chats?.map((chat) => {
-              return (
-                <User
-                  chat={chat}
-                  activeChat={activeChat}
-                  onClick={async () => {
-                    setActiveChat(chat?.id);
-                  }}
-                  key={chat.id}
-                />
-              );
-            })}
-          </Scrollbars>
+          {loading ? (
+            <div className="h-full w-full flex items-center justify-center">
+              <ClipLoader color="black" size={50} />
+            </div>
+          ) : (
+            <Scrollbars style={{ height: "600px" }}>
+              {chats?.map((chat) => {
+                return (
+                  <User
+                    chat={chat}
+                    activeChat={activeChat}
+                    onClick={async () => {
+                      setActiveChat(chat?.id);
+                    }}
+                    key={chat.id}
+                  />
+                );
+              })}
+            </Scrollbars>
+          )}
         </div>
         <Chat activeChat={activeChat} />
       </div>

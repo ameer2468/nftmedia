@@ -27,7 +27,7 @@ const Message = ({ message, className }: props) => {
               className="w-6 mr-2"
             />
           ) : (
-            <AvatarMemo className="w-10 mb-3" />
+            <AvatarMemo className="w-10" />
           )}
           <p className="font-bold text-sm">{message.user}</p>
         </div>
@@ -35,7 +35,7 @@ const Message = ({ message, className }: props) => {
           {moment(message.created_at).format("lll")}
         </p>
       </div>
-      <p className="text-sm leading-6">{message.message}</p>
+      <p className="text-sm leading-6 mt-3">{message.message}</p>
     </div>
   );
 };

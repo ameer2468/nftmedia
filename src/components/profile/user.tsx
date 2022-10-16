@@ -69,7 +69,7 @@ const User = ({
             <img
               alt="user"
               onError={handleImageError}
-              className="w-24 h-24 rounded-full mb-5"
+              className="w-24 h-24 rounded-full mb-5 border-2 border-sky-500"
               src={profile?.avatar_image_url + "?v=" + Date.now()}
             />
           )}

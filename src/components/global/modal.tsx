@@ -15,7 +15,7 @@ interface props {
   loading?: boolean;
   disabled?: any;
   subtext?: string;
-  lottie: any;
+  lottie?: any;
   lottieWidth?: string;
   lottieHeight?: string;
   cancelButton?: boolean;
