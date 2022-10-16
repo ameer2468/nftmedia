@@ -1,16 +1,26 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import Modal from "../global/modal";
 import bin from "../../lottie/delete.json";
 import { ModalContext } from "../../context/ModalContext";
-import { supabase } from "../../constants/supabase";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import { deletePostService } from "../../services/post";
 
 const Confirm = () => {
   const { setModalId } = useContext(ModalContext);
-  const { state } = useLocation() as any;
   const navigate = useNavigate();
-  const deleteHandler = async () => {};
+  const postId = useLocation().pathname.split("/")[2];
+  const [deleteLoading, setDeleteLoading] = useState(false);
+  const deleteHandler = async () => {
+    setDeleteLoading(true);
+    await deletePostService(Number(postId));
+    setDeleteLoading(false);
+    setModalId(null);
+    toast.success("Post deleted successfully", {
+      position: "top-right",
+    });
+    navigate("/home");
+  };
   const defaultOptions = {
     loop: true,
     autoplay: true,
@@ -24,6 +34,7 @@ const Confirm = () => {
       subtext="Are you sure you want to delete your thread?"
       title="Confirm"
       onClick={deleteHandler}
+      loading={deleteLoading}
       cancelHandler={() => setModalId(null)}
       cancelButton={true}
       lottie={defaultOptions}

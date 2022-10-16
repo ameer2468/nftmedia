@@ -20,3 +20,15 @@ export const postRequest = async (url: string, data: {}) => {
   });
   return response.data;
 };
+
+export const deleteRequest = async (url: string, params: {}) => {
+  const response = await axios.delete(url, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    params: {
+      ...params,
+    },
+  });
+  return response.data;
+};
