@@ -8,7 +8,7 @@ import { ChatsContext } from "../context/ChatsContext";
 import { UserContext } from "../context/UserContext";
 import { useChat } from "../hooks/useChat";
 import { fetchChatsService } from "../services/messages";
-import { ClipLoader } from "react-spinners";
+import Loading from "../components/global/loading";
 
 const Messages = () => {
   const { chats, setChats } = useContext(ChatsContext);
@@ -42,7 +42,7 @@ const Messages = () => {
           />
           {loading ? (
             <div className="h-full w-full flex items-center justify-center">
-              <ClipLoader color="black" size={50} />
+              <Loading color="black" width={200} />
             </div>
           ) : (
             <Scrollbars style={{ height: "600px" }}>

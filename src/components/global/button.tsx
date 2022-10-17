@@ -31,7 +31,7 @@ const Button = ({
          py-4 px-8 rounded-xl hover:brightness-105 uppercase ${className}`}
     >
       {loading ? (
-        <Loading color="white" />
+        <Loading color="white" width="100%" />
       ) : (
         <>
           {icon && <FontAwesomeIcon icon={icon} />}

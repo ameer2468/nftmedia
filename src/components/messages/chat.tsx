@@ -11,6 +11,7 @@ import { supabase } from "../../constants/supabase";
 import { UserContext } from "../../context/UserContext";
 import Scrollbars from "react-custom-scrollbars-2";
 import TextInput from "../global/textinput";
+import Loading from "../global/loading";
 
 interface props {
   activeChat: number | null;
@@ -22,6 +23,7 @@ const Chat = ({ activeChat }: props) => {
   });
   const { user } = useContext(UserContext);
   const [messages, setMessages] = useState<IChatMessage[] | null>(null);
+  const [messagesLoading, setMessagesLoading] = useState<boolean>(false);
   const inputRef: any = useRef(0);
   const chatRef = useRef<any>(null);
   const messageRef = useRef<any>(null);
@@ -29,6 +31,7 @@ const Chat = ({ activeChat }: props) => {
   const [showEmojis, setShowEmojis] = useDetectOutsideClick(emojiRef, false);
   const getData = useCallback(async () => {
     if (activeChat) {
+      setMessagesLoading(true);
       setMessages([]);
       await supabase
         .from("messages")
@@ -36,6 +39,7 @@ const Chat = ({ activeChat }: props) => {
         .eq("chat_id", activeChat)
         .then(({ data }) => {
           setMessages(data);
+          setMessagesLoading(false);
         });
     }
   }, [activeChat]);
@@ -68,23 +72,29 @@ const Chat = ({ activeChat }: props) => {
   return (
     <div className="bg-gradient-to-br to-zinc-50 from-sky-50 w-[70%] rounded-r-lg border-white border">
       <div className="flex w-full h-[530px] p-5 overflow-hidden">
-        <Scrollbars
-          className="relative overflow-hidden"
-          ref={chatRef}
-          autoHeight
-          autoHeightMin={480}
-        >
-          {messages?.map((message, index) => {
-            return message.user === user?.display_name ? (
-              <Message className="ml-auto" key={index} message={message} />
-            ) : (
-              <Message className="bg-white" key={index} message={message} />
-            );
-          })}
-          {messages && messages?.length > 0 && (
-            <div className="h-0" ref={messageRef} />
-          )}
-        </Scrollbars>
+        {messagesLoading ? (
+          <div className="flex items-center justify-center w-full">
+            <Loading width={200} color="black" />
+          </div>
+        ) : (
+          <Scrollbars
+            className="relative overflow-hidden"
+            ref={chatRef}
+            autoHeight
+            autoHeightMin={480}
+          >
+            {messages?.map((message, index) => {
+              return message.user === user?.display_name ? (
+                <Message className="ml-auto" key={index} message={message} />
+              ) : (
+                <Message className="bg-white" key={index} message={message} />
+              );
+            })}
+            {messages && messages?.length > 0 && (
+              <div className="h-0" ref={messageRef} />
+            )}
+          </Scrollbars>
+        )}
       </div>
       <div
         className="w-full bg-sky-100 h-[100px]

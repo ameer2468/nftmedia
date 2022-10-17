@@ -45,12 +45,17 @@ const NewChat = () => {
   }, [inputValues.display_name, userSelected, users]);
   const createChat = async () => {
     const checkChat = chats.map((chat) => {
-      return chat?.users?.find(
-        (member) => member.user === userSelected?.display_name
-      );
+      return chat.users
+        .map((user) => user.user)
+        .includes(userSelected?.display_name as string);
     });
-    if (checkChat[0]?.user === userSelected?.display_name) {
-      return setErrorMessage("You already have an active chat with this user.");
+    if (
+      checkChat.includes(true) &&
+      userSelected?.display_name !== user?.display_name
+    ) {
+      return setErrorMessage("A chat with this user already exists");
+    } else if (userSelected?.display_name === user?.display_name) {
+      return setErrorMessage("You can't chat with yourself");
     }
     setCreateLoading(true);
     await supabase
