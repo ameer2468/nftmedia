@@ -16,7 +16,7 @@ const User = ({ onClick, activeChat, chat }: props) => {
   return (
     <div
       onClick={onClick}
-      className={`w-full height-12 border-b border-sky-100 p-3 hover:brightness-90
+      className={`w-full height-12 border-b border-sky-100 p-3 hover:bg-sky-100
      transition-all duration-200 cursor-pointer  ${
        chat.id === activeChat ? "bg-sky-50" : ""
      }`}
@@ -39,7 +39,9 @@ const User = ({ onClick, activeChat, chat }: props) => {
             : ""}
         </p>
       </div>
-      <p className="text-sm mt-2">{chat ? chat.last_message.message : ""}</p>
+      <p className="text-sm mt-2 w-full max-w-[420px] overflow-hidden text-ellipsis whitespace-nowrap">
+        {chat ? chat.last_message.message : ""}
+      </p>
     </div>
   );
 };

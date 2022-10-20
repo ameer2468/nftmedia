@@ -64,6 +64,7 @@ const Chat = ({ activeChat }: props) => {
       chat_id: activeChat,
       message: inputValues.message,
       user: user?.display_name,
+
       avatar_image_url: user?.avatar_image_url,
     });
     setInputValues({ message: "" });

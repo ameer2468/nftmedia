@@ -22,7 +22,9 @@ const Profile = () => {
           <User
             handleFileUpload={handleFileUpload}
             imageLoading={imageLoading}
-            followHandler={() => followHandler(profile?.user.id, followOrNot)}
+            followHandler={() =>
+              followHandler(Number(profile?.user.id), followOrNot)
+            }
             loading={loading}
             params={userId}
             profile={profile?.user}

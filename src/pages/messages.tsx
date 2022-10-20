@@ -17,7 +17,6 @@ const Messages = () => {
   const { user } = useContext(UserContext);
   useEffect(() => {
     if (user) {
-      setLoading(true);
       fetchChatsService(user.display_name).then((res) => {
         setChats(res);
         setLoading(false);

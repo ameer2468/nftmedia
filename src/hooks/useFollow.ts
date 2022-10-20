@@ -8,7 +8,7 @@ export const useFollow = (
   setProfile: Dispatch<IUserProfile | null>
 ) => {
   const { user } = useContext(UserContext);
-  const followHandler = async (userId: number | undefined, follow: boolean) => {
+  const followHandler = async (userId: number, follow: boolean) => {
     await followUser(user?.id, userId, follow).then(() => {
       setProfile({
         ...profile,
