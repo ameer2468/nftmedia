@@ -61,7 +61,7 @@ const Modal = ({
                 <FontAwesomeIcon icon={faClose} />
               </div>
             )}
-            <div className="flex rounded">
+            <div className="flex rounded h-full">
               <div className="bg-gradient-to-br h-full overflow-hidden to-sky-50 rounded-bl rounded-tl from-sky-200 w-[50%] flex items-center">
                 <Lottie
                   isClickToPauseDisabled={true}
@@ -71,7 +71,7 @@ const Modal = ({
                 />
               </div>
               <div className="w-[50%] px-10 flex items-center justify-evenly flex-wrap">
-                <div>
+                <div className="w-full">
                   <h1 className="text-left text-black w-full text-xl font-bold mb-2">
                     {title}
                   </h1>

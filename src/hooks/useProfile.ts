@@ -38,7 +38,11 @@ export const useProfile = () => {
     setImageLoading(true);
     await supabase.storage
       .from("avatars")
-      .remove([`${profile?.user.id}.${findImageExtension}`]);
+      .remove([
+        `${profile?.user.id}.${
+          findImageExtension === "jpe" ? "jpeg" : findImageExtension
+        }`,
+      ]);
     let { error: uploadError } = await supabase.storage
       .from("avatars")
       .upload(filePath, file);

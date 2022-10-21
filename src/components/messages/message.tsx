@@ -23,8 +23,8 @@ const Message = ({ message, className }: props) => {
           {message.avatar_image_url !== null ? (
             <img
               alt="avatar"
-              src={message.avatar_image_url as string}
-              className="w-6 mr-2"
+              src={(message.avatar_image_url as string) + "?date=" + Date.now()}
+              className="w-6 mr-2 rounded-full"
             />
           ) : (
             <AvatarMemo className="w-10" />

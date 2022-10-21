@@ -14,6 +14,7 @@ import { useImageBroken } from "../../hooks/useImageBroken";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencil, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { ModalContext } from "../../context/ModalContext";
+import { UserContext } from "../../context/UserContext";
 
 interface props {
   post: IThread["thread"] | undefined;
@@ -25,6 +26,7 @@ interface props {
 const PostContent = ({ post, loading, vote, voteLoading }: props) => {
   const { handleImageError, imageBroken } = useImageBroken();
   const { setModalId } = useContext(ModalContext);
+  const { user } = useContext(UserContext);
   const skeleton = () => {
     return (
       <div>
@@ -95,27 +97,29 @@ const PostContent = ({ post, loading, vote, voteLoading }: props) => {
               <CommentCount count={post?.comment_count} />
               <ViewCount count={post?.view_count} />
               <VoteCount count={Number(post?.vote_count)} />
-              <div className="flex gap-2">
-                <div
-                  className="bg-sky-500 w-8 h-8 rounded-md flex items-center justify-center
+              {post?.user_id === user?.id && (
+                <div className="flex gap-2">
+                  <div
+                    className="bg-sky-500 w-8 h-8 rounded-md flex items-center justify-center
                 hover:bg-sky-400 transition-all duration-200 cursor-pointer"
-                >
-                  <FontAwesomeIcon
-                    icon={faPencil}
-                    className="text-xs text-white"
-                  />
-                </div>
-                <div
-                  onClick={() => setModalId("confirm")}
-                  className="bg-sky-500 w-8 h-8 rounded-md flex items-center justify-center
+                  >
+                    <FontAwesomeIcon
+                      icon={faPencil}
+                      className="text-xs text-white"
+                    />
+                  </div>
+                  <div
+                    onClick={() => setModalId("confirm")}
+                    className="bg-sky-500 w-8 h-8 rounded-md flex items-center justify-center
                 hover:bg-sky-400 transition-all duration-200 cursor-pointer"
-                >
-                  <FontAwesomeIcon
-                    icon={faTrash}
-                    className="text-xs text-white"
-                  />
+                  >
+                    <FontAwesomeIcon
+                      icon={faTrash}
+                      className="text-xs text-white"
+                    />
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
           </div>
           <div className="flex items-center gap-2 mb-5">
