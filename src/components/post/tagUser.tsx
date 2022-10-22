@@ -32,7 +32,7 @@ const TagUser = ({ data, onUserClick }: props) => {
                   >
                     {value.avatar_image_url ? (
                       <img
-                        className="w-7 h-7"
+                        className="w-7 h-7 rounded-full"
                         src={value.avatar_image_url}
                         alt="avatar"
                       />

@@ -1,9 +1,13 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, {
+  useContext,
+  useDeferredValue,
+  useEffect,
+  useState,
+} from "react";
 import Modal from "../global/modal";
 import message from "../../lottie/message.json";
 import TextInput from "../global/textinput";
 import TagUser from "../post/tagUser";
-import { useDebounce } from "../../hooks/useDebounce";
 import { useSearchUsers } from "../../hooks/useSearchUsers";
 import { useFormHook } from "../../hooks/useFormHook";
 import { supabase } from "../../constants/supabase";
@@ -31,7 +35,7 @@ const NewChat = () => {
   });
   const [userSelected, setUserSelected] = useState<IUserInfo | null>(null);
   const [show, setShow] = useState(false);
-  const nameDebounce = useDebounce(inputValues.display_name, 300);
+  const nameDebounce = useDeferredValue(inputValues.display_name);
   const { users, setUsers } = useSearchUsers(nameDebounce);
   useEffect(() => {
     if (inputValues.display_name && users && !userSelected) {
