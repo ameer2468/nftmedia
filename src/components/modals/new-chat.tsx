@@ -48,15 +48,20 @@ const NewChat = () => {
     };
   }, [inputValues.display_name, userSelected, users]);
   const createChat = async () => {
-    const checkChat = chats.map((chat) => {
-      return chat.users
-        .map((user) => user.user)
+    const checkChat = () => {
+      let chatUsers = [];
+      for (let i of chats) {
+        for (let j of i.users) {
+          chatUsers.push(j);
+        }
+      }
+      return chatUsers
+        .map((i) => {
+          return i.user;
+        })
         .includes(userSelected?.display_name as string);
-    });
-    if (
-      checkChat.includes(true) &&
-      userSelected?.display_name !== user?.display_name
-    ) {
+    };
+    if (checkChat() && userSelected?.display_name !== user?.display_name) {
       return setErrorMessage("A chat with this user already exists");
     } else if (userSelected?.display_name === user?.display_name) {
       return setErrorMessage("You can't chat with yourself");
