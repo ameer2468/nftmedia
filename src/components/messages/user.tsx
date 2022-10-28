@@ -25,7 +25,11 @@ const User = ({ onClick, activeChat, chat }: props) => {
         <div className="flex items-center gap-1">
           <div className="w-8">
             {chat && userChat?.avatar_image_url ? (
-              <img alt="avatar" src={userChat?.avatar_image_url} />
+              <img
+                className="rounded-full"
+                alt="avatar"
+                src={userChat?.avatar_image_url}
+              />
             ) : (
               <AvatarMemo className="w-10" />
             )}

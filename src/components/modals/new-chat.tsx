@@ -49,7 +49,7 @@ const NewChat = () => {
   }, [inputValues.display_name, userSelected, users]);
   const createChat = async () => {
     const checkChat = () => {
-      let chatUsers = [];
+      const chatUsers = [];
       for (let i of chats) {
         for (let j of i.users) {
           chatUsers.push(j);
