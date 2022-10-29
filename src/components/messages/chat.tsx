@@ -15,9 +15,10 @@ import Loading from "../global/loading";
 
 interface props {
   activeChat: number | null;
+  lastMessage: (message: string) => void;
 }
 
-const Chat = ({ activeChat }: props) => {
+const Chat = ({ activeChat, lastMessage }: props) => {
   const { onChangeHandler, inputValues, setInputValues } = useFormHook({
     message: "",
   });
@@ -64,9 +65,9 @@ const Chat = ({ activeChat }: props) => {
       chat_id: activeChat,
       message: inputValues.message,
       user: user?.display_name,
-
       avatar_image_url: user?.avatar_image_url,
     });
+    lastMessage(inputValues.message);
     setInputValues({ message: "" });
   };
 
