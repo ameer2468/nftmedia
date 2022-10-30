@@ -1,4 +1,11 @@
-import { useCallback, useContext, useEffect, useRef, useState } from "react";
+import {
+  memo,
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { useFormHook } from "../../hooks/useFormHook";
 import Message from "./message";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -12,16 +19,17 @@ import { UserContext } from "../../context/UserContext";
 import Scrollbars from "react-custom-scrollbars-2";
 import TextInput from "../global/textinput";
 import Loading from "../global/loading";
+import { ChatsContext } from "../../context/ChatsContext";
 
 interface props {
   activeChat: number | null;
-  lastMessage: (message: string) => void;
 }
 
-const Chat = ({ activeChat, lastMessage }: props) => {
+const Chat = ({ activeChat }: props) => {
   const { onChangeHandler, inputValues, setInputValues } = useFormHook({
     message: "",
   });
+  const { chats, setChats } = useContext(ChatsContext);
   const { user } = useContext(UserContext);
   const [messages, setMessages] = useState<IChatMessage[] | null>(null);
   const [messagesLoading, setMessagesLoading] = useState<boolean>(false);
@@ -30,6 +38,22 @@ const Chat = ({ activeChat, lastMessage }: props) => {
   const messageRef = useRef<any>(null);
   const emojiRef = useRef(null);
   const [showEmojis, setShowEmojis] = useDetectOutsideClick(emojiRef, false);
+  const lastMessageHandler = (message: string, chat_id: number | null) => {
+    setChats(() => {
+      return chats?.map((chat) => {
+        if (chat.id === chat_id) {
+          return {
+            ...chat,
+            last_message: {
+              ...chat.last_message,
+              message,
+            },
+          };
+        }
+        return chat;
+      });
+    });
+  };
   const getData = useCallback(async () => {
     if (activeChat) {
       setMessagesLoading(true);
@@ -57,7 +81,7 @@ const Chat = ({ activeChat, lastMessage }: props) => {
     };
   }, [activeChat, getData]);
   useEffect(() => {
-    messageRef.current?.scrollIntoView({ behavior: "smooth" });
+    messageRef.current?.scrollIntoView();
   }, [messages]);
   const sendMessage = async () => {
     if (inputValues.message.length === 0) return;
@@ -67,7 +91,7 @@ const Chat = ({ activeChat, lastMessage }: props) => {
       user: user?.display_name,
       avatar_image_url: user?.avatar_image_url,
     });
-    lastMessage(inputValues.message);
+    lastMessageHandler(inputValues.message, activeChat);
     setInputValues({ message: "" });
   };
 
@@ -157,4 +181,4 @@ const Chat = ({ activeChat, lastMessage }: props) => {
   );
 };
 
-export default Chat;
+export default memo(Chat);

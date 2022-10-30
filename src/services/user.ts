@@ -3,8 +3,8 @@ import { supabase } from "../constants/supabase";
 
 const api = process.env.REACT_APP_API_URL;
 
-export const fetchUserProfile = async (userId: number) => {
-  return await getRequest(`${api}/profile`, { userId });
+export const fetchUserProfile = async (userId: number, user: number) => {
+  return await getRequest(`${api}/profile`, { userId, user });
 };
 
 export const followUser = (

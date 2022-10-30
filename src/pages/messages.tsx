@@ -1,4 +1,4 @@
-import { useContext, useEffect, memo, useState } from "react";
+import { useContext, useEffect, memo } from "react";
 import User from "../components/messages/user";
 import { Scrollbars } from "react-custom-scrollbars-2";
 import Chat from "../components/messages/chat";
@@ -14,7 +14,6 @@ const Messages = () => {
   const { chats, setChats } = useContext(ChatsContext);
   const { setModalId } = useContext(ModalContext);
   const { activeChat, setActiveChat, loading, setLoading } = useChat();
-  const [lastMessage, setLastMessage] = useState<string>("");
   const { user } = useContext(UserContext);
   useEffect(() => {
     if (user) {
@@ -50,7 +49,6 @@ const Messages = () => {
                 return (
                   <User
                     chat={chat}
-                    lastMessage={lastMessage}
                     activeChat={activeChat}
                     onClick={async () => {
                       setActiveChat(chat?.id);
@@ -62,12 +60,7 @@ const Messages = () => {
             </Scrollbars>
           )}
         </div>
-        <Chat
-          lastMessage={(message: string) => {
-            setLastMessage(message);
-          }}
-          activeChat={activeChat}
-        />
+        <Chat activeChat={activeChat} />
       </div>
     </div>
   );

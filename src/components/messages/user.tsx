@@ -8,10 +8,9 @@ interface props {
   onClick: () => void;
   activeChat: number | null;
   chat: IChat;
-  lastMessage: string;
 }
 
-const User = ({ onClick, activeChat, chat, lastMessage }: props) => {
+const User = ({ onClick, activeChat, chat }: props) => {
   const { user } = useContext(UserContext);
   const userChat = chat.users.find((u) => u.user !== user?.display_name);
   return (
@@ -45,7 +44,7 @@ const User = ({ onClick, activeChat, chat, lastMessage }: props) => {
         </p>
       </div>
       <p className="text-sm mt-2 w-full max-w-[420px] overflow-hidden text-ellipsis whitespace-nowrap">
-        {(chat.id === activeChat && lastMessage) || chat.last_message.message}
+        {chat ? chat.last_message.message : ""}
       </p>
     </div>
   );
