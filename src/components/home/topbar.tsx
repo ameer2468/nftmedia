@@ -10,16 +10,23 @@ import { faSignOut, faUser } from "@fortawesome/free-solid-svg-icons";
 import { useDetectOutsideClick } from "../../hooks/useDetectOutsideClick";
 import { useNavigate } from "react-router-dom";
 import { AvatarMemo } from "../global/avatar";
+import Notifications from "../global/notifications/notifications";
 
 const Topbar = () => {
   const { logout } = useLogin();
   const { user } = useContext(UserContext);
   const dropdownRef = useRef(null);
+  const notifRef = useRef(null);
   const navigate = useNavigate();
+  const [notificationToggle, setNotificationToggle] = useDetectOutsideClick(
+    notifRef,
+    false
+  );
   const [active, setActive] = useDetectOutsideClick(dropdownRef, false);
   const clickHandler = () => {
     setActive(!active);
   };
+  console.log(notificationToggle);
   return (
     <div
       className="topbar z-50  w-full gap-5 h-24 px-0 fixed right-0 top-0
@@ -51,10 +58,19 @@ const Topbar = () => {
             <p>{user?.display_name || "NA"}</p>
             <FontAwesomeIcon icon={faCaretDown} />
           </div>
-          <FontAwesomeIcon
-            className="text-2xl transition-all duration-200 hover:opacity-50 cursor-pointer"
-            icon={faBell}
-          />
+          <div
+            ref={notifRef}
+            onClick={() => {
+              setNotificationToggle(!notificationToggle);
+              setActive(false);
+            }}
+          >
+            <FontAwesomeIcon
+              className="text-2xl transition-all duration-200 hover:opacity-50 cursor-pointer"
+              icon={faBell}
+            />
+            {notificationToggle && <Notifications />}
+          </div>
           <AnimatePresence>
             {active && (
               <motion.div
