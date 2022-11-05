@@ -26,7 +26,6 @@ const Topbar = () => {
   const clickHandler = () => {
     setActive(!active);
   };
-  console.log(notificationToggle);
   return (
     <div
       className="topbar z-50  w-full gap-5 h-24 px-0 fixed right-0 top-0

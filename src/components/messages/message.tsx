@@ -11,6 +11,10 @@ interface props {
 
 const Message = ({ message, className }: props) => {
   const { user } = useContext(UserContext);
+  const userImage =
+    user?.display_name === message.user
+      ? user?.avatar_image_url
+      : message.avatar_image_url;
   return (
     <div
       className={`${className} ${
@@ -23,7 +27,7 @@ const Message = ({ message, className }: props) => {
           {message.avatar_image_url !== null ? (
             <img
               alt="avatar"
-              src={(message.avatar_image_url as string) + "?date=" + Date.now()}
+              src={userImage + "?date=" + Date.now()}
               className="w-6 mr-2 rounded-full"
             />
           ) : (
