@@ -55,7 +55,7 @@ const Topbar = () => {
               />
             )}
             <p>{user?.display_name || "NA"}</p>
-            <FontAwesomeIcon icon={faCaretDown} />
+            <FontAwesomeIcon className={`${active ? 'rotate-180 transition-all 0.2s' : ''}`} icon={faCaretDown} />
           </div>
           <div
             ref={notifRef}
@@ -68,14 +68,25 @@ const Topbar = () => {
               className="text-2xl transition-all duration-200 hover:opacity-50 cursor-pointer"
               icon={faBell}
             />
-            {notificationToggle && <Notifications />}
+
+            <AnimatePresence>
+              {notificationToggle && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 20 }}
+                  exit={{ opacity: 0}}
+                >
+                  <Notifications />
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
           <AnimatePresence>
             {active && (
               <motion.div
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
+                exit={{ opacity: 0 }}
                 className="absolute bg-black text-white text-sm text-justify rounded w-36 h-auto p-3 top-[60px]"
               >
                 <ul className="flex flex-col gap-1.5">

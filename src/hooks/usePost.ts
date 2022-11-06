@@ -5,6 +5,7 @@ import { UserContext } from "../context/UserContext";
 import { useNavigate, useParams } from "react-router-dom";
 import { INewComment, IPost, IThread, IUpvotePost } from "../types/posts";
 import { fetchPostService, getRecentPosts } from "../services/post";
+import toast from "react-hot-toast";
 
 interface args {
   title: string;
@@ -16,8 +17,23 @@ export const usePost = (form?: args) => {
   const [voteLoading, setVoteLoading] = useState(false);
   const [createLoading, setCreateLoading] = useState(false);
   const [commentLoading, setCommentLoading] = useState(false);
+  const [editPostLoading, setEditPostLoading] = useState(false);
   const [createCommentLoading, setCreateCommentLoading] = useState(false);
   const nav = useNavigate();
+
+  const submitEditPost = async (id: string) => {
+    setEditPostLoading(true);
+    await supabase
+      .from("threads")
+      .update({ title: form?.title, post: form?.post })
+      .eq("id", Number(id));
+    setEditPostLoading(false);
+    nav(`/post/${id}`);
+    toast.success("Post edited successfully", {
+      position: "top-right",
+    });
+  };
+
   const submitNewPost = async (
     clearInput: Dispatch<{ title: string; post: string }>
   ) => {
@@ -77,7 +93,10 @@ export const usePost = (form?: args) => {
       .update({ comment: editedComment })
       .eq("id", commentId)
       .then((res: any) => {
-        const updatedComment = {...res.data[0], avatar_image_url: user?.avatar_image_url};
+        const updatedComment = {
+          ...res.data[0],
+          avatar_image_url: user?.avatar_image_url,
+        };
         setCommentLoading(false);
         if (post) {
           const updateComment = post.comments?.map((comment) => {
@@ -246,6 +265,8 @@ export const usePost = (form?: args) => {
 
   return {
     submitNewPost,
+    submitEditPost,
+    editPostLoading,
     upvote,
     commentLoading,
     createLoading,

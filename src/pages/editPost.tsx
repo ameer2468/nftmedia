@@ -6,7 +6,7 @@ import Picker from "emoji-picker-react";
 import { useFormHook } from "../hooks/useFormHook";
 import { usePost } from "../hooks/usePost";
 import { onEmojiClick } from "../helpers/emojiClick";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 
 const EditPost = () => {
   const inputRef: any = useRef(0);
@@ -16,13 +16,24 @@ const EditPost = () => {
   };
   useEffect(() => {}, [inputRef]);
   const { inputValues, setInputValues, onChangeHandler } = useFormHook(form);
-  const { submitNewPost, createLoading } = usePost(inputValues);
-  const formCheck = inputValues.title.length > 0 && inputValues.post.length > 0;
+  const { submitEditPost, editPostLoading } = usePost(inputValues);
+  const params = useParams() as { id: string };
   const location = useLocation();
   const { title, content } = location.state as {
     title: string;
     content: string;
   };
+  const formCheck =
+    (inputValues.title.length > 0 &&
+      inputValues.post.length > 0 &&
+      inputValues.post !== content) ||
+    inputValues.title !== title;
+  useEffect(() => {
+    setInputValues({
+      title,
+      post: content,
+    });
+  }, [content, setInputValues, title]);
 
   return (
     <div className="w-full h-auto top-post pt-48 px-5 lg:pl-64 lg:pr-32 lg:pt-48">
@@ -69,9 +80,9 @@ const EditPost = () => {
           />
         </div>
         <Button
-          loading={createLoading}
-          disabled={createLoading || !formCheck}
-          onClick={() => submitNewPost(setInputValues)}
+          loading={editPostLoading}
+          disabled={editPostLoading || !formCheck}
+          onClick={() => submitEditPost(params.id)}
           className={`normal-case w-40 h-14 bg-sky-500 mt-3 ${
             formCheck ? "" : "bg-zinc-300 cursor-not-allowed"
           }`}
