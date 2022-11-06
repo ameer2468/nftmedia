@@ -23,6 +23,7 @@ import Messages from "./pages/messages";
 import { ChatsContext } from "./context/ChatsContext";
 import { useChat } from "./hooks/useChat";
 import { Toaster } from "react-hot-toast";
+import EditPost from "./pages/editPost";
 
 function App() {
   const appRoutes = [
@@ -32,6 +33,7 @@ function App() {
     "/profile",
     "/new",
     "/messages",
+    `/post/${useLocation().pathname.split("/")[2]}/edit`,
     `/post/${useLocation().pathname.split("/")[2]}`,
     `/profile/${useLocation().pathname.split("/")[2]}`,
   ];
@@ -50,6 +52,7 @@ function App() {
   const authedRoutes = [
     { path: "/home", element: <Home /> },
     { path: "/post/:id", element: <Post /> },
+    { path: "/post/:id/edit", element: <EditPost /> },
     { path: "/profile/:id", element: <Profile /> },
     { path: "/settings", element: <Settings /> },
     { path: "/new", element: <New /> },

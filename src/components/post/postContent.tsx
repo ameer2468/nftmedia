@@ -99,15 +99,23 @@ const PostContent = ({ post, loading, vote, voteLoading }: props) => {
               <VoteCount count={Number(post?.vote_count)} />
               {post?.user_id === user?.id && (
                 <div className="flex gap-2">
-                  <div
-                    className="bg-sky-500 w-8 h-8 rounded-md flex items-center justify-center
-                hover:bg-sky-400 transition-all duration-200 cursor-pointer"
+                  <Link
+                    to={`edit`}
+                    state={{
+                      title: post?.title,
+                      content: post?.post,
+                    }}
                   >
-                    <FontAwesomeIcon
-                      icon={faPencil}
-                      className="text-xs text-white"
-                    />
-                  </div>
+                    <div
+                      className="bg-sky-500 w-8 h-8 rounded-md flex items-center justify-center
+                hover:bg-sky-400 transition-all duration-200 cursor-pointer"
+                    >
+                      <FontAwesomeIcon
+                        icon={faPencil}
+                        className="text-xs text-white"
+                      />
+                    </div>
+                  </Link>
                   <div
                     onClick={() => setModalId("confirm")}
                     className="bg-sky-500 w-8 h-8 rounded-md flex items-center justify-center
