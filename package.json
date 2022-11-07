@@ -32,7 +32,6 @@
     "metamask-react": "^2.4.0",
     "moment": "^2.29.4",
     "os-browserify": "^0.3.0",
-    "prettier": "^2.7.1",
     "react": "^18.2.0",
     "react-app-rewired": "^2.2.1",
     "react-content-loader": "^6.2.0",
@@ -82,7 +81,9 @@
     "@types/react-lottie": "^1.2.6",
     "@types/uuid": "^8.3.4",
     "autoprefixer": "^10.4.7",
+    "eslint-config-prettier": "^8.5.0",
     "postcss": "^8.4.14",
+    "prettier": "2.7.1",
     "tailwindcss": "^3.1.6"
   }
 }
